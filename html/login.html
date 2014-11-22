@@ -1,0 +1,30 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3 well">	
+		<form class="form-horizontal" role="form">
+			<div class="form-group text-center">
+				<div class="col-md-10">
+					<input type="text" class="form-control input-lg" id="" name="un" required placeholder=" username" data-ng-model="login.username">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<input type="password" class="form-control input-lg"  id="" name="pw" required placeholder=" password" data-ng-model="login.password">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<select name="status" class="form-control" data-ng-model="login.status">
+						<option value="">--Pilih Status--</option>
+						<option value="1">Anggota</option>
+						<option value="2">Petugas</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<button type="submit" class="btn btn-primary btn-block" name="ok" data-ng-click="ceklogin()"><i class="fa fa-lock"></i> MASUK</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

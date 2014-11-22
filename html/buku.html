@@ -1,0 +1,45 @@
+<h3 class="text-center" data-ng-hide="editing">DATA BUKU</h3>
+<form class="form form-horizontal">
+	<div class="form-group">
+		<div class="col-md-3 col-md-offset-4"><input type="text" name="search"></div>
+		<div class="col-md-3">
+			<select class="form-control" name="jenis">
+				<option value="">--Pilih--</option>
+				<option value="judul">Judul</option>
+				<option value="pengarang">Pengarang</option>
+				<option value="penerbit">Penerbit</option>
+			</select>
+		</div>
+		<div class="col-md-2">
+			<button type="text" class="btn btn-primary btn-md"><i class="fa fa-search"></i>  cari</button>
+		</div>
+	</div>
+</form><br/>
+<table class="table table-bordered table-striped table-hover">
+	<thead>
+		<tr>
+			<th>NO.</th>
+			<th>KODE BUKU</th>
+			<th>JUDUL</th>
+			<th>PENGARANG</th>
+			<th>SISA STOK</th>
+			<th>MACAM</th>
+			<th>BAHASA</th>
+			<th>PENERBIT</th>
+			<th>TAHUN TERBIT</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr data-ng-repeat="c in db">
+			<td>{{$index+1}}</td>
+			<td>{{c.kode}}</td>
+			<td>{{c.judul}}</td>
+			<td>{{c.pengarang}}</td>
+			<td>{{c.stok}}</td>
+			<td>{{c.macam}}</td>
+			<td>{{c.bahasa}}</td>
+			<td>{{c.penerbit}}</td>
+			<td>{{c.tahun}}</td>
+		</tr>
+	</tbody>
+</table>
