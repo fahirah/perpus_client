@@ -68,7 +68,7 @@ app.controller('FileCtrl', function($scope, $http){
 /* login controller */
 app.controller('LoginCtrl', function($scope,$http,$location) {
 	$scope.login = {
-		username:'',password:''
+		username:'',password:'',status: 1
 	};
 	
 	//login

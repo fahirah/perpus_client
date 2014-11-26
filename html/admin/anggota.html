@@ -11,48 +11,45 @@
 				
 				<form class="form form-horizontal" data-ng-show="editing">
 					<div class="form-group">
-						<label for="nama" class="col-md-3">Nama</label>
+						<label for="nama" class="col-md-3 col-md-offset-2">Nama</label>
 						<div class="col-md-3"><input type="text" name="nama" data-ng-model="anggota.nama" placeholder="Nama" class="form-control tooltips" title="Masukkan nama"></div>
 					</div>
 					<div class="form-group">
-						<label for="identitas" class="col-md-3">No Identitas</label>
+						<label for="identitas" class="col-md-3 col-md-offset-2">No Identitas</label>
 						<div class="col-md-3"><input type="text" name="identitas" data-ng-model="anggota.identitas" placeholder="No Identitas" class="form-control tooltips" title="Masukkan no identitas"></div>
 					</div>
 					<div class="form-group">
-						<label for="alamat" class="col-md-3">Alamat</label>
-						<div class="col-md-3"><textarea class="form-control" name="alamat" rows="1" id="alamat"data-ng-model="anggota.alamat" class="form-control tooltips" title="Masukkan alamat"></textarea></div>
+						<label for="alamat" class="col-md-3 col-md-offset-2">Alamat</label>
+						<div class="col-md-4"><input type="text" name="alamat" data-ng-model="anggota.alamat"  placeholder="alamat" id="alamat" class="form-control tooltips" title="Masukkan alamat"></div>
 					</div>
 					<div class="form-group">
-						<label for="telp" class="col-md-3">Telp</label>
-						<div class="col-md-3"><input type="text" name="telp" data-ng-model="anggota.telp"  placeholder="telp" id="telp" class="form-control tooltips" title="Masukkan telp"></div>
+						<label for="telp" class="col-md-3 col-md-offset-2">Telp</label>
+						<div class="col-md-2"><input type="text" name="telp" data-ng-model="anggota.telp"  placeholder="telp" id="telp" class="form-control tooltips" title="Masukkan telp" number-input></div>
 					</div>
 					<div class="form-group">
-						<label for="" class="col-md-3">Jenis Kelamin</label>
+						<label for="" class="col-md-3 col-md-offset-2">Jenis Kelamin</label>
 						<div class="col-md-3">
-							<label><input type="radio" name="gender" value="Laki-Laki" data-ng-model="anggota.gender">Laki-Laki </label>
-							<label><input type="radio" name="gender" value="Perempuan" data-ng-model="anggota.gender">Perempuan </label>
+							<label><input type="radio" name="gender" value="L" data-ng-model="anggota.gender"> Laki-Laki </label> &nbsp;
+							<label><input type="radio" name="gender" value="P" data-ng-model="anggota.gender"> Perempuan </label>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="" class="col-md-3">Status</label>
+						<label for="" class="col-md-3 col-md-offset-2">Status</label>
 						<div class="col-md-3">
-							<label><input type="radio" name="status" value="dosen" data-ng-model="anggota.status">Dosen </label>
-							<label><input type="radio" name="status" value="mahasiswa" data-ng-model="anggota.status">Mahasiswa </label>
+							<label><input type="radio" name="status" value="d" data-ng-model="anggota.status"> Dosen </label> &nbsp;
+							<label><input type="radio" name="status" value="m" data-ng-model="anggota.status"> Mahasiswa </label>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="prodi" class="col-md-3">Program Studi</label>
+						<label for="prodi" class="col-md-3 col-md-offset-2">Program Studi</label>
 						<div class="col-md-3">
-						<!--	<select name="prodi" id="prodi" data-ng-model="anggota.prodi" class="form-control" data-ng-options="p.kode as p.prodi for p in prodi">
-								<option value="{{p.kode}}">{{p.prodi}}</option>-->
-							<select name="prodi">
-								<option value="1">Teknik Informatika</option>
-								<option value="2">Teknik Sipil</option>
-							</select>
+							<select name="prodi" id="prodi" data-ng-model="anggota.prodi" class="form-control" data-ng-options="p.kode as p.nama for p in prodi">
+								<option value="">-- pilih prodi --</option>
+							</select>	
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-5 col-md-offset-3"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-anggota>SIMPAN</button></div>
+						<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-anggota>SIMPAN</button> </div>
 					</div>
 				</form>
 				
@@ -73,17 +70,23 @@
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="c in db">
-							<td>{{$index+1}}</td>
+							<td>{{(jph*cpage)+$index+1}}</td>
 							<td>{{c.id}}</td>
 							<td>{{c.nama}}</td>
 							<td>{{c.identitas}}</td>
 							<td>{{c.alamat}}</td>
 							<td>{{c.telp}}</td>
-							<td>{{c.gender}}</td>
-							<td>{{c.status}}</td>
+							<td>{{c.jk}}</td>
+							<td>{{c.level}}</td>
 							<td>{{c.kd}}</td>
-							<td>aksi</td>
+							<td><a href="" data-ng-click="setEdit($index)" class="btn btn-sm"><i class="fa fa-edit"></i></a><a href="" hapus-anggota="{{c.id}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>
 						</tr>
 					</tbody>
 				</table>
+				
+				<ul class="pagination pagination-sm" data-ng-show=" ! editing && db.length > 0">
+					<li data-ng-class="{ disabled: cpage == 0 }"><a href="" data-ng-click="prevPage()">&laquo;</a></li>
+					<li data-ng-repeat="n in range(numpage)" data-ng-class="{ active: n == cpage }"><a href="" data-ng-click="setPage()" data-ng-bind="n+1">1</a></li>
+					<li data-ng-class="{ disabled: cpage == numpage - 1 }"><a href="" data-ng-click="nextPage()">&raquo;</a></li>
+				</ul>
 			</div>

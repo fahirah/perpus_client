@@ -1,63 +1,101 @@
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<form class="form form-horizontal">
-				<div class="form-group">
-					<label for="kd" class="col-md-3">Kode Buku</label>
-					<div class="col-md-3"><input type="text" name="kd" placeholder="kode buku" id="kd"></div>
-				</div>
-				<div class="form-group">
-					<label for="judul" class="col-md-3">Judul</label>
-					<div class="col-md-3"><input type="text" name="judul" placeholder="judul" id="judul"></div>
-				</div>
-				<div class="form-group">
-					<label for="pgrg" class="col-md-3">Pengarang</label>
-					<div class="col-md-3"><input type="text" name="pengarang" placeholder="pengarang" id="pgrg"></div>
-				</div>
-				<div class="form-group">
-					<label for="stok" class="col-md-3">Stok</label>
-					<div class="col-md-3"><input type="number" name="stok" placeholder="stok" id="stok"></div>
-				</div>
-				<div class="form-group">
-					<label for="mcm" class="col-md-3">Macam</label>
-					<div class="col-md-3">
-						<select class="form-control" name="macam" id="mcm">
-							<option value="">--Pilih Macam Buku--</option>
-							<option value="U">U</option>
-							<option value="R">R</option>
-							<option value="LL">LL</option>
-						</select>
+			<div class="well">
+				<h3 class="text-center" data-ng-hide="editing">
+					DATA BUKU
+					<button class="btn btn-md btn-primary pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Buku</button>
+				</h3>
+				<h3 class="text-center" data-ng-show="editing">
+					TAMBAH / EDIT BUKU
+					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
+				</h3>
+				<hr>
+				
+				<form class="form form-horizontal" data-ng-show="editing">
+					<div class="form-group">
+						<label for="kode" class="col-md-3 col-md-offset-2">Kode Buku</label>
+						<div class="col-md-3"><input type="text" name="kode" data-ng-model="buku.kode" placeholder="Kode Buku" id="kode" class="form-control tooltips" title="Masukkan kode buku"></div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="bhs" class="col-md-3">Bahasa</label>
-					<div class="col-md-3">
-						<select class="form-control" name="bahasa" id="bhs">
-							<option value="">--Pilih Bahasa Buku--</option>
-							<option value="Indonesia">Indonesia</option>
-							<option value="Inggris">Inggris</option>
-							<option value="LL">LL</option>
-						</select>
+					<div class="form-group">
+						<label for="judul" class="col-md-3 col-md-offset-2">Judul</label>
+						<div class="col-md-3"><input type="text" name="judul" data-ng-model="buku.judul" placeholder="Judul Buku" id="judul" class="form-control tooltips" title="Masukkan judul buku"></div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="no" class="col-md-3">No Penempatan</label>
-					<div class="col-md-3"><input type="text" name="penempatan" placeholder="no penempatan" id="no"></div>
-				</div>
-				<div class="form-group">
-					<label for="pnrbt" class="col-md-3">Penerbit</label>
-					<div class="col-md-3"><input type="text" name="penerbit" placeholder="penerbit" id="pnrbt"></div>
-				</div>
-				<div class="form-group">
-					<label for="thn" class="col-md-3">Tahun Terbit</label>
-					<div class="col-md-3"><input type="text" name="tahun" placeholder="tahun terbit" id="thn"></div>
-				</div>			
-				<div class="form-group">
-					<div class="col-md-5 col-md-offset-3">
-						<button type="text" class="btn btn-primary btn-lg">SIMPAN</button>
-						<button type="reset" class="btn btn-default btn-lg">BATAL</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+					<div class="form-group">
+						<label for="pengarang" class="col-md-3 col-md-offset-2">Pengarang</label>
+						<div class="col-md-4"><input type="text" name="pengarang" data-ng-model="buku.pengarang"  placeholder="pengarang" id="pengarang" class="form-control tooltips" title="Masukkan pengarang"></div>
+					</div>
+					<div class="form-group">
+						<label for="stok" class="col-md-3 col-md-offset-2">Stok</label>
+						<div class="col-md-2"><input type="text" name="stok" data-ng-model="buku.stok"  placeholder="telp" id="telp" class="form-control tooltips" title="Masukkan Stok" number-input></div>
+					</div>
+					<div class="form-group">
+						<label for="macam" class="col-md-3 col-md-offset-2">Macam</label>
+						<div class="col-md-3">
+							<select class="form-control" name="macam" id="macam" data-ng-model="buku.macam">
+								<option value="">--Pilih Macam Buku--</option>
+								<option value="U">U</option>
+								<option value="R">R</option>
+								<option value="LL">LL</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="bhs" class="col-md-3 col-md-offset-2">Bahasa</label>
+						<div class="col-md-3">
+							<select class="form-control" name="bahasa" id="bhs" data-ng-model="buku.bahasa">
+								<option value="">--Pilih Bahasa Buku--</option>
+								<option value="Indonesia">Indonesia</option>
+								<option value="Inggris">Inggris</option>
+								<option value="LL">LL</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="prodi" class="col-md-3 col-md-offset-2">No Penempatan</label>
+						<div class="col-md-3"><input type="text" name="penempatan" data-ng-model="buku.penempatan" placeholder="No Penempatan" class="form-control tooltips" title="Masukkan no penempatan">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="nama" class="col-md-3 col-md-offset-2">Penerbit</label>
+						<div class="col-md-3"><input type="text" name="nama" data-ng-model="buku.penerbit" placeholder="Penerbit" class="form-control tooltips" title="Masukkan penerbit"></div>
+					</div>
+					<div class="form-group">
+						<label for="thn" class="col-md-3 col-md-offset-2">Tahun Terbit</label>
+						<div class="col-md-2"><input type="text" name="tahun" data-ng-model="buku.tahun"  placeholder="tahun terbit" id="thn" class="form-control tooltips" title="Masukkan tahun terbit" number-input></div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-buku>SIMPAN</button> </div>
+					</div>
+				</form>
+				
+				<table class="table table-bordered table-striped table-hover" data-ng-hide="editing">
+					<thead>
+						<tr>
+							<th>NO.</th>
+							<th>KODE BUKU</th>
+							<th>JUDUL</th>
+							<th>PENGARANG</th>
+							<th>STOK</th>
+							<th>MACAM</th>
+							<th>BAHASA</th>
+							<th>NO PENEMPATAN</th>
+							<th>PENERBIT</th>
+							<th>TAHUN TERBIT</th>
+							<th>AKSI</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="c in dbBuku">
+							<td>{{$index+1}}</td>
+							<td>{{c.kode}}</td>
+							<td>{{c.judul}}</td>
+							<td>{{c.pengarang}}</td>
+							<td>{{c.stok}}</td>
+							<td>{{c.macam}}</td>
+							<td>{{c.bahasa}}</td>
+							<td>{{c.penempatan}}</td>
+							<td>{{c.penerbit}}</td>
+							<td>{{c.tahun}}</td>
+							<td><a href="" data-ng-click="setEdit($index)" class="btn btn-sm"><i class="fa fa-edit"></i></a><a href="" hapus-buku="{{c.d}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>

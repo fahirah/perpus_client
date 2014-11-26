@@ -31,3 +31,21 @@ app.directive('popovers', function() {
 	}
 });
 
+/**
+ * Input angka
+ */
+app.directive('numberInput', function() {
+	return function($scope, elm) {
+		elm.keypress(function(e) {
+			var c = e.keyCode || e.charCode;
+			switch (c) {
+				case 8: case 9: case 27: case 44: case 13: return;
+				case 65:
+					if (e.ctrlKey === true) return;
+			}
+			if (c < 45 || c > 57) {
+				e.preventDefault();
+			}
+		});
+	}
+});
