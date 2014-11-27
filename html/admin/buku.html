@@ -1,12 +1,29 @@
 			<div class="well">
 				<h3 class="text-center" data-ng-hide="editing">
 					DATA BUKU
-					<button class="btn btn-md btn-primary pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Buku</button>
+					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Buku</button>
 				</h3>
 				<h3 class="text-center" data-ng-show="editing">
 					TAMBAH / EDIT BUKU
 					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
-				</h3>
+				</h3><br/><br/>
+				
+				<form class="form form-horizontal" data-ng-hide="editing">
+					<div class="form-group">
+						<div class="col-md-2"><input type="text" name="search" data-ng-model="search.kata"></div>
+						<div class="col-md-2">
+							<select class="form-control" name="jenis" data-ng-model="search.jenis">
+								<option value="">--Pilih--</option>
+								<option value="judul">Judul</option>
+								<option value="pengarang">Pengarang</option>
+								<option value="penerbit">Penerbit</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<button type="text" class="btn btn-primary btn-md" data-ng-click="loadDataBuku()"><i class="fa fa-search"></i>  cari</button>
+						</div>
+					</div>
+				</form>
 				<hr>
 				
 				<form class="form form-horizontal" data-ng-show="editing">
@@ -84,7 +101,7 @@
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="c in dbBuku">
-							<td>{{$index+1}}</td>
+							<td>{{(jph*cpagebk)+$index+1}}</td>
 							<td>{{c.kode}}</td>
 							<td>{{c.judul}}</td>
 							<td>{{c.pengarang}}</td>
@@ -94,8 +111,13 @@
 							<td>{{c.penempatan}}</td>
 							<td>{{c.penerbit}}</td>
 							<td>{{c.tahun}}</td>
-							<td><a href="" data-ng-click="setEdit($index)" class="btn btn-sm"><i class="fa fa-edit"></i></a><a href="" hapus-buku="{{c.d}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>
+							<td><a href="" data-ng-click="setEdit($index)" class="btn btn-sm"><i class="fa fa-edit"></i></a><a href="" hapus-buku="{{c.id}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>
 						</tr>
 					</tbody>
 				</table>
+				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbBuku.length > 0">
+					<li data-ng-class="{ disabled: cpagebk == 0 }"><a href="" data-ng-click="prevPagebk()">&laquo;</a></li>
+					<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
+					<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
+				</ul>
 			</div>

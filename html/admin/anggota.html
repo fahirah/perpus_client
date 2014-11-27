@@ -1,14 +1,23 @@
 			<div class="well">
 				<h3 class="text-center" data-ng-hide="editing">
 					DATA ANGGOTA
-					<button class="btn btn-md btn-primary pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Anggota</button>
+					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Anggota</button>
 				</h3>
 				<h3 class="text-center" data-ng-show="editing">
 					TAMBAH / EDIT ANGGOTA
 					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
 				</h3>
-				<hr>
-				
+				<br/><br/>
+				<form class="form form-horizontal" data-ng-hide="editing">
+				<div class="form-group">
+					<div class="col-md-2"><input type="text" name="search" placeholder="nama" data-ng-model="kata"></div>
+					<div class="col-md-2">
+						<button type="text" class="btn btn-primary btn-md" data-ng-click="loadData()"><i class="fa fa-search"></i>  cari</button>
+					</div>
+				</div>
+				</form>
+			
+				<hr>				
 				<form class="form form-horizontal" data-ng-show="editing">
 					<div class="form-group">
 						<label for="nama" class="col-md-3 col-md-offset-2">Nama</label>

@@ -44,6 +44,10 @@ app.controller('BukuCtrl', function($scope, $http){
 		judul:'', pengarang:'', stok:'', macam:'', bahasa:'', penerbit:'', tahun:''
 	};
 	
+	$scope.search={
+		kata:'', jenis:''
+	}
+	
 });
 
 /*file controller */
@@ -64,6 +68,8 @@ app.controller('FileCtrl', function($scope, $http){
 		judul:'', pengarang:'', macam:'', bahasa:'', penerbit:'', tahun:'', ringkasan:'', tgl:''
 	};
 });
+
+
 
 /* login controller */
 app.controller('LoginCtrl', function($scope,$http,$location) {

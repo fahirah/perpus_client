@@ -57,3 +57,20 @@ app.directive('simpanBuku', ['$http', function($http) {
 		});
 	}
 }]);
+
+/*hapus buku */
+app.directive('hapusBuku', ['$http', function($http) {
+	return function($scope, elm, attrs) {
+		elm.click(function(e) {
+			alertify.confirm('Yakin data ini akan dihapus?', function(e){
+				if(e){
+					$http({ url:$scope.server + '/admin/buku/'+attrs.hapusBuku, method: 'DELETE' }).
+					success(function(d){
+						alertify.success('Data buku berhasil dihapus');
+						$scope.loadDataBuku();
+					});
+				}
+			});
+		});
+	}
+}]);

@@ -4,12 +4,14 @@ app.controller('PetugasCtrl', function($scope, $http){
 	
 	$scope.cpage = 0;
 	$scope.numpage = 0;
+	$scope.kata='';
+	
 	
 	//load data anggota
 	$scope.db=[];
 	$scope.loadData=function(){
 		$http({
-			url: $scope.server+'/admin/anggota?cpage='+$scope.cpage, method:'GET'
+			url: $scope.server+'/admin/anggota?cpage='+$scope.cpage +'&kata='+$scope.kata, method:'GET'
 		}).
 		success(function(d){
 			$scope.db=d.data;
@@ -51,15 +53,21 @@ app.controller('PetugasCtrl', function($scope, $http){
 	}
 	
 	
-	
 	//load data buku
+	$scope.cpagebk = 0;
+	$scope.numpagebk = 0;
+	$scope.search={
+		kata:'',jenis:''
+	};
+
 	$scope.dbBuku=[];
 	$scope.loadDataBuku=function(){
 		$http({
-			url: $scope.server+'/admin/buku', method:'GET'
+			url: $scope.server+'/admin/buku?cpagebk='+$scope.cpagebk+'&kata='+$scope.search.kata, method:'GET'
 		}).
 		success(function(d){
-			$scope.dbBuku=d;
+			$scope.dbBuku=d.data;
+			$scope.numpagebk=d.numpagebk;
 		});
 	};
 	$scope.loadDataBuku(); //panggil fungsi
@@ -71,11 +79,11 @@ app.controller('PetugasCtrl', function($scope, $http){
 			id:'', kode:'', judul:'', pengarang:'', stok:'', macam:'', bahasa:'', penempatan:'', penerbit:'', tahun:''
 		};
 	};
-	$scope.resetAnggota();
+	$scope.resetBuku();
 	$scope.editing = false;
 	$scope.batal = function(){
 		$scope.editing = false;
-		$scope.resetAnggota();
+		$scope.resetBuku();
 	};
 	
 	
@@ -84,7 +92,7 @@ app.controller('PetugasCtrl', function($scope, $http){
 		$scope.editing = true;
 	}
 	
-	/*pagination */
+	/*pagination anggota*/
 	$scope.jph=20;
 	
 	$scope.range = function(start, end){
@@ -95,6 +103,7 @@ app.controller('PetugasCtrl', function($scope, $http){
 		for(var i = start; i< end; i++) r.push(i);
 		return r;
 	};
+	
 	$scope.setPage = function(){
 		$scope.cpage = this.n;
 		$scope.loadData();
@@ -110,4 +119,31 @@ app.controller('PetugasCtrl', function($scope, $http){
 		$scope.loadData();
 	};
 		
+
+	//pagination buku
+	$scope.jph=20;
+	
+	$scope.range = function(start, end){
+		var r = [];
+		if( ! end){
+			end = start; start = 0;
+		}
+		for(var i = start; i< end; i++) r.push(i);
+		return r;
+	};
+	
+	$scope.setPagebk = function(){
+		$scope.cpagebk = this.n;
+		$scope.loadDataBuku();
+	};
+	$scope.prevPagebk = function(){
+		if($scope.cpagebk > 0 )
+			$scope.cpagebk--;
+		$scope.loadDataBuku();
+	};
+	$scope.nextPagebk = function(){
+		if($scope.cpagebk < $scope.numpagebk -1)
+			$scope.cpagebk;
+		$scope.loadDataBuku();
+	};	
 })
