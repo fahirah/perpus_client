@@ -16,6 +16,10 @@ app.controller('PetugasCtrl', function($scope, $http){
 		success(function(d){
 			$scope.db=d.data;
 			$scope.numpage = d.numpage;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Data yang anda cari tidak ditemukan');
 		});
 	};
 	$scope.loadData(); //panggil fungsi
@@ -63,11 +67,15 @@ app.controller('PetugasCtrl', function($scope, $http){
 	$scope.dbBuku=[];
 	$scope.loadDataBuku=function(){
 		$http({
-			url: $scope.server+'/admin/buku?cpagebk='+$scope.cpagebk+'&kata='+$scope.search.kata, method:'GET'
+			url: $scope.server+'/admin/buku?cpagebk='+$scope.cpagebk+'&kata='+$scope.search.kata+'&jenis='+$scope.search.jenis, method:'GET'
 		}).
 		success(function(d){
 			$scope.dbBuku=d.data;
 			$scope.numpagebk=d.numpagebk;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Data yang anda cari tidak ditemukan');
 		});
 	};
 	$scope.loadDataBuku(); //panggil fungsi
