@@ -29,7 +29,7 @@ app.controller('FilePetugasCtrl', function($scope, $http){
 	
 	$scope.resetBerkas= function(){
 		$scope.berkas={
-			id:'',nama:'', judul:'',pengarang:'', macam:'', bahasa:'', penerbit:'', tahun:'', ringkasan:''
+			id:'',nama:'', judul:'',pengarang:'', macam:'', bahasa:'', penerbit:'', tahun:'', ringkasan:'', tgl:''
 		};
 	};	
 	$scope.resetBerkas();

@@ -92,6 +92,15 @@ app.directive('simpanFile', function(){
 	return function($scope, elm) {
 		elm.on('click', function(e){
 			var fd = new FormData();
+			//validasi
+			if($scope.berkas.judul.length < 3) return alertify.error('Judul file tidak boleh kosong');
+			if($scope.berkas.pengarang.length < 3) return alertify.error('Pengarang file tidak boleh kosong');
+			if($scope.berkas.macam.length < 0 || $scope.berkas.macam==null) return alertify.error('Macam file tidak boleh kosong');
+			if($scope.berkas.bahasa.length < 0 || $scope.berkas.bahasa==null) return alertify.error('Bahasa file tidak boleh kosong');
+			if($scope.berkas.penerbit.length < 3) return alertify.error('Penerbit file tidak boleh kosong');
+			if($scope.berkas.tahun.length < 4) return alertify.error('Tahun terbit file tidak boleh kosong');
+			if($scope.berkas.ringkasan.length < 5) return alertify.error('Ringkasan file tidak boleh kosong');
+						
 			//fd.append("file", e.target.files[0]);
 			fd.append('file', $scope.file);
 			fd.append('id', $scope.berkas.id);

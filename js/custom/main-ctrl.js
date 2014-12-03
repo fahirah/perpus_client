@@ -89,13 +89,24 @@ app.controller('BukuCtrl', function($scope, $http){
 /*file controller */
 app.controller('FileCtrl', function($scope, $http){
 	//load data file
+	$scope.cpagefl = 0;
+	$scope.numpagefl = 0;
+	$scope.search={
+		kata:'',jenis:''
+	};
+	
 	$scope.db=[];
 	$scope.loadData=function(){
 		$http({
-			url: $scope.server+'/file', method:'GET'
+			url: $scope.server+'/file?cpagefl='+$scope.cpagefl+'&kata='+$scope.search.kata+'&jenis='+$scope.search.jenis, method:'GET'
 		}).
 		success(function(d){
-			$scope.db=d;
+			$scope.db=d.data;
+			$scope.numpagefl=d.numpagefl;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Data yang anda cari tidak ditemukan');
 		});
 	};
 	$scope.loadData(); //panggil fungsi
@@ -103,6 +114,34 @@ app.controller('FileCtrl', function($scope, $http){
 	$scope.file = {
 		judul:'', pengarang:'', macam:'', bahasa:'', penerbit:'', tahun:'', ringkasan:'', tgl:''
 	};
+	
+	//pagination file
+	$scope.jph=20;
+	
+	$scope.range = function(start, end){
+		var r = [];
+		if( ! end){
+			end = start; start = 0;
+		}
+		for(var i = start; i< end; i++) r.push(i);
+		return r;
+	};
+	
+	$scope.setPagefl = function(){
+		$scope.cpagefl = this.n;
+		$scope.loadData();
+	};
+	$scope.prevPagefl = function(){
+		if($scope.cpagefl > 0 )
+			$scope.cpagefl--;
+		$scope.loadData();
+	};
+	$scope.nextPagefl = function(){
+		if($scope.cpagefl < $scope.numpagefl -1)
+			$scope.cpagefl;
+		$scope.loadData();
+	};		
+	
 });
 
 

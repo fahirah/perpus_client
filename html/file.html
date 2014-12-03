@@ -1,9 +1,9 @@
 <h3 class="text-center" data-ng-hide="editing">DATA FILE</h3>
 <form class="form form-horizontal">
 	<div class="form-group">
-		<div class="col-md-3 col-md-offset-4"><input type="text" name="search"></div>
+		<div class="col-md-3 col-md-offset-4"><input type="text" name="search" data-ng-model="search.kata"></div>
 		<div class="col-md-3">
-			<select class="form-control" name="jenis">
+			<select class="form-control" name="jenis" data-ng-model="search.jenis">
 				<option value="">--Pilih--</option>
 				<option value="judul">Judul</option>
 				<option value="pengarang">Pengarang</option>
@@ -11,7 +11,7 @@
 			</select>
 		</div>
 		<div class="col-md-2">
-			<button type="text" class="btn btn-primary btn-md"><i class="fa fa-search"></i>  cari</button>
+			<button type="text" class="btn btn-primary btn-md" data-ng-click="loadData()"><i class="fa fa-search"></i>  cari</button>
 		</div>
 	</div>
 </form><br/>
@@ -19,7 +19,6 @@
 	<thead>
 		<tr>
 			<th>NO.</th>
-			<th>KODE FILE</th>
 			<th>JUDUL</th>
 			<th>PENGARANG</th>
 			<th>MACAM</th>
@@ -33,7 +32,6 @@
 	<tbody>
 		<tr data-ng-repeat="c in db">
 			<td>{{$index+1}}</td>
-			<td>{{c.kode}}</td>
 			<td>{{c.judul}}</td>
 			<td>{{c.pengarang}}</td> 
 			<td>{{c.macam}}</td>
