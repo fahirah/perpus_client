@@ -33,7 +33,15 @@ config(function($routeProvider, $httpProvider) {
 	})
 	.when('/admin/buku', { 
 		templateUrl: 'html/admin/buku.html', 
-		controller: 'PetugasCtrl' 
+		controller: 'BukuPetugasCtrl' 
+	})
+	.when('/admin/file', { 
+		templateUrl: 'html/admin/file.html', 
+		controller: 'FilePetugasCtrl' 
+	})
+	.when('/admin/peminjaman', { 
+		templateUrl: 'html/admin/peminjaman.html', 
+		controller: 'PeminjamanPetugasCtrl' 
 	})
 	.otherwise({ redirectTo: '/' });
 	

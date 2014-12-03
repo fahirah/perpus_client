@@ -29,13 +29,23 @@ app.controller('MainCtrl', function($scope, $cookies, $location) {
 /*buku controller */
 app.controller('BukuCtrl', function($scope, $http){
 	//load data buku
+	$scope.cpagebk = 0;
+	$scope.numpagebk = 0;
+	$scope.search={
+		kata:'',jenis:''
+	};
 	$scope.db=[];
 	$scope.loadData=function(){
 		$http({
-			url: $scope.server+'/buku', method:'GET'
+			url: $scope.server+'/buku?cpagebk='+$scope.cpagebk+'&kata='+$scope.search.kata+'&jenis='+$scope.search.jenis, method:'GET'
 		}).
 		success(function(d){
-			$scope.db=d;
+			$scope.db=d.data;
+			$scope.numpagebk=d.numpagebk;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Data yang anda cari tidak ditemukan');
 		});
 	};
 	$scope.loadData(); //panggil fungsi
@@ -48,6 +58,32 @@ app.controller('BukuCtrl', function($scope, $http){
 		kata:'', jenis:''
 	}
 	
+	//pagination buku
+	$scope.jph=20;
+	
+	$scope.range = function(start, end){
+		var r = [];
+		if( ! end){
+			end = start; start = 0;
+		}
+		for(var i = start; i< end; i++) r.push(i);
+		return r;
+	};
+	
+	$scope.setPagebk = function(){
+		$scope.cpagebk = this.n;
+		$scope.loadData();
+	};
+	$scope.prevPagebk = function(){
+		if($scope.cpagebk > 0 )
+			$scope.cpagebk--;
+		$scope.loadData();
+	};
+	$scope.nextPagebk = function(){
+		if($scope.cpagebk < $scope.numpagebk -1)
+			$scope.cpagebk;
+		$scope.loadData();
+	};	
 });
 
 /*file controller */

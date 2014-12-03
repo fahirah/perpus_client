@@ -11,7 +11,7 @@
 			</select>
 		</div>
 		<div class="col-md-2">
-			<button type="text" class="btn btn-primary btn-md"><i class="fa fa-search"></i>  cari</button>
+			<button type="text" class="btn btn-primary btn-md"data-ng-click="loadData()"><i class="fa fa-search"></i>  cari</button>
 		</div>
 	</div>
 </form><br/>
@@ -43,3 +43,8 @@
 		</tr>
 	</tbody>
 </table>
+<ul class="pagination pagination-sm" data-ng-show=" db.length > 0">
+	<li data-ng-class="{ disabled: cpagebk == 0 }"><a href="" data-ng-click="prevPagebk()">&laquo;</a></li>
+	<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
+	<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
+</ul>

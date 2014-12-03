@@ -12,6 +12,13 @@ app.directive('tooltips', function() {
 	}
 });
 
+//Input file
+app.directive('inputFile',function(){
+	return function($scope,elm){
+		elm.on('change', function(e) { $scope.file = e.target.files[0]; });
+	};
+});
+
 /**
  * Popover
  */

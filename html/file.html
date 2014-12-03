@@ -45,3 +45,8 @@
 		</tr>
 	</tbody>
 </table>
+<ul class="pagination pagination-sm" data-ng-show=" db.length > 0">
+	<li data-ng-class="{ disabled: cpagefl == 0 }"><a href="" data-ng-click="prevPagefl()">&laquo;</a></li>
+	<li data-ng-repeat="n in range(numpagefl)" data-ng-class="{ active: n == cpagefl }"><a href="" data-ng-click="setPagefl()" data-ng-bind="n+1">1</a></li>
+	<li data-ng-class="{ disabled: cpagefl == numpagefl - 1 }"><a href="" data-ng-click="nextPagefl()">&raquo;</a></li>
+</ul>

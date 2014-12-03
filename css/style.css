@@ -365,7 +365,7 @@ li p, .art-postcontent li p, .art-blockcontent li p
   top: 73px;
   left: 81.43%;
   line-height: 100%;
-  margin-left: -421px !important;
+  margin-left: -470px !important;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
@@ -416,7 +416,7 @@ font-size: 36px;
 font-family: 'Century Gothic', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
 font-weight: normal;
 font-style: normal;
-  padding: 0;
+  padding: 0px 8px;
   margin: 0;
   color: #81570E !important;
 }
@@ -451,7 +451,7 @@ font-style: normal;
    margin:0 auto;
    height: 250px;
    background-image: url('../img/object1225140276.png'), url('../img/header.jpg');
-   background-position: 10px 38px, 0 0;
+   background-position: 50px 30px, 0 0;
    background-repeat: no-repeat,repeat;
    position: relative;
    z-index: auto !important;
@@ -1098,7 +1098,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
 {
    width: 100%;
-   padding: 8px 3px;
+   padding: 8px;
    color: #515129 !important;
    font-size: 13px;
    font-family: 'Century Gothic', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;

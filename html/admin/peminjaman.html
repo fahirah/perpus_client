@@ -1,0 +1,88 @@
+			<div class="well">
+				<h3 class="text-center" data-ng-hide="editing">
+					DATA PEMINJAMAN
+					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Peminjaman</button>
+				</h3>
+				<h3 class="text-center" data-ng-show="editing">
+					TAMBAH / EDIT Peminjaman
+					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
+				</h3><br/><br/>
+				
+				<form class="form form-horizontal" data-ng-hide="editing">
+				<div class="form-group">
+					<div class="col-md-2"><input type="text" name="search" placeholder="" data-ng-model="kata"></div>
+					<div class="col-md-2">
+						<button type="text" class="btn btn-primary btn-md" data-ng-click="loadData()"><i class="fa fa-search"></i>  cari</button>
+					</div>
+				</div>
+				</form>
+				<hr>
+				
+				<form class="form form-horizontal" data-ng-show="editing">
+					<div class="form-group">
+						<label for="nama" class="col-md-2 col-md-offset-2">Kode Anggota</label>
+						<div class="col-md-3">
+							<input type="text" name="kdanggota" data-ng-model="pjm.anggota" placeholder="kode anggota" class="form-control tooltips" title="Masukkan kode anggota">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="identitas" class="col-md-2 col-md-offset-2">Kode Buku</label>
+						<div class="col-md-3">
+							<input type="text" name="kdbuku" data-ng-model="pjm.buku" placeholder="kode buku" class="form-control tooltips" title="Masukkan kode buku">
+						</div>
+						<div class="col-md-3">
+							<button class="btn btn-primary btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" data-ng-click="tambahPinjam()">SIMPAN</button>
+						</div>
+					</div>
+					
+					<table class="table table-bordered table-striped table-hover" data-ng-show="editing">
+					<thead>
+						<tr>
+							<th>NO.</th>
+							<th>KODE BUKU</th>
+							<th>JUDUL BUKU</th>
+							<th>TGL PINJAM</th>
+							<th>TGL KEMBALI</th>
+							<th>BATAL</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="c in dataPinjam">
+							<td>{{$index+1}}</td>
+							<td>{{c.kode}}</td>
+							<td>{{c.judul}}</td>
+							<td>{{c.tgl_pinjam}}</td>
+							<td>{{c.tgl_kembali}}</td>							
+							<td><a href="" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>							
+						</tr>
+					</tbody>
+				</table>
+				<div class="form-group">
+					<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-pjm>SIMPAN</button> </div>
+				</div>
+				</form>
+				
+				<table class="table table-bordered table-striped table-hover" data-ng-hide="editing">
+					<thead>
+						<tr>
+							<th>NO.</th>
+							<th>KODE PEMINJAMAN</th>
+							<th>KODE ANGGOTA</th>
+							<th>AKSI</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="c in dbPjm">
+							<td>{{(jph*cpagepjm)+$index+1}}</td>
+							<td>{{c.kode}}</td>				
+							<td>{{c.idang}}</td>	
+							<td><a href="" data-ng-click="" class="btn btn-sm"><i class="fa fa-edit"></i></a><a href="" hapus-file="{{c.id}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbPjm.length > 0">
+					<li data-ng-class="{ disabled: cpagepjm == 0 }"><a href="" data-ng-click="prevPagepjm()">&laquo;</a></li>
+					<li data-ng-repeat="n in range(numpagepjm)" data-ng-class="{ active: n == cpagepjm }"><a href="" data-ng-click="setPagepjm()" data-ng-bind="n+1">1</a></li>
+					<li data-ng-class="{ disabled: cpagepjm == numpagepjm - 1 }"><a href="" data-ng-click="nextPagepjm()">&raquo;</a></li>
+				</ul>
+			</div>

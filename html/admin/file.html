@@ -1,59 +1,118 @@
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<form class="form form-horizontal">
-				<div class="form-group">
-					<label for="nama" class="col-md-3">Nama File</label>
-					<div class="col-md-3"><input type="file" name="nama" id="nama"></div>
-				</div>
-				<div class="form-group">
-					<label for="judul" class="col-md-3">Judul</label>
-					<div class="col-md-3"><input type="text" name="judul" placeholder="judul" id="judul"></div>
-				</div>
-				<div class="form-group">
-					<label for="pgrg" class="col-md-3">Pengarang</label>
-					<div class="col-md-3"><input type="text" name="pengarang" placeholder="pengarang" id="pgrg"></div>
-				</div>
-				<div class="form-group">
-					<label for="mcm" class="col-md-3">Macam</label>
-					<div class="col-md-3">
-						<select class="form-control" name="macam" id="mcm">
-							<option value="">--Pilih Macam Buku--</option>
-							<option value="U">U</option>
-							<option value="R">R</option>
-							<option value="LL">LL</option>
-						</select>
+			<div class="well">
+				<h1>{{user.id}}</h1>
+				<h3 class="text-center" data-ng-hide="editing">
+					DATA FILE
+					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah File</button>
+				</h3>
+				<h3 class="text-center" data-ng-show="editing">
+					TAMBAH / EDIT FILE
+					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
+				</h3><br/><br/>
+				
+				<form class="form form-horizontal" data-ng-hide="editing">
+					<div class="form-group">
+						<div class="col-md-2"><input type="text" name="search" data-ng-model="search.kata"></div>
+						<div class="col-md-2">
+							<select class="form-control" name="jenis" data-ng-model="search.jenis">
+								<option value="">--Pilih--</option>
+								<option value="judul">Judul</option>
+								<option value="pengarang">Pengarang</option>
+								<option value="penerbit">Penerbit</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<button type="text" class="btn btn-primary btn-md" data-ng-click="loadDataFile()"><i class="fa fa-search"></i>  cari</button>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="bhs" class="col-md-3">Bahasa</label>
-					<div class="col-md-3">
-						<select class="form-control" name="bahasa" id="bhs">
-							<option value="">--Pilih Bahasa Buku--</option>
-							<option value="Indonesia">Indonesia</option>
-							<option value="Inggris">Inggris</option>
-							<option value="LL">LL</option>
-						</select>
+				</form>
+				<hr>
+				
+				<form class="form form-horizontal" data-ng-show="editing">
+					<div class="form-group">
+						<label for="nama" class="col-md-3 col-md-offset-2">Nama File</label>
+						<div class="col-md-3">
+							<input type="text" name="namalm" class="form-control tooltips" data-ng-model="berkas.nama" readonly>
+							<input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="pnrbt" class="col-md-3">Penerbit</label>
-					<div class="col-md-3"><input type="text" name="penerbit" placeholder="penerbit" id="pnrbt"></div>
-				</div>
-				<div class="form-group">
-					<label for="thn" class="col-md-3">Tahun Terbit</label>
-					<div class="col-md-3"><input type="text" name="tahun" placeholder="tahun terbit" id="thn"></div>
-				</div>		
-				<div class="form-group">
-					<label for="ringkasan" class="col-md-3">Ringkasan</label>
-					<div class="col-md-3"><textarea class="form-control" name="ringkasan" rows="1" id="ringkasan"></textarea></div>
-				</div>			
-				<div class="form-group">
-					<div class="col-md-5 col-md-offset-3">
-						<button type="text" class="btn btn-primary btn-lg">SIMPAN</button>
-						<button type="reset" class="btn btn-default btn-lg">BATAL</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+					<div class="form-group">
+						<label for="judul" class="col-md-3 col-md-offset-2">Judul</label>
+						<div class="col-md-3"><input type="text" name="judul" data-ng-model="berkas.judul" placeholder="Judul File" id="judul" class="form-control tooltips" title="Masukkan judul file"></div>
+					</div>
+					<div class="form-group">
+						<label for="pengarang" class="col-md-3 col-md-offset-2">Pengarang</label>
+						<div class="col-md-4"><input type="text" name="pengarang" data-ng-model="berkas.pengarang"  placeholder="pengarang" id="pengarang" class="form-control tooltips" title="Masukkan pengarang"></div>
+					</div>
+					<div class="form-group">
+						<label for="macam" class="col-md-3 col-md-offset-2">Macam</label>
+						<div class="col-md-3">
+							<select class="form-control" name="macam" id="macam" data-ng-model="berkas.macam">
+								<option value="">--Pilih Macam Buku--</option>
+								<option value="U">U</option>
+								<option value="R">R</option>
+								<option value="LL">LL</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="bhs" class="col-md-3 col-md-offset-2">Bahasa</label>
+						<div class="col-md-3">
+							<select class="form-control" name="bahasa" id="bhs" data-ng-model="berkas.bahasa">
+								<option value="">--Pilih Bahasa Buku--</option>
+								<option value="Indonesia">Indonesia</option>
+								<option value="Inggris">Inggris</option>
+								<option value="LL">LL</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="nama" class="col-md-3 col-md-offset-2">Penerbit</label>
+						<div class="col-md-3"><input type="text" name="nama" data-ng-model="berkas.penerbit" placeholder="Penerbit" class="form-control tooltips" title="Masukkan penerbit"></div>
+					</div>
+					<div class="form-group">
+						<label for="thn" class="col-md-3 col-md-offset-2">Tahun Terbit</label>
+						<div class="col-md-2"><input type="text" name="tahun" data-ng-model="berkas.tahun"  placeholder="tahun terbit" id="thn" class="form-control tooltips" title="Masukkan tahun terbit" number-input></div>
+					</div>
+					<div class="form-group">
+						<label for="ringkasan" class="col-md-3 col-md-offset-2">Ringkasan</label>
+						<div class="col-md-4"><textarea name="ringkasan" data-ng-model="berkas.ringkasan" class="form-control tooltips" title="Masukkan ringkasan" cols="50" rows="4"></textarea></div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-file>SIMPAN</button> </div>
+					</div>
+				</form>
+				
+				<table class="table table-bordered table-striped table-hover" data-ng-hide="editing">
+					<thead>
+						<tr>
+							<th>NO.</th>
+							<th>JUDUL</th>
+							<th>PENGARANG</th>
+							<th>MACAM</th>
+							<th>BAHASA</th>
+							<th>PENERBIT</th>
+							<th>TAHUN TERBIT</th>
+							<th>RINGKASAN</th>
+							<th>AKSI</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="c in dbFile">
+							<td>{{(jph*cpagefl)+$index+1}}</td>
+							<td>{{c.judul}}</td>
+							<td>{{c.pengarang}}</td>
+							<td>{{c.macam}}</td>
+							<td>{{c.bahasa}}</td>
+							<td>{{c.penerbit}}</td>
+							<td>{{c.tahun}}</td>
+							<td>{{c.ringkasan}}</td>
+							<td><a href="" data-ng-click="setEdit($index)" class="btn btn-sm"><i class="fa fa-edit"></i></a><a href="" hapus-file="{{c.id}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbBuku.length > 0">
+					<li data-ng-class="{ disabled: cpagebk == 0 }"><a href="" data-ng-click="prevPagebk()">&laquo;</a></li>
+					<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
+					<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
+				</ul>
+			</div>
