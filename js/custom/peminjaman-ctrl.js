@@ -67,6 +67,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	$scope.editing = false;
 	$scope.batal = function(){
 		$scope.editing = false;
+		$scope.detail=false;
 		$scope.resetPjm();
 	};
 	
@@ -77,7 +78,21 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			url: $scope.server+'/detailpjm/'+i, method:'GET'
 		}).
 		success(function(d){
-			$scope.dataDetail.push(d);
+			$scope.dataDetail=d.data;
+			$scope.kode_pinjam=d.kode_pinjam;
+			$scope.id_anggota=d.id_anggota;
+			$scope.nama_anggota=d.nama_anggota;
+		});
+	}
+	
+	$scope.perpanjangPjm = function(i,j) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/perpanjangpjm/'+i+'/'+j, method:'GET'
+		}).
+		success(function(d){
+			alertify.success('Perpanjangan buku berhasil disimpan');
+			$scope.detail = false;
 		});
 	}
 	

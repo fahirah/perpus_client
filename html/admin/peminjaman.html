@@ -1,14 +1,15 @@
 			<div class="well">
 				<h3 class="text-center" data-ng-hide="editing">
-					DATA PEMINJAMAN
-					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Peminjaman</button>
+					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()" data-ng-show="detail"><i class="fa fa-mail-reply"></i> Batalkan</button> &nbsp;
+					DATA PEMINJAMAN DAN DETAIL PEMINJAMAN &nbsp;
+					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Peminjaman</button> &nbsp;
 				</h3>
 				<h3 class="text-center" data-ng-show="editing">
 					TAMBAH / EDIT Peminjaman
 					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
 				</h3><br/><br/>
 				
-				<form class="form form-horizontal" data-ng-hide="editing">
+				<form class="form form-horizontal" data-ng-show=" ! editing && ! detail">
 				<div class="form-group">
 					<div class="col-md-2"><input type="text" name="search" placeholder="" data-ng-model="kata"></div>
 					<div class="col-md-2">
@@ -20,7 +21,7 @@
 				
 				<form class="form form-horizontal" data-ng-show="editing">
 					<div class="form-group">
-						<label for="nama" class="col-md-2 col-md-offset-2">Kode Anggota</label>
+						<label for="nama" class="col-md-2 col-md-offset-2">Id Anggota</label>
 						<div class="col-md-3">
 							<input type="text" name="kdanggota" data-ng-model="pjm.anggota" placeholder="kode anggota" class="form-control tooltips" title="Masukkan kode anggota" data-ng-disabled="dataPinjam.length>0">
 						</div>
@@ -61,60 +62,70 @@
 					<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin' ></i> LOADING" data-ng-show="dataPinjam.length>0" simpan-pjm>SIMPAN</button> </div>
 				</div>
 				</form>
+				<div data-ng-show=" ! editing && ! detail">
+					<table class="table table-bordered table-striped table-hover">
+						<thead>
+							<tr>
+								<th>NO.</th>
+								<th>KODE PEMINJAMAN</th>
+								<th>ID ANGGOTA</th>
+								<th>AKSI</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="c in dbPjm">
+								<td>{{(jph*cpagepjm)+$index+1}}</td>
+								<td>{{c.kode}}</td>				
+								<td>{{c.idang}}</td>	
+								<td>
+									<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm"><i class="fa fa-th-list"></i></a>
+									<a href="" data-ng-click="" class="btn btn-sm"><i class="fa fa-edit"></i></a>
+									<a href="" hapus-pjm="{{c.kode}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbPjm.length > 0" data-ng-hide="editing">
+						<li data-ng-class="{ disabled: cpagepjm == 0 }"><a href="" data-ng-click="prevPagepjm()">&laquo;</a></li>
+						<li data-ng-repeat="n in range(numpagepjm)" data-ng-class="{ active: n == cpagepjm }"><a href="" data-ng-click="setPagepjm()" data-ng-bind="n+1">1</a></li>
+						<li data-ng-class="{ disabled: cpagepjm == numpagepjm - 1 }"><a href="" data-ng-click="nextPagepjm()">&raquo;</a></li>
+					</ul>
+				</div>
 				
-				<table class="table table-bordered table-striped table-hover" data-ng-hide="editing">
-					<thead>
-						<tr>
-							<th>NO.</th>
-							<th>KODE PEMINJAMAN</th>
-							<th>KODE ANGGOTA</th>
-							<th>AKSI</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr data-ng-repeat="c in dbPjm">
-							<td>{{(jph*cpagepjm)+$index+1}}</td>
-							<td>{{c.kode}}</td>				
-							<td>{{c.idang}}</td>	
-							<td>
-								<a href="" data-ng-click="tampilDetail(c.kode)"" class="btn btn-sm"><i class="fa fa-th-list"></i></a>
-								<a href="" data-ng-click="" class="btn btn-sm"><i class="fa fa-edit"></i></a>
-								<a href="" hapus-file="{{c.id}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbPjm.length > 0" data-ng-hide="editing">
-					<li data-ng-class="{ disabled: cpagepjm == 0 }"><a href="" data-ng-click="prevPagepjm()">&laquo;</a></li>
-					<li data-ng-repeat="n in range(numpagepjm)" data-ng-class="{ active: n == cpagepjm }"><a href="" data-ng-click="setPagepjm()" data-ng-bind="n+1">1</a></li>
-					<li data-ng-class="{ disabled: cpagepjm == numpagepjm - 1 }"><a href="" data-ng-click="nextPagepjm()">&raquo;</a></li>
-				</ul>
-				
-				<table class="table table-bordered table-striped table-hover" data-ng-show="detail">
-					<thead>
-						<tr>
-							<th>NO.</th>
-							<th>ID BUKU</th>
-							<th>JUDUL BUKU</th>
-							<th>TGL PINJAM</th>
-							<th>TGL KEMBALI</th>
-							<th>TGL PENGEMBALIAN</th>
-							<th>DENDA</th>
-							<th>AKSI</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr data-ng-repeat="c in dataDetail">
-							<td>{{$index+1}}</td>
-							<td>{{c.id_buku}}</td>				
-							<td>{{}}</td>	
-							<td>{{c.tgl_pinjam}}</td>	
-							<td>{{c.tgl_kembali}}</td>	
-							<td>{{c.tgl_pengembalian}}</td>	
-							<td>{{c.denda}}</td>	
-							<td>&nbsp;</td>
-						</tr>
-					</tbody>
-				</table>
+				<div data-ng-show="detail && ! editing">
+					<div class="col-md-8">
+						<table class="table">
+							<tr><td>KODE PEMINJAMAN</td><td>:</td><td width="60%">{{kode_pinjam}}</td></tr>
+							<tr><td>ID ANGGOTA</td><td>:</td><td>{{id_anggota}}</td></tr>
+							<tr><td>NAMA ANGGOTA</td><td>:</td><td>{{nama_anggota}}</td></tr>
+						</table>
+					</div><br/><br/>
+					<table class="table table-bordered table-striped table-hover">
+						<thead>
+							<tr>
+								<th>NO.</th>
+								<th>KODE BUKU</th>
+								<th>JUDUL BUKU</th>
+								<th>TGL PINJAM</th>
+								<th>TGL KEMBALI</th>
+								<th>TGL PENGEMBALIAN</th>
+								<th>DENDA</th>
+								<th>AKSI</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="c in dataDetail">
+								<td>{{$index+1}}</td>
+								<td>{{c.kd_buku}}</td>				
+								<td>{{c.judul}}</td>	
+								<td>{{c.tgl_pinjam}}</td>	
+								<td>{{c.tgl_kembali}}</td>	
+								<td>{{c.tgl_pengembalian}}</td>	
+								<td>{{c.denda}}</td>	
+								<td><a href="" data-ng-click="perpanjangPjm(kode_pinjam, c.id_buku)" class="btn btn-sm"><i class="fa fa-share-square-o"></i></a><a href="" data-ng-click="" class="btn btn-sm"><i class="fa fa-times"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				
 			</div>
