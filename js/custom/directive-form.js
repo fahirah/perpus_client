@@ -102,6 +102,8 @@ app.directive('simpanFile', function(){
 			if($scope.berkas.ringkasan.length < 5) return alertify.error('Ringkasan file tidak boleh kosong');
 						
 			//fd.append("file", e.target.files[0]);
+			fd.append("status", $scope.user.status);
+			fd.append("id_user", $scope.user.id);
 			fd.append('file', $scope.file);
 			fd.append('id', $scope.berkas.id);
 			fd.append("judul", $scope.berkas.judul);
@@ -141,6 +143,30 @@ app.directive('hapusFile', ['$http', function($http) {
 					});
 				}
 			});
+		});
+	}
+}]);
+
+/* simpan peminjaman */
+app.directive('simpanPjm', ['$http', function($http) {
+	return function($scope, elm) {
+		elm.click(function(e) {
+			//validasi
+			if($scope.dataPinjam.length == 0) return alertify.error('Tidak ada data peminjaman');
+			var data = { buku: [], anggota: $scope.pjm.anggota, idp: $scope.user.id }; // variabel sementara
+			for (var i = 0; i < $scope.dataPinjam.length; i++) // cacah array buku
+				data.buku.push($scope.dataPinjam[i].id); // ambil id nya
+			
+			elm.button('loading');
+			$http({ url:$scope.server + '/admin/peminjaman', method: 'POST', data: data }).
+			success(function(d){
+				elm.button('reset');
+				$scope.resetPjm();
+				alertify.success('Data peminjaman berhasil disimpan');
+				$scope.loadDataPjm();
+				
+			}).
+			error(function(e, s, h) { elm.button('reset'); });
 		});
 	}
 }]);

@@ -26,12 +26,6 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	};
 	$scope.loadDataPjm(); //panggil fungsi
 	
-	$scope.editing = false;
-	$scope.batal = function(){
-		$scope.editing = false;
-		$scope.resetPjm();
-	};
-	
 	$scope.setEdit=function(i){
 		$scope.pjm=$scope.dbPjm[i];
 		$scope.editing = true;
@@ -50,6 +44,40 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			//kalau error
 			alertify.error('Kode buku yang anda cari tidak ditemukan atau stok buku kosong');
 			$scope.pjm.buku='';
+		});
+	}
+	
+	function removeByIndex(arr, index) {
+		arr.splice(index, 1);
+	}
+
+	$scope.setHapus=function(i){
+		removeByIndex($scope.dataPinjam, i);
+	}
+	
+	$scope.resetPjm= function(){
+		$scope.pjm={
+			anggota:'', buku:'',
+		};
+		$scope.dataPinjam=[];
+	};	
+	$scope.resetPjm();
+	
+	$scope.detail = false;
+	$scope.editing = false;
+	$scope.batal = function(){
+		$scope.editing = false;
+		$scope.resetPjm();
+	};
+	
+	$scope.dataDetail = [];
+	$scope.tampilDetail = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailpjm/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail.push(d);
 		});
 	}
 	

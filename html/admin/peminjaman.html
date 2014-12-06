@@ -22,13 +22,13 @@
 					<div class="form-group">
 						<label for="nama" class="col-md-2 col-md-offset-2">Kode Anggota</label>
 						<div class="col-md-3">
-							<input type="text" name="kdanggota" data-ng-model="pjm.anggota" placeholder="kode anggota" class="form-control tooltips" title="Masukkan kode anggota">
+							<input type="text" name="kdanggota" data-ng-model="pjm.anggota" placeholder="kode anggota" class="form-control tooltips" title="Masukkan kode anggota" data-ng-disabled="dataPinjam.length>0">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="identitas" class="col-md-2 col-md-offset-2">Kode Buku</label>
 						<div class="col-md-3">
-							<input type="text" name="kdbuku" data-ng-model="pjm.buku" placeholder="kode buku" class="form-control tooltips" title="Masukkan kode buku">
+							<input type="text" name="kdbuku" data-ng-model="pjm.buku" placeholder="kode buku" class="form-control tooltips" title="Masukkan kode buku" data-ng-disabled="dataPinjam.length>2">
 						</div>
 						<div class="col-md-3">
 							<button class="btn btn-primary btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" data-ng-click="tambahPinjam()">SIMPAN</button>
@@ -53,12 +53,12 @@
 							<td>{{c.judul}}</td>
 							<td>{{c.tgl_pinjam}}</td>
 							<td>{{c.tgl_kembali}}</td>							
-							<td><a href="" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>							
+							<td><a href="" data-ng-click="setHapus($index)" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>							
 						</tr>
 					</tbody>
 				</table>
 				<div class="form-group">
-					<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-pjm>SIMPAN</button> </div>
+					<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin' ></i> LOADING" data-ng-show="dataPinjam.length>0" simpan-pjm>SIMPAN</button> </div>
 				</div>
 				</form>
 				
@@ -76,13 +76,45 @@
 							<td>{{(jph*cpagepjm)+$index+1}}</td>
 							<td>{{c.kode}}</td>				
 							<td>{{c.idang}}</td>	
-							<td><a href="" data-ng-click="" class="btn btn-sm"><i class="fa fa-edit"></i></a><a href="" hapus-file="{{c.id}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>
+							<td>
+								<a href="" data-ng-click="tampilDetail(c.kode)"" class="btn btn-sm"><i class="fa fa-th-list"></i></a>
+								<a href="" data-ng-click="" class="btn btn-sm"><i class="fa fa-edit"></i></a>
+								<a href="" hapus-file="{{c.id}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
-				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbPjm.length > 0">
+				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbPjm.length > 0" data-ng-hide="editing">
 					<li data-ng-class="{ disabled: cpagepjm == 0 }"><a href="" data-ng-click="prevPagepjm()">&laquo;</a></li>
 					<li data-ng-repeat="n in range(numpagepjm)" data-ng-class="{ active: n == cpagepjm }"><a href="" data-ng-click="setPagepjm()" data-ng-bind="n+1">1</a></li>
 					<li data-ng-class="{ disabled: cpagepjm == numpagepjm - 1 }"><a href="" data-ng-click="nextPagepjm()">&raquo;</a></li>
 				</ul>
+				
+				<table class="table table-bordered table-striped table-hover" data-ng-show="detail">
+					<thead>
+						<tr>
+							<th>NO.</th>
+							<th>ID BUKU</th>
+							<th>JUDUL BUKU</th>
+							<th>TGL PINJAM</th>
+							<th>TGL KEMBALI</th>
+							<th>TGL PENGEMBALIAN</th>
+							<th>DENDA</th>
+							<th>AKSI</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="c in dataDetail">
+							<td>{{$index+1}}</td>
+							<td>{{c.id_buku}}</td>				
+							<td>{{}}</td>	
+							<td>{{c.tgl_pinjam}}</td>	
+							<td>{{c.tgl_kembali}}</td>	
+							<td>{{c.tgl_pengembalian}}</td>	
+							<td>{{c.denda}}</td>	
+							<td>&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				
 			</div>
