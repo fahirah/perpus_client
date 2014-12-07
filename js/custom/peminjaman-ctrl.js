@@ -26,10 +26,10 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	};
 	$scope.loadDataPjm(); //panggil fungsi
 	
-	$scope.setEdit=function(i){
+	/*$scope.setEdit=function(i){
 		$scope.pjm=$scope.dbPjm[i];
 		$scope.editing = true;
-	}
+	}*/
 	
 	$scope.dataPinjam = [];
 	$scope.tambahPinjam=function(){
@@ -95,6 +95,19 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			$scope.detail = false;
 		});
 	}
+	
+	$scope.kembaliPjm = function(i,j) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/kembalipjm/'+i+'/'+j, method:'GET'
+		}).
+		success(function(d){
+			alertify.success('Buku dikembalikan berhasil disimpan');
+			$scope.detail= false;
+			//$scope.tampilDetail(i);
+		});
+	}
+
 	
 	//pagination file
 	$scope.jph=20;

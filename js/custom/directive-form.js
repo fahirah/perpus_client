@@ -115,13 +115,21 @@ app.directive('simpanFile', function(){
 			fd.append("ringkasan", $scope.berkas.ringkasan);
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open('post', $scope.server +'/admin/file', true);
+			if(status==2){
+				xhr.open('post', $scope.server +'/admin/file', true);
+			}else{
+				xhr.open('post', $scope.server +'/file', true);
+			}
 			xhr.onload = function(){
 				var r = this.responseText;
 				if(r == '500') return alertify.error('Data gagal diproses dan disimpan!');
 				alertify.success('Data berhasil diproses dan disimpan');
 				$scope.batal();
-				$scope.loadDataFile();
+				if(status==2){
+					$scope.loadDataFile();
+				}else{
+					$scope.loadData();
+				}
 				//console.log(r);
 			};	
 			xhr.send(fd);
@@ -162,11 +170,28 @@ app.directive('simpanPjm', ['$http', function($http) {
 			success(function(d){
 				elm.button('reset');
 				$scope.resetPjm();
-				alertify.success('Data peminjaman berhasil disimpan');
 				$scope.loadDataPjm();
-				
+				alertify.success('Data peminjaman berhasil disimpan');				
 			}).
 			error(function(e, s, h) { elm.button('reset'); });
+		});
+	}
+}]);
+
+
+/*hapus peminjaman */
+app.directive('hapusPjm', ['$http', function($http) {
+	return function($scope, elm, attrs) {
+		elm.click(function(e) {
+			alertify.confirm('Yakin data ini akan dihapus?', function(e){
+				if(e){
+					$http({ url:$scope.server + '/admin/peminjaman/'+attrs.hapusPjm, method: 'DELETE' }).
+					success(function(d){
+						alertify.success('Data peminjaman berhasil dihapus');
+						$scope.loadDataPjm();
+					});
+				}
+			});
 		});
 	}
 }]);

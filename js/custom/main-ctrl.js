@@ -111,9 +111,26 @@ app.controller('FileCtrl', function($scope, $http){
 	};
 	$scope.loadData(); //panggil fungsi
 	
-	$scope.file = {
-		judul:'', pengarang:'', macam:'', bahasa:'', penerbit:'', tahun:'', ringkasan:'', tgl:''
+	$scope.file=null;
+	$scope.berkas = {};	
+	
+	$scope.resetBerkas= function(){
+		$scope.berkas={
+			id:'',nama:'', judul:'',pengarang:'', macam:'', bahasa:'', penerbit:'', tahun:'', ringkasan:'', tgl:''
+		};
+	};	
+	$scope.resetBerkas();
+
+	$scope.editing = false;
+	$scope.batal = function(){
+		$scope.editing = false;
+		$scope.resetBerkas();
 	};
+	
+	$scope.setEdit=function(i){
+		$scope.berkas=$scope.dbFile[i];
+		$scope.editing = true;
+	}
 	
 	//pagination file
 	$scope.jph=20;

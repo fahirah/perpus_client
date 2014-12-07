@@ -11,9 +11,9 @@
 				
 				<form class="form form-horizontal" data-ng-show=" ! editing && ! detail">
 				<div class="form-group">
-					<div class="col-md-2"><input type="text" name="search" placeholder="" data-ng-model="kata"></div>
+					<div class="col-md-2"><input type="text" name="search" placeholder="id anggota" data-ng-model="kata"></div>
 					<div class="col-md-2">
-						<button type="text" class="btn btn-primary btn-md" data-ng-click="loadData()"><i class="fa fa-search"></i>  cari</button>
+						<button type="text" class="btn btn-primary btn-md" data-ng-click="loadDataPjm()"><i class="fa fa-search"></i>  cari</button>
 					</div>
 				</div>
 				</form>
@@ -79,7 +79,6 @@
 								<td>{{c.idang}}</td>	
 								<td>
 									<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm"><i class="fa fa-th-list"></i></a>
-									<a href="" data-ng-click="" class="btn btn-sm"><i class="fa fa-edit"></i></a>
 									<a href="" hapus-pjm="{{c.kode}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a>
 								</td>
 							</tr>
@@ -122,7 +121,7 @@
 								<td>{{c.tgl_kembali}}</td>	
 								<td>{{c.tgl_pengembalian}}</td>	
 								<td>{{c.denda}}</td>	
-								<td><a href="" data-ng-click="perpanjangPjm(kode_pinjam, c.id_buku)" class="btn btn-sm"><i class="fa fa-share-square-o"></i></a><a href="" data-ng-click="" class="btn btn-sm"><i class="fa fa-times"></i></a></td>
+								<td><a href="" data-ng-click="perpanjangPjm(kode_pinjam, c.id_buku)" class="btn btn-sm"><i class="fa fa-share-square-o"></i></a><a href="" data-ng-click="kembaliPjm(kode_pinjam, c.id_buku)" class="btn btn-sm"><i class="fa fa-times"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
