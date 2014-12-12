@@ -20,12 +20,16 @@ config(function($routeProvider, $httpProvider) {
 		controller: 'FileCtrl' 
 	})
 	.when('/user/buku', { 
-		templateUrl: 'html/buku.html', 
-		controller: 'BukuCtrl' 
+		templateUrl: 'html/user/buku.html', 
+		controller: 'BukuAnggotaCtrl' 
 	})
 	.when('/user/file', { 
-		templateUrl: 'html/file.html', 
-		controller: 'FileCtrl' 
+		templateUrl: 'html/user/file.html', 
+		controller: 'FileAnggotaCtrl' 
+	})
+	.when('/user/peminjaman', { 
+		templateUrl: 'html/user/peminjaman.html', 
+		controller: 'PeminjamanAnggotaCtrl' 
 	})
 	.when('/admin/anggota', { 
 		templateUrl: 'html/admin/anggota.html', 
@@ -42,6 +46,10 @@ config(function($routeProvider, $httpProvider) {
 	.when('/admin/peminjaman', { 
 		templateUrl: 'html/admin/peminjaman.html', 
 		controller: 'PeminjamanPetugasCtrl' 
+	})
+	.when('/admin/pengaturan', { 
+		templateUrl: 'html/admin/pengaturan.html', 
+		controller: 'PengaturanPetugasCtrl' 
 	})
 	.otherwise({ redirectTo: '/' });
 	

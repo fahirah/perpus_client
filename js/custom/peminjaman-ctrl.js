@@ -34,18 +34,30 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	$scope.dataPinjam = [];
 	$scope.tambahPinjam=function(){
 		$http({
-			url: $scope.server+'/cekbuku/'+$scope.pjm.buku, method:'GET'
+			url: $scope.server+'/cekanggota/'+$scope.pjm.anggota, method:'GET'
 		}).
 		success(function(d){
-			$scope.dataPinjam.push(d);
-			$scope.pjm.buku='';
+			$http({
+				url: $scope.server+'/cekbuku/'+$scope.pjm.buku, method:'GET'
+			}).
+			success(function(d){
+				$scope.dataPinjam.push(d);
+				$scope.pjm.buku='';
+			}).
+			error(function(e, s, h){
+				//kalau error
+				alertify.error('Kode buku yang anda cari tidak ditemukan atau stok buku kosong');
+				$scope.pjm.buku='';
+			});
 		}).
 		error(function(e, s, h){
 			//kalau error
-			alertify.error('Kode buku yang anda cari tidak ditemukan atau stok buku kosong');
+			alertify.error('Id anggota yang anda cari tidak ditemukan atau jumlah peminjaman sudah maksimal');
+			$scope.pjm.anggota='';
 			$scope.pjm.buku='';
 		});
 	}
+	$scope.loadDataPjm();
 	
 	function removeByIndex(arr, index) {
 		arr.splice(index, 1);
@@ -60,6 +72,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			anggota:'', buku:'',
 		};
 		$scope.dataPinjam=[];
+		$scope.editing=false;
 	};	
 	$scope.resetPjm();
 	
@@ -121,7 +134,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 		return r;
 	};
 	
-	$scope.setPagpjm = function(){
+	$scope.setPagepjm = function(){
 		$scope.cpagepjm = this.n;
 		$scope.loadDataPjm();
 	};

@@ -1,5 +1,135 @@
-/*home untuk anggota controller */
-app.controller('AnggotaCtrl', function($scope, $http) {
+/*buku controller */
+app.controller('BukuAnggotaCtrl', function($scope, $http){
 	if ( ! $scope.checkUser()) $scope.disconnect();
+	//load data buku
+	$scope.cpagebk = 0;
+	$scope.numpagebk = 0;
+	$scope.search={
+		kata:'',jenis:''
+	};
+	$scope.db=[];
+	$scope.loadData=function(){
+		$http({
+			url: $scope.server+'/user/buku?cpagebk='+$scope.cpagebk+'&kata='+$scope.search.kata+'&jenis='+$scope.search.jenis, method:'GET'
+		}).
+		success(function(d){
+			$scope.db=d.data;
+			$scope.numpagebk=d.numpagebk;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Data yang anda cari tidak ditemukan');
+		});
+	};
+	$scope.loadData(); //panggil fungsi
+	
+	$scope.buku = {
+		judul:'', pengarang:'', stok:'', macam:'', bahasa:'', penerbit:'', tahun:''
+	};
+	
+	$scope.search={
+		kata:'', jenis:''
+	}
+	
+	//pagination buku
+	$scope.jph=20;
+	
+	$scope.range = function(start, end){
+		var r = [];
+		if( ! end){
+			end = start; start = 0;
+		}
+		for(var i = start; i< end; i++) r.push(i);
+		return r;
+	};
+	
+	$scope.setPagebk = function(){
+		$scope.cpagebk = this.n;
+		$scope.loadData();
+	};
+	$scope.prevPagebk = function(){
+		if($scope.cpagebk > 0 )
+			$scope.cpagebk--;
+		$scope.loadData();
+	};
+	$scope.nextPagebk = function(){
+		if($scope.cpagebk < $scope.numpagebk -1)
+			$scope.cpagebk;
+		$scope.loadData();
+	};	
+});
+
+/*file controller */
+app.controller('FileAnggotaCtrl', function($scope, $http){
+	//load data file
+	$scope.cpagefl = 0;
+	$scope.numpagefl = 0;
+	$scope.search={
+		kata:'',jenis:''
+	};
+	
+	$scope.db=[];
+	$scope.loadData=function(){
+		$http({
+			url: $scope.server+'/user/file?cpagefl='+$scope.cpagefl+'&kata='+$scope.search.kata+'&jenis='+$scope.search.jenis, method:'GET'
+		}).
+		success(function(d){
+			$scope.db=d.data;
+			$scope.numpagefl=d.numpagefl;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Data yang anda cari tidak ditemukan');
+		});
+	};
+	$scope.loadData(); //panggil fungsi
+	
+	$scope.file=null;
+	$scope.berkas = {};	
+	
+	$scope.resetBerkas= function(){
+		$scope.berkas={
+			id:'',nama:'', judul:'',pengarang:'', macam:'', bahasa:'', penerbit:'', tahun:'', ringkasan:'', tgl:''
+		};
+	};	
+	$scope.resetBerkas();
+
+	$scope.editing = false;
+	$scope.batal = function(){
+		$scope.editing = false;
+		$scope.resetBerkas();
+	};
+	
+	$scope.setEdit=function(i){
+		$scope.berkas=$scope.db[i];
+		$scope.editing = true;
+	}
+	
+	//pagination file
+	$scope.jph=20;
+	
+	$scope.range = function(start, end){
+		var r = [];
+		if( ! end){
+			end = start; start = 0;
+		}
+		for(var i = start; i< end; i++) r.push(i);
+		return r;
+	};
+	
+	$scope.setPagefl = function(){
+		$scope.cpagefl = this.n;
+		$scope.loadData();
+	};
+	$scope.prevPagefl = function(){
+		if($scope.cpagefl > 0 )
+			$scope.cpagefl--;
+		$scope.loadData();
+	};
+	$scope.nextPagefl = function(){
+		if($scope.cpagefl < $scope.numpagefl -1)
+			$scope.cpagefl;
+		$scope.loadData();
+	};		
 	
 });

@@ -1,7 +1,7 @@
 			<div class="well">
 				<h3 class="text-center" data-ng-hide="editing">
 					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()" data-ng-show="detail"><i class="fa fa-mail-reply"></i> Batalkan</button> &nbsp;
-					DATA PEMINJAMAN DAN DETAIL PEMINJAMAN &nbsp;
+					DATA PEMINJAMAN BUKU &nbsp;
 					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Peminjaman</button> &nbsp;
 				</h3>
 				<h3 class="text-center" data-ng-show="editing">
@@ -54,8 +54,11 @@
 							<td>{{c.judul}}</td>
 							<td>{{c.tgl_pinjam}}</td>
 							<td>{{c.tgl_kembali}}</td>							
-							<td><a href="" data-ng-click="setHapus($index)" class="btn btn-sm"><i class="fa fa-trash-o"></i></a></td>							
+							<td><a href="" data-ng-click="setHapus($index)" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>							
 						</tr>
+						<tr>
+							<td colspan="6" align=""> <i class="fa fa-trash-o"></i> : Hapus Data</td>
+							</tr>
 					</tbody>
 				</table>
 				<div class="form-group">
@@ -69,6 +72,7 @@
 								<th>NO.</th>
 								<th>KODE PEMINJAMAN</th>
 								<th>ID ANGGOTA</th>
+								<th>NAMA ANGGOTA</th>
 								<th>AKSI</th>
 							</tr>
 						</thead>
@@ -77,10 +81,14 @@
 								<td>{{(jph*cpagepjm)+$index+1}}</td>
 								<td>{{c.kode}}</td>				
 								<td>{{c.idang}}</td>	
+								<td>{{c.nmang}}</td>	
 								<td>
-									<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm"><i class="fa fa-th-list"></i></a>
-									<a href="" hapus-pjm="{{c.kode}}" class="btn btn-sm"><i class="fa fa-trash-o"></i></a>
+									<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
+									<a href="" hapus-pjm="{{c.kode}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
 								</td>
+							</tr>
+							<tr>
+								<td colspan="12" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
 							</tr>
 						</tbody>
 					</table>
@@ -121,8 +129,12 @@
 								<td>{{c.tgl_kembali}}</td>	
 								<td>{{c.tgl_pengembalian}}</td>	
 								<td>{{c.denda}}</td>	
-								<td><a href="" data-ng-click="perpanjangPjm(kode_pinjam, c.id_buku)" class="btn btn-sm"><i class="fa fa-share-square-o"></i></a><a href="" data-ng-click="kembaliPjm(kode_pinjam, c.id_buku)" class="btn btn-sm"><i class="fa fa-times"></i></a></td>
+								<td>
+									<a href="" data-ng-click="perpanjangPjm(kode_pinjam, c.id_buku)" data-ng-hide="c.tgl_pengembalian.length>1" class="btn btn-sm tooltips" title="perpanjang buku"><i class="fa fa-share-square-o"></i></a>
+									<a href="" data-ng-click="kembaliPjm(kode_pinjam, c.id_buku)" data-ng-hide="c.tgl_pengembalian.length>1" class="btn btn-sm tooltips" title="pengembalian buku"><i class="fa fa-times"></i></a>
+								</td>
 							</tr>
+							<tr><td colspan="8"><i class="fa fa-share-square-o"></i> : perpanjang buku pinjaman &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-times"></i> : pengembalian buku<td></tr>
 						</tbody>
 					</table>
 				</div>

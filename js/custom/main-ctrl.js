@@ -162,7 +162,6 @@ app.controller('FileCtrl', function($scope, $http){
 });
 
 
-
 /* login controller */
 app.controller('LoginCtrl', function($scope,$http,$location) {
 	$scope.login = {
@@ -191,3 +190,23 @@ app.controller('LoginCtrl', function($scope,$http,$location) {
 	};
 });
 
+/*file controller */
+app.controller('PeminjamanAnggotaCtrl', function($scope, $http){
+	//load data peminjaman
+	
+	$scope.dbPjm=[];
+	$scope.loadDataPjm=function(){
+		$http({
+			url: $scope.server+'/user/peminjaman/'+$scope.user.id, method:'GET'
+		}).
+		success(function(d){
+			$scope.dbPjm=d;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Anda tidak punya tanggungan pinjaman buku. . .');
+		});
+	};
+	$scope.loadDataPjm(); //panggil fungsi
+	
+});

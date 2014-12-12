@@ -35,12 +35,15 @@
 				
 				<li data-ng-show="user.status == 1"><a href="#/user/buku">Buku</a></li>
 				<li data-ng-show="user.status == 1"><a href="#/user/file">File</a></li>
+				<li data-ng-show="user.status == 1"><a href="#/user/peminjaman">Transaksi</a></li>
 				<li data-ng-show="user.status == 1"><a href="#/user/pengaturan">Pengaturan</a></li>
 				
 				<li data-ng-show="user.status == 2"><a href="#/admin/anggota">Anggota</a></li>
 				<li data-ng-show="user.status == 2"><a href="#/admin/buku">Buku</a></li>
 				<li data-ng-show="user.status == 2"><a href="#/admin/file">File</a></li>
-				<li data-ng-show="user.status == 2"><a href="#/admin/peminjaman">Peminjaman</a></li>
+				<li data-ng-show="user.status == 2"><a href="#/admin/peminjaman">Transaksi</a></li>
+				<li data-ng-show="user.status == 2"><a href="#/admin/laporan">Laporan</a></li>
+				<li data-ng-show="user.status == 2"><a href="#/admin/pengaturan">Pengaturan</a></li>
 				<li data-ng-hide="user.id == 0"><a href="" data-ng-click="disconnect()">Logout</a></li>
 			</ul> 
 		</nav>

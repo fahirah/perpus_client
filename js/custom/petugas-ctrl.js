@@ -4,14 +4,16 @@ app.controller('PetugasCtrl', function($scope, $http){
 	
 	$scope.cpage = 0;
 	$scope.numpage = 0;
-	$scope.kata='';
+	$scope.search={
+		kata:'',jenis:''
+	};
 	
 	
 	//load data anggota
 	$scope.db=[];
 	$scope.loadData=function(){
 		$http({
-			url: $scope.server+'/admin/anggota?cpage='+$scope.cpage +'&kata='+$scope.kata, method:'GET'
+			url: $scope.server+'/admin/anggota?cpage='+$scope.cpage +'&kata='+$scope.search.kata+'&jenis='+$scope.search.jenis, method:'GET'
 		}).
 		success(function(d){
 			$scope.db=d.data;
