@@ -104,8 +104,8 @@
 				<td>{{c.tgl}}</td>
 				<td>{{c.ringkasan}}</td>
 				<td data-ng-show="user.status==1">
-				<a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
-				<a href="" hapus-file="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
+				<a href="" data-ng-show="c.idp==user.id" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
+				<a href="" data-ng-show="c.idp==user.id" hapus-file="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
 				<a data-ng-href="{{server}}/download/{{c.kode}}/{{user.id}}" class="btn btn-sm tooltips" title="download"><i class="fa fa-download"></i></a></td>
 			</tr>
 			<tr>

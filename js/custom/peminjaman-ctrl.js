@@ -38,7 +38,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 		}).
 		success(function(d){
 			$http({
-				url: $scope.server+'/cekbuku/'+$scope.pjm.buku, method:'GET'
+				url: $scope.server+'/cekbuku/'+$scope.pjm.buku+'/'+$scope.pjm.anggota, method:'GET'
 			}).
 			success(function(d){
 				$scope.dataPinjam.push(d);
@@ -94,6 +94,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			$scope.dataDetail=d.data;
 			$scope.kode_pinjam=d.kode_pinjam;
 			$scope.id_anggota=d.id_anggota;
+			$scope.no_identitas=d.no_identitas;
 			$scope.nama_anggota=d.nama_anggota;
 		});
 	}

@@ -5,7 +5,7 @@ config(function($routeProvider, $httpProvider) {
 	$routeProvider
 	.when('/', { // halaman depan
 		templateUrl: 'html/home.html', 
-		controller: 'MainCtrl' 
+		controller: 'HomeCtrl' 
 	})
 	.when('/login', { 
 		templateUrl: 'html/login.html', 

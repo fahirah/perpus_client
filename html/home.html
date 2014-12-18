@@ -1,1 +1,112 @@
-HOME
+<div class="well">
+<div class="well col-md-8 col-md-offset-2"><br/><br/>
+	<form class="form form-horizontal">
+		<div class="form-group">
+			<div>
+				<div class="col-md-10"><input type="text" name="judul" data-ng-model="search.judul" placeholder="judul" class="form-control tooltips" title="Masukkan judul"></div>
+				<div class="col-md-2">
+					<button type="text" class="btn btn-primary btn-md" data-ng-click="loadDataSearch()"><i class="fa fa-search"></i>  cari</button>
+				</div>
+			</div><br/><br/><br/>
+			<div data-ng-show="editing">
+				<table class="table">
+					<tr>
+						<td width="7px">&nbsp;</td>
+						<td width="">Pengarang</td>
+						<td width="200px"><input type="text" name="pengarang" data-ng-model="search.pengarang" placeholder="pengarang" class="form-control tooltips" title="Masukkan pengarang"></td>
+						<td width="80px">&nbsp;</td>
+						<td width="">Penerbit</td><td width="200px"><input type="text" name="penerbit" data-ng-model="search.penerbit" placeholder="penerbit" class="form-control tooltips" title="Masukkan penerbit"></td>
+						<td width="100px">&nbsp;</td>
+					</tr>
+					<tr>
+						<td width="7px">&nbsp;</td>
+						<td width="">ISBN/ISSN</td>
+						<td width="200px"><input type="text" name="nama" data-ng-model="search.isbn" placeholder="ISBN/ISSN" class="form-control tooltips" title="Masukkan nama"></td>
+						<td width="80px">&nbsp;</td>
+						<td width="">Tipe</td>
+						<td width="200px">
+							<select name="tipe" id="tipe" data-ng-model="search.tipe" class="form-control">
+								<option value="">-- semua tipe --</option>
+								<option value="buku">buku</option>
+								<option value="file">file</option>
+							</select>	</td>
+						<td width="100px">&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+			<div align="center" class="col-md-10" data-ng-click="editing = !editing">	
+				<a href="">Advanced Search</a>
+			</div>
+		</div>
+	</form>
+</div>	
+	<table class="table table-bordered table-striped table-hover" data-ng-show=" db.length > 0">
+	<thead>
+		<tr>
+			<th>NO.</th>
+			<th>KODE BUKU</th>
+			<th>ISBN BUKU</th>
+			<th>JUDUL</th>
+			<th>PENGARANG</th>
+			<th>SISA STOK</th>
+			<th>MACAM</th>
+			<th>BAHASA</th>
+			<th>PENERBIT</th>
+			<th>TAHUN TERBIT</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr data-ng-repeat="c in db">
+			<td>{{$index+1}}</td>
+			<td>{{c.kode}}</td>
+			<td>{{c.isbn}}</td>
+			<td>{{c.judul}}</td>
+			<td>{{c.pengarang}}</td>
+			<td>{{c.stok}}</td>
+			<td>{{c.macam}}</td>
+			<td>{{c.bahasa}}</td>
+			<td>{{c.penerbit}}</td>
+			<td>{{c.tahun}}</td>
+		</tr>
+	</tbody>
+	</table>
+	<ul class="pagination pagination-sm" data-ng-show=" db.length > 0">
+		<li data-ng-class="{ disabled: cpagebk == 0 }"><a href="" data-ng-click="prevPagebk()">&laquo;</a></li>
+		<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
+		<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
+	</ul>
+	
+		<table class="table table-bordered table-striped table-hover" data-ng-show=" dbFile.length > 0">
+		<thead>
+			<tr>
+				<th>NO.</th>
+				<th>JUDUL</th>
+				<th>PENGARANG</th>
+				<th>MACAM</th>
+				<th>BAHASA</th>
+				<th>PENERBIT</th>
+				<th>TAHUN TERBIT</th>
+				<th>TGL UPLOAD</th>
+				<th>RINGKASAN</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="c in dbFile">
+				<td>{{$index+1}}</td>
+				<td>{{c.judul}}</td>
+				<td>{{c.pengarang}}</td> 
+				<td>{{c.macam}}</td>
+				<td>{{c.bahasa}}</td>
+				<td>{{c.penerbit}}</td>
+				<td>{{c.tahun}}</td>
+				<td>{{c.tgl}}</td>
+				<td>{{c.ringkasan}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<ul class="pagination pagination-sm" data-ng-show=" dbFile.length > 0">
+		<li data-ng-class="{ disabled: cpagefl == 0 }"><a href="" data-ng-click="prevPagefl()">&laquo;</a></li>
+		<li data-ng-repeat="n in range(numpagefl)" data-ng-class="{ active: n == cpagefl }"><a href="" data-ng-click="setPagefl()" data-ng-bind="n+1">1</a></li>
+		<li data-ng-class="{ disabled: cpagefl == numpagefl - 1 }"><a href="" data-ng-click="nextPagefl()">&raquo;</a></li>
+	</ul>
+</div>

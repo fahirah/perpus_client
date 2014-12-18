@@ -41,9 +41,10 @@ app.directive('hapusAnggota', ['$http', function($http) {
 }]);
 
 /* simpan buku */
-app.directive('simpanBuku', ['$http', function($http) {
+app.directive('simpanBuku', function() {
 	return function($scope, elm) {
 		elm.click(function(e) {
+			var fd=new FormData();
 			//validasi
 			if($scope.buku.kode.length < 4) return alertify.error('Kode buku tidak boleh kosong');
 			if($scope.buku.judul.length < 4) return alertify.error('Judul buku tidak boleh kosong');
@@ -55,20 +56,33 @@ app.directive('simpanBuku', ['$http', function($http) {
 			if($scope.buku.penerbit.length < 3) return alertify.error('Penerbit buku tidak boleh kosong');
 			if($scope.buku.tahun.length < 4) return alertify.error('Tahun terbit buku tidak boleh kosong');
 			
-			elm.button('loading');
-			$http({ url:$scope.server + '/admin/buku', method: 'POST', data:$scope.buku }).
-			success(function(d){
-				elm.button('reset');
-				if (d == 'false') return alertify.error('Kode buku sudah ada!');
-				alertify.success('Data buku berhasil disimpan');
+			fd.append("kode",$scope.buku.kode);
+			fd.append("isbn",$scope.buku.isbn);
+			fd.append('buku', $scope.file);
+			fd.append("judul",$scope.buku.judul);
+			fd.append("pengarang",$scope.buku.pengarang);
+			fd.append("stok",$scope.buku.stok);
+			fd.append("macam", $scope.buku.macam);
+			fd.append("bahasa", $scope.buku.bahasa);
+			fd.append("penerbit", $scope.buku.penerbit);
+			fd.append("tahun", $scope.buku.tahun);
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open('post', $scope.server +'/admin/buku', true);
+			
+			xhr.onload = function(){
+				var r = this.responseText;
+				if(r == '500') return alertify.error('Data gagal diproses dan disimpan!');
+				alertify.success('Data berhasil diproses dan disimpan');
 				$scope.batal();
-				$scope.dbBuku=d.data;
-				$scope.numpagebk=d.numpagebk;
-			}).
-			error(function(e, s, h) { elm.button('reset'); });
+				$scope.loadDataBuku();
+				
+			};	
+			xhr.send(fd);
+			
 		});
 	}
-}]);
+});
 
 /*hapus buku */
 app.directive('hapusBuku', ['$http', function($http) {
@@ -97,7 +111,6 @@ app.directive('simpanFile', function(){
 			if($scope.berkas.pengarang.length < 3) return alertify.error('Pengarang file tidak boleh kosong');
 			if($scope.berkas.macam.length < 0 || $scope.berkas.macam==null) return alertify.error('Macam file tidak boleh kosong');
 			if($scope.berkas.bahasa.length < 0 || $scope.berkas.bahasa==null) return alertify.error('Bahasa file tidak boleh kosong');
-			if($scope.berkas.penerbit.length < 3) return alertify.error('Penerbit file tidak boleh kosong');
 			if($scope.berkas.tahun.length < 4) return alertify.error('Tahun terbit file tidak boleh kosong');
 			if($scope.berkas.ringkasan.length < 5) return alertify.error('Ringkasan file tidak boleh kosong');
 						
@@ -192,6 +205,23 @@ app.directive('hapusPjm', ['$http', function($http) {
 					});
 				}
 			});
+		});
+	}
+}]);
+
+/* update pengaturan */
+app.directive('simpanAp', ['$http', function($http) {
+	return function($scope, elm) {
+		elm.click(function(e) {
+			
+			elm.button('loading');
+			$http({ url:$scope.server + '/admin/pengaturan', method: 'POST', data:$scope.dbAp }).
+			success(function(d){
+				elm.button('reset');
+				alertify.success('Data pengaturan aplikasi berhasil disimpan');
+				$scope.db=d;
+			}).
+			error(function(e, s, h) { elm.button('reset'); });
 		});
 	}
 }]);

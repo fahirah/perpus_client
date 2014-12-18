@@ -21,9 +21,9 @@
 				
 				<form class="form form-horizontal" data-ng-show="editing">
 					<div class="form-group">
-						<label for="nama" class="col-md-2 col-md-offset-2">Id Anggota</label>
+						<label for="nama" class="col-md-2 col-md-offset-2">Id Anggota / No Identitas</label>
 						<div class="col-md-3">
-							<input type="text" name="kdanggota" data-ng-model="pjm.anggota" placeholder="kode anggota" class="form-control tooltips" title="Masukkan kode anggota" data-ng-disabled="dataPinjam.length>0">
+							<input type="text" name="kdanggota" data-ng-model="pjm.anggota" placeholder="id anggota / no identitas" class="form-control tooltips" title="Masukkan kode anggota" data-ng-disabled="dataPinjam.length>0">
 						</div>
 					</div>
 					<div class="form-group">
@@ -72,6 +72,7 @@
 								<th>NO.</th>
 								<th>KODE PEMINJAMAN</th>
 								<th>ID ANGGOTA</th>
+								<th>NO IDENTITAS</th>
 								<th>NAMA ANGGOTA</th>
 								<th>AKSI</th>
 							</tr>
@@ -81,6 +82,7 @@
 								<td>{{(jph*cpagepjm)+$index+1}}</td>
 								<td>{{c.kode}}</td>				
 								<td>{{c.idang}}</td>	
+								<td>{{c.noid}}</td>	
 								<td>{{c.nmang}}</td>	
 								<td>
 									<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
@@ -104,6 +106,7 @@
 						<table class="table">
 							<tr><td>KODE PEMINJAMAN</td><td>:</td><td width="60%">{{kode_pinjam}}</td></tr>
 							<tr><td>ID ANGGOTA</td><td>:</td><td>{{id_anggota}}</td></tr>
+							<tr><td>NO IDENTITAS</td><td>:</td><td>{{no_identitas}}</td></tr>
 							<tr><td>NAMA ANGGOTA</td><td>:</td><td>{{nama_anggota}}</td></tr>
 						</table>
 					</div><br/><br/>
@@ -134,7 +137,7 @@
 									<a href="" data-ng-click="kembaliPjm(kode_pinjam, c.id_buku)" data-ng-hide="c.tgl_pengembalian.length>1" class="btn btn-sm tooltips" title="pengembalian buku"><i class="fa fa-times"></i></a>
 								</td>
 							</tr>
-							<tr><td colspan="8"><i class="fa fa-share-square-o"></i> : perpanjang buku pinjaman &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-times"></i> : pengembalian buku<td></tr>
+							<tr><td colspan="7"><i class="fa fa-share-square-o"></i> : perpanjang buku pinjaman &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-times"></i> : pengembalian buku<td></tr>
 						</tbody>
 					</table>
 				</div>

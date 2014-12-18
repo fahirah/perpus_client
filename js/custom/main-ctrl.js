@@ -26,6 +26,69 @@ app.controller('MainCtrl', function($scope, $cookies, $location) {
 	
 });
 
+/*home controller */
+app.controller('HomeCtrl', function($scope, $http){
+	//load data buku
+	$scope.cpagebk = 0;
+	$scope.numpagebk = 0;
+	$scope.search={
+		judul:'', pengarang:'', penerbit:'', isbn:'', tipe:''
+	};
+	$scope.db=[];
+	$scope.dbFile=[];
+	$scope.loadDataSearch=function(){
+		$http({
+			url: $scope.server+'/pencarian?cpagebk='+$scope.cpagebk+'&judul='+$scope.search.judul+'&pengarang='+$scope.search.pengarang+'&penerbit='+$scope.search.penerbit+'&isbn='+$scope.search.isbn+'&tipe='+$scope.search.tipe, method:'GET'
+		}).
+		success(function(d){
+			$scope.db=d.buku.data;
+			$scope.numpagebk=d.buku.numpagebk;
+			$scope.dbFile=d.file.data;
+			$scope.numpagefl=d.file.numpagefl;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Data yang anda cari tidak ditemukan');
+		});
+	};
+	//$scope.loadDataSearch(); //panggil fungsi
+	
+	$scope.buku = {
+		judul:'', pengarang:'', penerbit:'', isbn:'', tipe:''
+	};
+	
+	$scope.search={
+		judul:'', pengarang:'', penerbit:'', isbn:'', tipe:''
+	}
+	
+	//pagination buku
+	$scope.jph=10;
+	
+	$scope.range = function(start, end){
+		var r = [];
+		if( ! end){
+			end = start; start = 0;
+		}
+		for(var i = start; i< end; i++) r.push(i);
+		return r;
+	};
+	
+	$scope.setPagebk = function(){
+		$scope.cpagebk = this.n;
+		$scope.loadDataSearch();
+	};
+	$scope.prevPagebk = function(){
+		if($scope.cpagebk > 0 )
+			$scope.cpagebk--;
+		$scope.loadDataSearch();
+	};
+	$scope.nextPagebk = function(){
+		if($scope.cpagebk < $scope.numpagebk -1)
+			$scope.cpagebk;
+		$scope.loadDataSearch();
+	};	
+});
+
 /*buku controller */
 app.controller('BukuCtrl', function($scope, $http){
 	//load data buku

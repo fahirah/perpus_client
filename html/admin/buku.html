@@ -1,6 +1,7 @@
 			<div class="well">
 				<h3 class="text-center" data-ng-hide="editing">
-					DATA BUKU
+					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()" data-ng-show="detail"><i class="fa fa-mail-reply"></i> Batalkan</button> &nbsp;
+					DATA BUKU 
 					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Buku</button>
 				</h3>
 				<h3 class="text-center" data-ng-show="editing">
@@ -8,12 +9,14 @@
 					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
 				</h3><br/><br/>
 				
-				<form class="form form-horizontal" data-ng-hide="editing">
+				<form class="form form-horizontal" data-ng-show=" ! editing && ! detail">
 					<div class="form-group">
 						<div class="col-md-2"><input type="text" name="search" data-ng-model="search.kata"></div>
 						<div class="col-md-2">
 							<select class="form-control" name="jenis" data-ng-model="search.jenis">
 								<option value="">--Pilih--</option>
+								<option value="kode">Kode</option>
+								<option value="isbn">ISBN</option>
 								<option value="judul">Judul</option>
 								<option value="pengarang">Pengarang</option>
 								<option value="penerbit">Penerbit</option>
@@ -30,6 +33,14 @@
 					<div class="form-group">
 						<label for="kode" class="col-md-3 col-md-offset-2">Kode Buku</label>
 						<div class="col-md-3"><input type="text" name="kode" data-ng-model="buku.kode" placeholder="Kode Buku" id="kode" class="form-control tooltips" title="Masukkan kode buku"></div>
+					</div>
+					<div class="form-group">
+						<label for="isbn" class="col-md-3 col-md-offset-2">ISBN Buku</label>
+						<div class="col-md-3"><input type="text" name="isbn" data-ng-model="buku.isbn" placeholder="ISBN Buku" id="kode" class="form-control tooltips" title="Masukkan isbn buku"></div>
+					</div>
+					<div class="form-group">
+						<label for="isbn" class="col-md-3 col-md-offset-2">Sampul Buku</label>
+						<div class="col-md-3"><input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file>  </div>
 					</div>
 					<div class="form-group">
 						<label for="judul" class="col-md-3 col-md-offset-2">Judul</label>
@@ -83,20 +94,18 @@
 					</div>
 				</form>
 				
-				<table class="table table-bordered table-striped table-hover" data-ng-hide="editing">
+				<table class="table table-bordered table-striped table-hover" data-ng-show=" ! editing && ! detail">
 					<thead>
 						<tr>
 							<th>NO.</th>
 							<th>KODE BUKU</th>
+							<th>ISBN BUKU</th>
+							<th>SAMPUL BUKU</th>
 							<th>JUDUL</th>
 							<th>PENGARANG</th>
 							<th>STOK</th>
 							<th>SISA STOK</th>
-							<th>MACAM</th>
-							<th>BAHASA</th>
-							<th>NO PENEMPATAN</th>
 							<th>PENERBIT</th>
-							<th>TAHUN TERBIT</th>
 							<th>AKSI</th>
 						</tr>
 					</thead>
@@ -104,25 +113,70 @@
 						<tr data-ng-repeat="c in dbBuku">
 							<td>{{(jph*cpagebk)+$index+1}}</td>
 							<td>{{c.kode}}</td>
+							<td>{{c.isbn}}</td>
+							<td><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:50px; max-height:50px"></td>
 							<td>{{c.judul}}</td>
 							<td>{{c.pengarang}}</td>
 							<td>{{c.stok}}</td>
 							<td>{{c.sisa}}</td>
-							<td>{{c.macam}}</td>
-							<td>{{c.bahasa}}</td>
-							<td>{{c.penempatan}}</td>
 							<td>{{c.penerbit}}</td>
-							<td>{{c.tahun}}</td>
-							<td><a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a><a href="" hapus-buku="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
+							<td>
+								<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
+								<a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
+								<a href="" hapus-buku="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
+							</td>
 						</tr>
 						<tr>
-							<td colspan="12" align=""> <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
+							<td colspan="13" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td><td>&nbsp;</td>
 						</tr>
 					</tbody>
 				</table>
-				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbBuku.length > 0">
+				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbBuku.length > 0" data-ng-hide="detail">
 					<li data-ng-class="{ disabled: cpagebk == 0 }"><a href="" data-ng-click="prevPagebk()">&laquo;</a></li>
 					<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
 					<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
 				</ul>
-			</div>
+				
+				<div data-ng-show="detail && ! editing">
+					<div class="">
+						<table class="table" data-ng-repeat="c in dataDetail">
+							<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KODE BUKU</td><td>:</td><td width="">{{c.kode}}</td></tr>
+							<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
+							<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
+							<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
+							<tr><td>STOK</td><td>:</td><td>{{c.stok}}</td></tr>
+							<tr><td>SISA STOK</td><td>:</td><td>{{c.sisa}}</td></tr>
+							<tr><td>NO PENEMPATAN</td><td>:</td><td>{{c.penempatan}}</td></tr>
+							<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
+							<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
+							<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
+							<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+							<tr><td colspan="4">&nbsp;</td></tr>
+						</table>
+					</div>
+					<h4 class="text-center">PEMINJAM BUKU</h4><br/>
+					<table class="table table-bordered table-striped table-hover">
+						<thead>
+							<tr>
+								<th>NO.</th>
+								<th>KODE PEMINJAMAN</th>
+								<th>ID ANGGOTA</th>
+								<th>NAMA ANGGOTA</th>
+								<th>STATUS ANGGOTA</th>
+								<th>TGL PINJAM</th>
+								<th>TGL KEMBALI</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="c in dataPinjam">
+								<td>{{$index+1}}</td>
+								<td>{{c.kdpjm}}</td>
+								<td>{{c.idan}}</td>				
+								<td>{{c.nama}}</td>				
+								<td>{{c.status}}</td>				
+								<td>{{c.tgl_pinjam}}</td>				
+								<td>{{c.tgl_kembali}}</td>	
+							</tr>
+						</tbody>
+					</table>
+				</div>

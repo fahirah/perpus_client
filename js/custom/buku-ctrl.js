@@ -10,6 +10,7 @@ app.controller('BukuPetugasCtrl', function($scope, $http){
 	};
 
 	$scope.dbBuku=[];
+	$scope.file=null;
 	$scope.loadDataBuku=function(){
 		$http({
 			url: $scope.server+'/admin/buku?cpagebk='+$scope.cpagebk+'&kata='+$scope.search.kata+'&jenis='+$scope.search.jenis, method:'GET'
@@ -29,16 +30,31 @@ app.controller('BukuPetugasCtrl', function($scope, $http){
 	
 	$scope.resetBuku= function(){
 		$scope.buku={
-			id:'', kode:'', judul:'', pengarang:'', stok:'', sisa:'', macam:'', bahasa:'', penempatan:'', penerbit:'', tahun:''
+			id:'', kode:'',isbn:'', judul:'', pengarang:'', stok:'', sisa:'', macam:'', bahasa:'', penempatan:'', penerbit:'', tahun:''
 		};
 	};
 	$scope.resetBuku();
+	
+	$scope.detail = false;
 	$scope.editing = false;
 	$scope.batal = function(){
 		$scope.editing = false;
+		$scope.detail=false;
 		$scope.resetBuku();
 	};
 	
+	$scope.dataDetail = [];
+	$scope.dataPinjam=[];
+	$scope.tampilDetail = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailbuku/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail=d.data;
+			$scope.dataPinjam=d.datapjm;
+		});
+	}
 	
 	$scope.setEdit=function(i){
 		$scope.buku=$scope.dbBuku[i];
