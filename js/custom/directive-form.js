@@ -1,3 +1,4 @@
+
 'use strict';
 
 /* simpan anggota */
@@ -56,11 +57,13 @@ app.directive('simpanBuku', function() {
 			if($scope.buku.penerbit.length < 3) return alertify.error('Penerbit buku tidak boleh kosong');
 			if($scope.buku.tahun.length < 4) return alertify.error('Tahun terbit buku tidak boleh kosong');
 			
+			fd.append("id",$scope.buku.id);
 			fd.append("kode",$scope.buku.kode);
 			fd.append("isbn",$scope.buku.isbn);
 			fd.append('buku', $scope.file);
 			fd.append("judul",$scope.buku.judul);
 			fd.append("pengarang",$scope.buku.pengarang);
+			fd.append("penempatan",$scope.buku.penempatan);
 			fd.append("stok",$scope.buku.stok);
 			fd.append("macam", $scope.buku.macam);
 			fd.append("bahasa", $scope.buku.bahasa);
@@ -141,7 +144,7 @@ app.directive('simpanFile', function(){
 				if(status==2){
 					$scope.loadDataFile();
 				}else{
-					$scope.loadData();
+					$scope.loadDataFile();
 				}
 				//console.log(r);
 			};	

@@ -30,7 +30,7 @@ app.controller('BukuPetugasCtrl', function($scope, $http){
 	
 	$scope.resetBuku= function(){
 		$scope.buku={
-			id:'', kode:'',isbn:'', judul:'', pengarang:'', stok:'', sisa:'', macam:'', bahasa:'', penempatan:'', penerbit:'', tahun:''
+			id:'', sampul:'', kode:'',isbn:'', judul:'', pengarang:'', stok:'', sisa:'', macam:'', bahasa:'', penempatan:'', penerbit:'', tahun:''
 		};
 	};
 	$scope.resetBuku();

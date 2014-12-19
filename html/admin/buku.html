@@ -32,7 +32,7 @@
 				<form class="form form-horizontal" data-ng-show="editing">
 					<div class="form-group">
 						<label for="kode" class="col-md-3 col-md-offset-2">Kode Buku</label>
-						<div class="col-md-3"><input type="text" name="kode" data-ng-model="buku.kode" placeholder="Kode Buku" id="kode" class="form-control tooltips" title="Masukkan kode buku"></div>
+						<div class="col-md-3"><input type="hidden" name="namalm" class="form-control tooltips" data-ng-model="buku.sampul" readonly><input type="text" name="kode" data-ng-model="buku.kode" placeholder="Kode Buku" id="kode" class="form-control tooltips" title="Masukkan kode buku"></div>
 					</div>
 					<div class="form-group">
 						<label for="isbn" class="col-md-3 col-md-offset-2">ISBN Buku</label>
@@ -40,7 +40,7 @@
 					</div>
 					<div class="form-group">
 						<label for="isbn" class="col-md-3 col-md-offset-2">Sampul Buku</label>
-						<div class="col-md-3"><input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file>  </div>
+						<div class="col-md-3"><input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file> <span class="help-block">*Pilih file kembali, jika gambar akan diganti.</span> </div>
 					</div>
 					<div class="form-group">
 						<label for="judul" class="col-md-3 col-md-offset-2">Judul</label>
@@ -106,6 +106,7 @@
 							<th>STOK</th>
 							<th>SISA STOK</th>
 							<th>PENERBIT</th>
+							<th>TERPINJAM</th>
 							<th>AKSI</th>
 						</tr>
 					</thead>
@@ -114,12 +115,13 @@
 							<td>{{(jph*cpagebk)+$index+1}}</td>
 							<td>{{c.kode}}</td>
 							<td>{{c.isbn}}</td>
-							<td><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:50px; max-height:50px"></td>
+							<td><img data-ng-src="{{server}}/{{c.sampul}}" style="width:50px; height:50px"></td>
 							<td>{{c.judul}}</td>
 							<td>{{c.pengarang}}</td>
 							<td>{{c.stok}}</td>
 							<td>{{c.sisa}}</td>
-							<td>{{c.penerbit}}</td>
+							<td>{{c.penempatan}}</td>
+							<td>{{c.jumlah}}</td>
 							<td>
 								<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
 								<a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
@@ -127,7 +129,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="13" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td><td>&nbsp;</td>
+							<td colspan="10" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td><td>&nbsp;</td>
 						</tr>
 					</tbody>
 				</table>
@@ -161,6 +163,7 @@
 								<th>NO.</th>
 								<th>KODE PEMINJAMAN</th>
 								<th>ID ANGGOTA</th>
+								<th>NO IDENTITAS</th>
 								<th>NAMA ANGGOTA</th>
 								<th>STATUS ANGGOTA</th>
 								<th>TGL PINJAM</th>
@@ -172,6 +175,7 @@
 								<td>{{$index+1}}</td>
 								<td>{{c.kdpjm}}</td>
 								<td>{{c.idan}}</td>				
+								<td>{{c.noid}}</td>				
 								<td>{{c.nama}}</td>				
 								<td>{{c.status}}</td>				
 								<td>{{c.tgl_pinjam}}</td>				

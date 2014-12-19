@@ -34,11 +34,26 @@ app.controller('FilePetugasCtrl', function($scope, $http){
 	};	
 	$scope.resetBerkas();
 
+	$scope.detail = false;
 	$scope.editing = false;
 	$scope.batal = function(){
 		$scope.editing = false;
+		$scope.detail = false;
 		$scope.resetBerkas();
 	};
+	
+	$scope.dataDetail = [];
+	$scope.dataDownload=[];
+	$scope.tampilDetail = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailfile/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail=d.data;
+			$scope.dataDownload=d.datadownload;
+		});
+	}
 	
 	$scope.setEdit=function(i){
 		$scope.berkas=$scope.dbFile[i];

@@ -1,6 +1,7 @@
 			<div class="well">
 				<!--<h1>{{user.id}}</h1>-->
-				<h3 class="text-center" data-ng-hide="editing">
+					<h3 class="text-center" data-ng-hide="editing">
+					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()" data-ng-show="detail"><i class="fa fa-mail-reply"></i> Batalkan</button> &nbsp;
 					DATA FILE
 					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah File</button>
 				</h3>
@@ -9,7 +10,7 @@
 					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
 				</h3><br/><br/>
 				
-				<form class="form form-horizontal" data-ng-hide="editing">
+				<form class="form form-horizontal"  data-ng-show=" ! editing && ! detail">
 					<div class="form-group">
 						<div class="col-md-2"><input type="text" name="search" data-ng-model="search.kata"></div>
 						<div class="col-md-2">
@@ -82,18 +83,16 @@
 					</div>
 				</form>
 				
-				<table class="table table-bordered table-striped table-hover" data-ng-hide="editing">
+				<table class="table table-bordered table-striped table-hover"  data-ng-show=" ! editing && ! detail">
 					<thead>
 						<tr>
 							<th>NO.</th>
 							<th>JUDUL</th>
 							<th>PENGARANG</th>
-							<th>MACAM</th>
-							<th>BAHASA</th>
 							<th>PENERBIT</th>
 							<th>TAHUN TERBIT</th>
-							<th>RINGKASAN</th>
 							<th>TGL UPLOAD</th>
+							<th>TER-DOWNLOAD</th>
 							<th>AKSI</th>
 						</tr>
 					</thead>
@@ -102,13 +101,14 @@
 							<td>{{(jph*cpagefl)+$index+1}}</td>
 							<td>{{c.judul}}</td>
 							<td>{{c.pengarang}}</td>
-							<td>{{c.macam}}</td>
-							<td>{{c.bahasa}}</td>
 							<td>{{c.penerbit}}</td>
 							<td>{{c.tahun}}</td>
-							<td>{{c.ringkasan}}</td>
 							<td>{{c.tgl}}</td>
-							<td><a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a><a href="" hapus-file="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
+							<td>{{c.jumlah}}</td>
+							<td>
+								<a href="" data-ng-click="tampilDetail(c.id)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
+								<a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
+								<a href="" hapus-file="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
 						</tr>
 						<tr>
 							<td colspan="12" align=""> <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
@@ -120,4 +120,43 @@
 					<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
 					<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
 				</ul>
+				
+				<div data-ng-show="detail && ! editing">
+					<div class="col-md-offset-1">
+						<table class="table" data-ng-repeat="c in dataDetail">
+							<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
+							<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
+							<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
+							<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
+							<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
+							<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+							<tr><td>TGL UPLOAD</td><td>:</td><td>{{c.tgl}}</td></tr>
+							<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
+							<tr><td colspan="4">&nbsp;</td></tr>
+						</table>
+					</div>
+					<h4 class="text-center">PENDOWNLOAD FILE</h4><br/>
+					<table class="table table-bordered table-striped table-hover">
+						<thead>
+							<tr>
+								<th>NO.</th>
+								<th>ID ANGGOTA</th>
+								<th>NO IDENTITAS</th>
+								<th>NAMA ANGGOTA</th>
+								<th>STATUS ANGGOTA</th>
+								<th>TGL DOWNLOAD</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="c in dataDownload">
+								<td>{{$index+1}}</td>
+								<td>{{c.idan}}</td>				
+								<td>{{c.noid}}</td>				
+								<td>{{c.nama}}</td>				
+								<td>{{c.status}}</td>				
+								<td>{{c.tgl_download}}</td>				
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
