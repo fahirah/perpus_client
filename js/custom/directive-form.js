@@ -41,6 +41,23 @@ app.directive('hapusAnggota', ['$http', function($http) {
 	}
 }]);
 
+/*reset password anggota */
+app.directive('resetAnggota', ['$http', function($http) {
+	return function($scope, elm, attrs) {
+		elm.click(function(e) {
+			alertify.confirm('Yakin akan reset password?', function(e){
+				if(e){
+					$http({ url:$scope.server + '/admin/anggota/'+attrs.resetAnggota, method: 'POST' }).
+					success(function(d){
+						alertify.success('Password anggota berhasil direset');
+						$scope.loadData();
+					});
+				}
+			});
+		});
+	}
+}]);
+
 /* simpan buku */
 app.directive('simpanBuku', function() {
 	return function($scope, elm) {
@@ -120,8 +137,8 @@ app.directive('simpanFile', function(){
 			//fd.append("file", e.target.files[0]);
 			fd.append("status", $scope.user.status);
 			fd.append("id_user", $scope.user.id);
-			fd.append('file', $scope.file);
-			fd.append('id', $scope.berkas.id);
+			fd.append("file", $scope.file);
+			fd.append("id", $scope.berkas.id);
 			fd.append("judul", $scope.berkas.judul);
 			fd.append("pengarang", $scope.berkas.pengarang);
 			fd.append("macam", $scope.berkas.macam);
@@ -154,17 +171,26 @@ app.directive('simpanFile', function(){
 	}
 });
 
-/*hapus buku */
+/*hapus file */
 app.directive('hapusFile', ['$http', function($http) {
 	return function($scope, elm, attrs) {
 		elm.click(function(e) {
 			alertify.confirm('Yakin data ini akan dihapus?', function(e){
 				if(e){
-					$http({ url:$scope.server + '/admin/file/'+attrs.hapusFile, method: 'DELETE' }).
-					success(function(d){
-						alertify.success('Data file berhasil dihapus');
-						$scope.loadDataFile();
-					});
+					if(status==2){
+						$http({ url:$scope.server + '/admin/file/'+attrs.hapusFile, method: 'DELETE' }).
+						success(function(d){
+							alertify.success('Data file berhasil dihapus');
+							$scope.loadDataFile();
+						});
+					}else{
+						$http({ url:$scope.server + '/user/file/'+attrs.hapusFile, method: 'DELETE' }).
+						success(function(d){
+							alertify.success('Data file berhasil dihapus');
+							$scope.loadDataFile();
+						});
+					}			
+						
 				}
 			});
 		});

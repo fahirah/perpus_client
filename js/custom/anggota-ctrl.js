@@ -69,7 +69,7 @@ app.controller('FileAnggotaCtrl', function($scope, $http){
 	};
 	
 	$scope.db=[];
-	$scope.loadData=function(){
+	$scope.loadDataFile=function(){
 		$http({
 			url: $scope.server+'/user/file?cpagefl='+$scope.cpagefl+'&kata='+$scope.search.kata+'&jenis='+$scope.search.jenis, method:'GET'
 		}).
@@ -82,7 +82,7 @@ app.controller('FileAnggotaCtrl', function($scope, $http){
 			alertify.error('Data yang anda cari tidak ditemukan');
 		});
 	};
-	$scope.loadData(); //panggil fungsi
+	$scope.loadDataFile(); //panggil fungsi
 	
 	$scope.file=null;
 	$scope.berkas = {};	
@@ -119,17 +119,17 @@ app.controller('FileAnggotaCtrl', function($scope, $http){
 	
 	$scope.setPagefl = function(){
 		$scope.cpagefl = this.n;
-		$scope.loadData();
+		$scope.loadDataFile();
 	};
 	$scope.prevPagefl = function(){
 		if($scope.cpagefl > 0 )
 			$scope.cpagefl--;
-		$scope.loadData();
+		$scope.loadDataFile();
 	};
 	$scope.nextPagefl = function(){
 		if($scope.cpagefl < $scope.numpagefl -1)
 			$scope.cpagefl;
-		$scope.loadData();
+		$scope.loadDataFile();
 	};		
 	
 });
