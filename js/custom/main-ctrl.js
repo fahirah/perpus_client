@@ -31,20 +31,24 @@ app.controller('HomeCtrl', function($scope, $http){
 	//load data buku
 	$scope.cpagebk = 0;
 	$scope.numpagebk = 0;
+	$scope.cpagefl = 0;
+	$scope.numpagefl = 0;
 	$scope.search={
 		judul:'', pengarang:'', penerbit:'', isbn:'', tipe:''
 	};
 	$scope.db=[];
 	$scope.dbFile=[];
+	
 	$scope.loadDataSearch=function(){
 		$http({
-			url: $scope.server+'/pencarian?cpagebk='+$scope.cpagebk+'&judul='+$scope.search.judul+'&pengarang='+$scope.search.pengarang+'&penerbit='+$scope.search.penerbit+'&isbn='+$scope.search.isbn+'&tipe='+$scope.search.tipe, method:'GET'
+			url: $scope.server+'/pencarian?cpagebk='+$scope.cpagebk+'&cpagefl='+$scope.cpagefl+'&judul='+$scope.search.judul+'&pengarang='+$scope.search.pengarang+'&penerbit='+$scope.search.penerbit+'&isbn='+$scope.search.isbn+'&tipe='+$scope.search.tipe, method:'GET'
 		}).
 		success(function(d){
 			$scope.db=d.buku.data;
 			$scope.numpagebk=d.buku.numpagebk;
 			$scope.dbFile=d.file.data;
 			$scope.numpagefl=d.file.numpagefl;
+			
 		}).
 		error(function(e, s, h){
 			//kalau error
@@ -52,6 +56,35 @@ app.controller('HomeCtrl', function($scope, $http){
 		});
 	};
 	//$scope.loadDataSearch(); //panggil fungsi
+	
+	$scope.batal = function(){
+		$scope.detail=false;
+		$scope.detailfile=false;
+	};
+	
+	$scope.detail = false;
+	$scope.dataDetail = [];
+	$scope.tampilDetail = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailbuku/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail=d.data;
+		});
+	}
+	
+	$scope.detailfile = false;
+	$scope.dataDetailFile = [];
+	$scope.tampilDetailFile = function(i) {
+		$scope.detailfile = true;
+		$http({
+			url: $scope.server+'/detailfile/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetailFile=d.data;
+		});
+	}
 	
 	$scope.buku = {
 		judul:'', pengarang:'', penerbit:'', isbn:'', tipe:''
@@ -64,12 +97,12 @@ app.controller('HomeCtrl', function($scope, $http){
 	//pagination buku
 	$scope.jph=10;
 	
-	$scope.range = function(start, end){
+	$scope.range = function(startbk, end){
 		var r = [];
 		if( ! end){
-			end = start; start = 0;
+			end = startbk; startbk = 0;
 		}
-		for(var i = start; i< end; i++) r.push(i);
+		for(var i = startbk; i< end; i++) r.push(i);
 		return r;
 	};
 	
@@ -87,6 +120,32 @@ app.controller('HomeCtrl', function($scope, $http){
 			$scope.cpagebk;
 		$scope.loadDataSearch();
 	};	
+	
+	
+	$scope.range = function(startfl, end){
+		var r = [];
+		if( ! end){
+			end = startfl; startfl = 0;
+		}
+		for(var i = startfl; i< end; i++) r.push(i);
+		return r;
+	};
+	
+	$scope.setPagefl = function(){
+		$scope.cpagefl = this.n;
+		$scope.loadDataSearch();
+	};
+	$scope.prevPagefl = function(){
+		if($scope.cpagefl > 0 )
+			$scope.cpagefl--;
+		$scope.loadDataSearch();
+	};
+	$scope.nextPagefl = function(){
+		if($scope.cpagefl < $scope.numpagefl -1)
+			$scope.cpagefl;
+		$scope.loadDataSearch();
+	};		
+	
 });
 
 /*buku controller */
@@ -218,7 +277,7 @@ app.controller('FileCtrl', function($scope, $http){
 	};
 	$scope.nextPagefl = function(){
 		if($scope.cpagefl < $scope.numpagefl -1)
-			$scope.cpagefl;
+			$scope.cpagefl++;
 		$scope.loadData();
 	};		
 	
@@ -241,9 +300,9 @@ app.controller('LoginCtrl', function($scope,$http,$location) {
 			alertify.success('Anda Berhasil Login');
 			$scope.setUser(d);
 			if (d.status == 1) {
-				$location.path('/admin').replace();
+				$location.path('/user/buku').replace();
 			} else {
-				$location.path('/user').replace();
+				$location.path('/admin/beranda').replace();
 			}
 		}).
 		error(function(e, s, h){

@@ -28,9 +28,7 @@
 		<div data-ng-include src="'html/header.html'"></div>
 		<nav class="art-nav clearfix">
 			<ul class="art-hmenu">
-				<li><a href="#/">Beranda</a></li>
-				<li data-ng-show="user.id == 0"><a href="#/buku">Buku</a></li>
-				<li data-ng-show="user.id == 0"><a href="#/file">File</a></li>
+				<li data-ng-show="user.id == 0"><a href="#/">Beranda</a></li>
 				<li data-ng-show="user.id == 0"><a href="#/login">Login</a></li>
 				
 				<li data-ng-show="user.status == 1"><a href="#/user/buku">Buku</a></li>
@@ -38,11 +36,11 @@
 				<li data-ng-show="user.status == 1"><a href="#/user/peminjaman">Transaksi</a></li>
 				<li data-ng-show="user.status == 1"><a href="#/user/pengaturan">Pengaturan</a></li>
 				
+				<li data-ng-show="user.status == 2"><a href="#/admin/beranda">Beranda</a></li>
 				<li data-ng-show="user.status == 2"><a href="#/admin/anggota">Anggota</a></li>
 				<li data-ng-show="user.status == 2"><a href="#/admin/buku">Buku</a></li>
 				<li data-ng-show="user.status == 2"><a href="#/admin/file">File</a></li>
 				<li data-ng-show="user.status == 2"><a href="#/admin/peminjaman">Transaksi</a></li>
-				<li data-ng-show="user.status == 2"><a href="#/admin/laporan">Laporan</a></li>
 				<li data-ng-show="user.status == 2"><a href="#/admin/pengaturan">Pengaturan</a></li>
 				<li data-ng-hide="user.id == 0"><a href="" data-ng-click="disconnect()">Logout</a></li>
 			</ul> 

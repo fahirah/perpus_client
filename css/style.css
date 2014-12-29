@@ -5,7 +5,7 @@
    background: #FFFFFF url('../img/page.jpeg') top center fixed;
    margin:0 auto;
    font-size: 13px;
-   font-family: 'Century Gothic', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Tahoma, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    position: relative;
    width: 100%;
    min-height: 100%;
@@ -17,7 +17,7 @@
 table, ul.art-hmenu
 {
    font-size: 13px;
-   font-family: 'Century Gothic', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Tahoma, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, ul, ol, li

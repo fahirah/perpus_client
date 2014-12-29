@@ -84,7 +84,7 @@ app.controller('BukuPetugasCtrl', function($scope, $http){
 	};
 	$scope.nextPagebk = function(){
 		if($scope.cpagebk < $scope.numpagebk -1)
-			$scope.cpagebk;
+			$scope.cpagebk++;
 		$scope.loadDataBuku();
 	};	
 })

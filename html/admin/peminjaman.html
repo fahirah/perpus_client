@@ -9,14 +9,60 @@
 					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
 				</h3><br/><br/>
 				
-				<form class="form form-horizontal" data-ng-show=" ! editing && ! detail">
-				<div class="form-group">
-					<div class="col-md-2"><input type="text" name="search" placeholder="id anggota" data-ng-model="kata"></div>
-					<div class="col-md-2">
-						<button type="text" class="btn btn-primary btn-md" data-ng-click="loadDataPjm()"><i class="fa fa-search"></i>  cari</button>
+				<form class="form form-vertical col-md-offset-2" data-ng-show=" ! editing && ! detail">
+					<div class="form-group">
+						<div class="col-md-2">
+							<select name="tipe" id="tipe" data-ng-model="search.tipe" class="form-control">
+								<option value="">-- Pilih --</option>
+								<option value="status">Status</option>
+								<option value="tanggal">tanggal</option>
+								<option value="bulanan">bulanan</option>
+								<option value="noid">no identitas</option>
+								<option value="kdbuku">Kode Buku</option>
+								<option value="jdbuku">Judul Buku</option>
+							</select>	
+						</div>
 					</div>
-				</div>
-				</form>
+					<div class="form-group" data-ng-show="search.tipe=='status'">
+						<div class="col-md-2">
+							<select name="tipe" id="tipe" data-ng-model="search.status" class="form-control">
+								<option value="">--Pilih--</option>
+								<option value="dikembalikan">Dikembalikan</option>
+								<option value="dipinjam">Dipinjam</option>
+							</select>	
+						</div>
+					</div>
+					<div class="form-group" data-ng-show="search.tipe=='tanggal'">
+						<div class="col-md-2">
+							<label><input type="date" name="tgl" data-ng-model="search.tgl" ></label> &nbsp;
+						</div>
+					</div>
+					<div class="form-group" data-ng-show="search.tipe=='bulanan'">
+						<div class="col-md-2">
+							<label><input type="month" name="bln" data-ng-model="search.bulan" ></label> &nbsp;
+						</div>
+					</div>
+					<div class="form-group" data-ng-show="search.tipe=='noid'">
+						<div class="col-md-2">
+							<label><input type="text" name="noid" data-ng-model="search.noid" ></label> &nbsp;
+						</div>
+					</div>
+					<div class="form-group" data-ng-show="search.tipe=='kdbuku'">
+						<div class="col-md-2">
+							<label><input type="text" name="kd" data-ng-model="search.kd" ></label> &nbsp;
+						</div>
+					</div>		
+					<div class="form-group" data-ng-show="search.tipe=='jdbuku'">
+						<div class="col-md-2">
+							<label><input type="text" name="kd" data-ng-model="search.jd" ></label> &nbsp;
+						</div>
+					</div>				
+					<div class="form-group">
+						<div class="col-md-2" >
+							<button type="text" class="btn btn-primary btn-md" data-ng-click="loadDataPjm()"><i class="fa fa-search"></i>  cari</button>
+						</div>
+					</div>
+				</form><br/>
 				<hr>
 				
 				<form class="form form-horizontal" data-ng-show="editing">
@@ -27,9 +73,9 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="identitas" class="col-md-2 col-md-offset-2">Kode Buku</label>
+						<label for="identitas" class="col-md-2 col-md-offset-2">Kode Buku </label>
 						<div class="col-md-3">
-							<input type="text" name="kdbuku" data-ng-model="pjm.buku" placeholder="kode buku" class="form-control tooltips" title="Masukkan kode buku" data-ng-disabled="dataPinjam.length>2">
+							<input type="text" name="kdbuku" data-ng-model="pjm.buku" placeholder="kode buku " class="form-control tooltips" title="Masukkan kode buku" data-ng-disabled="dataPinjam.length>2">
 						</div>
 						<div class="col-md-3">
 							<button class="btn btn-primary btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" data-ng-click="tambahPinjam()">SIMPAN</button>
@@ -70,76 +116,45 @@
 						<thead>
 							<tr>
 								<th>NO.</th>
-								<th>KODE PEMINJAMAN</th>
-								<th>ID ANGGOTA</th>
+								<th>TGL PINJAM</th>
+								<th>TGL KEMBALI</th>
+								<th>TGL PENGEMBALIAN</th>
 								<th>NO IDENTITAS</th>
-								<th>NAMA ANGGOTA</th>
+								<th>NAMA</th>
+								<th>KODE BUKU</th>
+								<th>JUDUL</th>
+								<th>DENDA</th>
 								<th>AKSI</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr data-ng-repeat="c in dbPjm">
 								<td>{{(jph*cpagepjm)+$index+1}}</td>
-								<td>{{c.kode}}</td>				
-								<td>{{c.idang}}</td>	
+								<td>{{c.tgl_pinjam}}</td>				
+								<td>{{c.tgl_kembali}}</td>	
+								<td>{{c.tgl_pengembalian}}</td>	
 								<td>{{c.noid}}</td>	
 								<td>{{c.nmang}}</td>	
+								<td>{{c.kd_buku}}</td>	
+								<td>{{c.judul}}</td>	
+								<td>{{c.denda}}</td>	
 								<td>
-									<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
-									<a href="" hapus-pjm="{{c.kode}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
+									<a href="" data-ng-click="perpanjangPjm(c.kodedet, c.id_buku)" data-ng-hide="c.tgl_pengembalian.length>1" class="btn btn-sm tooltips" title="perpanjang buku"><i class="fa fa-share-square-o"></i></a>
+									<a href="" data-ng-click="kembaliPjm(c.idang, c.id_buku)" data-ng-hide="c.tgl_pengembalian.length>1" class="btn btn-sm tooltips" title="pengembalian buku"><i class="fa fa-times"></i></a>
+									<a href="" hapus-pjm="{{c.kodedet}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="12" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
+								<td colspan="12" align=""> 
+									<i class="fa fa-share-square-o"></i> : perpanjang buku pinjaman &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-times"></i> : pengembalian buku  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
 							</tr>
 						</tbody>
 					</table>
+					<div><strong>Jumlah Peminjam : {{jumpjm}}</strong></div>
 					<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbPjm.length > 0" data-ng-hide="editing">
 						<li data-ng-class="{ disabled: cpagepjm == 0 }"><a href="" data-ng-click="prevPagepjm()">&laquo;</a></li>
 						<li data-ng-repeat="n in range(numpagepjm)" data-ng-class="{ active: n == cpagepjm }"><a href="" data-ng-click="setPagepjm()" data-ng-bind="n+1">1</a></li>
 						<li data-ng-class="{ disabled: cpagepjm == numpagepjm - 1 }"><a href="" data-ng-click="nextPagepjm()">&raquo;</a></li>
 					</ul>
-				</div>
-				
-				<div data-ng-show="detail && ! editing">
-					<div class="col-md-8">
-						<table class="table">
-							<tr><td>KODE PEMINJAMAN</td><td>:</td><td width="60%">{{kode_pinjam}}</td></tr>
-							<tr><td>ID ANGGOTA</td><td>:</td><td>{{id_anggota}}</td></tr>
-							<tr><td>NO IDENTITAS</td><td>:</td><td>{{no_identitas}}</td></tr>
-							<tr><td>NAMA ANGGOTA</td><td>:</td><td>{{nama_anggota}}</td></tr>
-						</table>
-					</div><br/><br/>
-					<table class="table table-bordered table-striped table-hover">
-						<thead>
-							<tr>
-								<th>NO.</th>
-								<th>KODE BUKU</th>
-								<th>JUDUL BUKU</th>
-								<th>TGL PINJAM</th>
-								<th>TGL KEMBALI</th>
-								<th>TGL PENGEMBALIAN</th>
-								<th>DENDA</th>
-								<th>AKSI</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr data-ng-repeat="c in dataDetail">
-								<td>{{$index+1}}</td>
-								<td>{{c.kd_buku}}</td>				
-								<td>{{c.judul}}</td>	
-								<td>{{c.tgl_pinjam}}</td>	
-								<td>{{c.tgl_kembali}}</td>	
-								<td>{{c.tgl_pengembalian}}</td>	
-								<td>{{c.denda}}</td>	
-								<td>
-									<a href="" data-ng-click="perpanjangPjm(kode_pinjam, c.id_buku)" data-ng-hide="c.tgl_pengembalian.length>1" class="btn btn-sm tooltips" title="perpanjang buku"><i class="fa fa-share-square-o"></i></a>
-									<a href="" data-ng-click="kembaliPjm(kode_pinjam, c.id_buku)" data-ng-hide="c.tgl_pengembalian.length>1" class="btn btn-sm tooltips" title="pengembalian buku"><i class="fa fa-times"></i></a>
-								</td>
-							</tr>
-							<tr><td colspan="7"><i class="fa fa-share-square-o"></i> : perpanjang buku pinjaman &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-times"></i> : pengembalian buku<td></tr>
-						</tbody>
-					</table>
-				</div>
-				
+				</div>				
 			</div>

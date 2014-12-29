@@ -1,8 +1,12 @@
 			<div class="well">
+			<div data-ng-show="detail">
+				<h3 class="text-center"> DETAIL DIGITAL
+					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
+				</h3>
+			</div>
 				<!--<h1>{{user.id}}</h1>-->
-					<h3 class="text-center" data-ng-hide="editing">
-					<button class="btn btn-md btn-default pull-right" data-ng-click="batal()" data-ng-show="detail"><i class="fa fa-mail-reply"></i> Batalkan</button> &nbsp;
-					DATA FILE
+					<h3 class="text-center" data-ng-show="!editing && !detail">
+						DATA FILE
 					<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah File</button>
 				</h3>
 				<h3 class="text-center" data-ng-show="editing">
@@ -33,8 +37,12 @@
 						<label for="nama" class="col-md-3 col-md-offset-2">Nama File</label>
 						<div class="col-md-3">
 							<input type="hidden" name="namalm" class="form-control tooltips" data-ng-model="berkas.nama" readonly>
-							<input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file> <span class="help-block">*Pilih file kembali, jika file akan diganti.</span>
+							<input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file accept=".doc,.docx,.ppt,.pptx,.pdf,.xls,.xlsx"> <span class="help-block">*Pilih file kembali, jika file akan diganti.</span>
 						</div>
+					</div>
+					<div class="form-group">
+						<label for="isbn" class="col-md-3 col-md-offset-2">Sampul File</label>
+						<div class="col-md-3"><input type="file" name="sampul" id="sampul" class="form-control tooltips" title="Masukkan sampul file" input-file2 accept=".jpg,.png,.jpeg,.gif"> <span class="help-block">*Pilih file kembali, jika gambar akan diganti.</span> </div>
 					</div>
 					<div class="form-group">
 						<label for="judul" class="col-md-3 col-md-offset-2">Judul</label>
@@ -87,18 +95,20 @@
 					<thead>
 						<tr>
 							<th>NO.</th>
+							<th>SAMPUL</th>
 							<th>JUDUL</th>
 							<th>PENGARANG</th>
 							<th>PENERBIT</th>
 							<th>TAHUN TERBIT</th>
 							<th>TGL UPLOAD</th>
-							<th>TER-DOWNLOAD</th>
+							<th>TER-UNDUH</th>
 							<th>AKSI</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="c in dbFile">
 							<td>{{(jph*cpagefl)+$index+1}}</td>
+							<td><img data-ng-src="{{server}}/{{c.sampul}}" style="width:50px; height:50px"></td>
 							<td>{{c.judul}}</td>
 							<td>{{c.pengarang}}</td>
 							<td>{{c.penerbit}}</td>
@@ -115,17 +125,19 @@
 						</tr>
 					</tbody>
 				</table>
-				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbBuku.length > 0">
-					<li data-ng-class="{ disabled: cpagebk == 0 }"><a href="" data-ng-click="prevPagebk()">&laquo;</a></li>
-					<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
-					<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
+				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbFile.length > 0">
+					<li data-ng-class="{ disabled: cpagefl == 0 }"><a href="" data-ng-click="prevPagefl()">&laquo;</a></li>
+					<li data-ng-repeat="n in range(numpagefl)" data-ng-class="{ active: n == cpagefl }"><a href="" data-ng-click="setPagefl()" data-ng-bind="n+1">1</a></li>
+					<li data-ng-class="{ disabled: cpagefl == numpagefl - 1 }"><a href="" data-ng-click="nextPagefl()">&raquo;</a></li>
 				</ul>
 				
 				<div data-ng-show="detail && ! editing">
 					<div class="col-md-offset-1">
 						<table class="table" data-ng-repeat="c in dataDetail">
-							<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
+							<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
 							<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
+							<tr><td>TIPE FILE</td><td>:</td><td>{{c.tipe}}</td></tr>
+							<tr><td>UKURAN FILE</td><td>:</td><td>{{c.ukuran}}</td></tr>
 							<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
 							<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
 							<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
@@ -135,7 +147,7 @@
 							<tr><td colspan="4">&nbsp;</td></tr>
 						</table>
 					</div>
-					<h4 class="text-center">PENDOWNLOAD FILE</h4><br/>
+					<h4 class="text-center">PENGUNDUH BERKAS</h4><br/>
 					<table class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>

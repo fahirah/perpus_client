@@ -82,8 +82,62 @@ app.controller('PetugasCtrl', function($scope, $http){
 	};
 	$scope.nextPage = function(){
 		if($scope.cpage < $scope.numpage -1)
-			$scope.cpage;
+			$scope.cpage++;
 		$scope.loadData();
 	};
 		
+});
+
+/*beranda petugas controller */
+app.controller('BerandaPetugasCtrl', function($scope, $http){
+	if ( ! $scope.checkUser()) $scope.disconnect();
+	
+	//load data
+	$scope.db=[];
+	$scope.dbBukuBr=[];
+	$scope.dbFileBr=[];
+	$scope.loadData=function(){
+		$http({
+			url: $scope.server+'/admin/beranda', method:'GET'
+		}).
+		success(function(d){
+			$scope.jumanggota=d.jum_anggota;
+			$scope.jumbuku=d.jum_buku;
+			$scope.jumfile=d.jum_file;
+			$scope.dipinjam=d.judul;
+			$scope.diunduh=d.nama;
+			$scope.dbBukuBr=d.bukubaru;
+			$scope.dbFileBr=d.filebaru;
+		});
+	};
+	$scope.loadData(); //panggil fungsi	
+
+	$scope.batal = function(){
+		$scope.detail=false;
+		$scope.detailfile=false;
+	};
+	
+	$scope.detail = false;
+	$scope.dataDetail = [];
+	$scope.tampilDetail = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailbuku/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail=d.data;
+		});
+	}
+	
+	$scope.detailfile = false;
+	$scope.dataDetailFile = [];
+	$scope.tampilDetailFile = function(i) {
+		$scope.detailfile = true;
+		$http({
+			url: $scope.server+'/detailfile/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetailFile=d.data;
+		});
+	}	
 });

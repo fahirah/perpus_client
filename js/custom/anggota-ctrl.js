@@ -31,6 +31,22 @@ app.controller('BukuAnggotaCtrl', function($scope, $http){
 		kata:'', jenis:''
 	}
 	
+	$scope.batal = function(){
+		$scope.detail=false;
+	};
+	
+	$scope.detail = false;
+	$scope.dataDetail = [];
+	$scope.tampilDetail = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailbuku/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail=d.data;
+		});
+	}
+	
 	//pagination buku
 	$scope.jph=20;
 	
@@ -54,13 +70,14 @@ app.controller('BukuAnggotaCtrl', function($scope, $http){
 	};
 	$scope.nextPagebk = function(){
 		if($scope.cpagebk < $scope.numpagebk -1)
-			$scope.cpagebk;
+			$scope.cpagebk++;
 		$scope.loadData();
 	};	
 });
 
 /*file controller */
 app.controller('FileAnggotaCtrl', function($scope, $http){
+	if ( ! $scope.checkUser()) $scope.disconnect();
 	//load data file
 	$scope.cpagefl = 0;
 	$scope.numpagefl = 0;
@@ -105,6 +122,23 @@ app.controller('FileAnggotaCtrl', function($scope, $http){
 		$scope.editing = true;
 	}
 	
+	$scope.batal = function(){
+		$scope.editing = false;
+		$scope.detail = false;
+		$scope.resetBerkas();
+	};
+	
+	$scope.detail = false;
+	$scope.dataDetail = [];
+	$scope.tampilDetail = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailfile/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail=d.data;
+		});
+	}
 	//pagination file
 	$scope.jph=20;
 	
@@ -128,8 +162,34 @@ app.controller('FileAnggotaCtrl', function($scope, $http){
 	};
 	$scope.nextPagefl = function(){
 		if($scope.cpagefl < $scope.numpagefl -1)
-			$scope.cpagefl;
+			$scope.cpagefl++;
 		$scope.loadDataFile();
 	};		
 	
+});
+
+app.controller('PengaturanAnggotaCtrl', function($scope, $http){
+	if ( ! $scope.checkUser()) $scope.disconnect();
+		
+	$scope.dbPt=[];
+	$scope.loadDataAp=function(){
+		$http({
+			url: $scope.server+'/user/pengaturan?id='+$scope.user.id, method:'GET'
+		}).
+		success(function(d){
+			$scope.dbPt=d.datapt;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Data yang anda cari tidak ditemukan');
+		});
+	};
+	$scope.loadDataAp(); //panggil fungsi
+	
+	$scope.batal = function(){
+		$scope.resetPt();
+	};
+	
+	$scope.pt = {};	
+		
 });

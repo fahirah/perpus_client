@@ -1,12 +1,17 @@
 <div class="well">
-	<h3 class="text-center" data-ng-hide="editing">DATA FILE 
+	<div data-ng-show="detail">
+		<h3 class="text-center"> DETAIL DIGITAL
+			<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
+		</h3>
+	</div>
+	<h3 class="text-center" data-ng-show="!editing && !detail">DATA FILE 
 		<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true" data-ng-show="user.status == 1 && user.level=='d' "><i class="fa fa-plus"></i> Tambah File</button>
 	</h3><br/>
 	<h3 class="text-center" data-ng-show="editing">
 		TAMBAH / EDIT FILE
 		<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
 	</h3><br/><br/>
-	<form class="form form-horizontal" data-ng-hide="editing">
+	<form class="form form-horizontal" data-ng-show=" ! editing && ! detail">
 		<div class="form-group">
 			<div class="col-md-2"><input type="text" name="search" data-ng-model="search.kata"></div>
 			<div class="col-md-2">
@@ -18,7 +23,7 @@
 				</select>
 			</div>
 			<div class="col-md-2">
-				<button type="text" class="btn btn-primary btn-md"data-ng-click="loadData()"><i class="fa fa-search"></i>  cari</button>
+				<button type="text" class="btn btn-primary btn-md"data-ng-click="loadDataFile()"><i class="fa fa-search"></i>  cari</button>
 			</div>
 		</div>
 	</form><br/>
@@ -27,9 +32,13 @@
 		<div class="form-group">
 			<label for="nama" class="col-md-3 col-md-offset-2">Nama File</label>
 			<div class="col-md-3">
-				<input type="text" name="namalm" class="form-control tooltips" data-ng-model="berkas.nama" readonly>
-				<input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file>
+				<input type="hidden" name="namalm" class="form-control tooltips" data-ng-model="berkas.nama" readonly>
+				<input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file accept=".doc,.docx,.ppt,.pptx,.pdf,.xls,.xlsx">
 			</div>
+		</div>
+		<div class="form-group">
+			<label for="isbn" class="col-md-3 col-md-offset-2">Sampul File</label>
+				<div class="col-md-3"><input type="file" name="sampul" id="sampul" class="form-control tooltips" title="Masukkan sampul file" input-file2 accept=".jpg,.png,.jpeg,.gif"> <span class="help-block">*Pilih file kembali, jika gambar akan diganti.</span> </div>
 		</div>
 		<div class="form-group">
 			<label for="judul" class="col-md-3 col-md-offset-2">Judul</label>
@@ -77,45 +86,57 @@
 			<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-file>SIMPAN</button> </div>
 		</div>
 	</form>
-	<table class="table table-bordered table-striped table-hover" data-ng-hide="editing">
+	<table class="table table-bordered table-striped table-hover" data-ng-show=" !editing && !detail">
 		<thead>
 			<tr>
 				<th>NO.</th>
+				<th>SAMPUL</th>
 				<th>JUDUL</th>
 				<th>PENGARANG</th>
-				<th>MACAM</th>
-				<th>BAHASA</th>
-				<th>PENERBIT</th>
-				<th>TAHUN TERBIT</th>
 				<th>TGL UPLOAD</th>
-				<th>RINGKASAN</th>
 				<th data-ng-show="user.status==1">AKSI</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr data-ng-repeat="c in db">
 				<td>{{$index+1}}</td>
+				<td><img data-ng-src="{{server}}/{{c.sampul}}" style="width:50px; height:50px"></td>
 				<td>{{c.judul}}</td>
 				<td>{{c.pengarang}}</td> 
-				<td>{{c.macam}}</td>
-				<td>{{c.bahasa}}</td>
-				<td>{{c.penerbit}}</td>
-				<td>{{c.tahun}}</td>
 				<td>{{c.tgl}}</td>
-				<td>{{c.ringkasan}}</td>
 				<td data-ng-show="user.status==1">
-				<a href="" data-ng-show="c.idp==user.id" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
-				<a href="" data-ng-show="c.idp==user.id" hapus-file="{{c.kode}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
-				<a data-ng-href="{{server}}/download/{{c.kode}}/{{user.id}}" class="btn btn-sm tooltips" title="download"><i class="fa fa-download"></i></a></td>
+					<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
+					<a href="" data-ng-show="c.idp==user.id" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
+					<a href="" data-ng-show="c.idp==user.id" hapus-file="{{c.kode}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
+					<a data-ng-href="{{server}}/download/{{c.kode}}/{{user.id}}" class="btn btn-sm tooltips" title="download"><i class="fa fa-download"></i></a>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="12" align=""> <i class="fa fa-download"></i> : Download File </td>
 			</tr>
 		</tbody>
 	</table>
-	<ul class="pagination pagination-sm" data-ng-show=" ! editing && db.length > 0">
+	<ul class="pagination pagination-sm" data-ng-show=" ! editing && !detail && db.length > 0">
 		<li data-ng-class="{ disabled: cpagefl == 0 }"><a href="" data-ng-click="prevPagefl()">&laquo;</a></li>
 		<li data-ng-repeat="n in range(numpagefl)" data-ng-class="{ active: n == cpagefl }"><a href="" data-ng-click="setPagefl()" data-ng-bind="n+1">1</a></li>
 		<li data-ng-class="{ disabled: cpagefl == numpagefl - 1 }"><a href="" data-ng-click="nextPagefl()">&raquo;</a></li>
 	</ul>
+	
+	<div data-ng-show="detail && !editing">
+		<div class="col-md-offset-1">
+			<table class="table" data-ng-repeat="c in dataDetail">
+				<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
+				<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
+				<tr><td>TIPE FILE</td><td>:</td><td>{{c.tipe}}</td></tr>
+				<tr><td>UKURAN FILE</td><td>:</td><td>{{c.ukuran}}</td></tr>
+				<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
+				<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
+				<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
+				<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+				<tr><td>TGL UPLOAD</td><td>:</td><td>{{c.tgl}}</td></tr>
+				<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
+				<tr><td colspan="4">&nbsp;</td></tr>
+			</table>
+		</div>
+	</div>
 </div>

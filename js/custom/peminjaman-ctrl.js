@@ -6,6 +6,10 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	$scope.cpagepjm = 0;
 	$scope.numpagepjm = 0;
 	$scope.kata='';
+	$scope.jumpjm=0;
+	$scope.search={
+		status:'',tgl:'',noid:'', bulan:'', kd:'', jd:''
+	};
 	$scope.pjm={
 		anggota:'',buku:''
 	}
@@ -13,11 +17,16 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	$scope.dbPjm=[];
 	$scope.loadDataPjm=function(){
 		$http({
-			url: $scope.server+'/admin/peminjaman?cpagepjm='+$scope.cpagepjm+'&kata='+$scope.kata, method:'GET'
+			url: $scope.server+'/admin/peminjaman?cpagepjm='+$scope.cpagepjm+'&status='+$scope.search.status+'&tgl='+$scope.search.tgl+'&noid='+$scope.search.noid+'&bulan='+$scope.search.bulan+'&kdbuku='+$scope.search.kd+'&jdbuku='+$scope.search.jd, method:'GET'
 		}).
 		success(function(d){
 			$scope.dbPjm=d.data;
+			$scope.jumpjm=d.jumlah;
 			$scope.numpagepjm=d.numpagepjm;
+			$scope.search.status='';
+			$scope.search.tgl='';
+			$scope.search.noid='';
+			$scope.search.bulan='';
 		}).
 		error(function(e, s, h){
 			//kalau error
@@ -107,6 +116,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 		success(function(d){
 			alertify.success('Perpanjangan buku berhasil disimpan');
 			$scope.detail = false;
+			$scope.loadDataPjm();
 		});
 	}
 	
@@ -118,6 +128,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 		success(function(d){
 			alertify.success('Buku dikembalikan berhasil disimpan');
 			$scope.detail= false;
+			$scope.loadDataPjm();
 			//$scope.tampilDetail(i);
 		});
 	}
@@ -146,7 +157,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	};
 	$scope.nextPagepjm = function(){
 		if($scope.cpagepjm < $scope.numpagepjm -1)
-			$scope.cpagepjm;
+			$scope.cpagepjm++;
 		$scope.loadDataPjm();
 	};
 	

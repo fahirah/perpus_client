@@ -97,12 +97,13 @@
 							<td>{{c.level}}</td>
 							<td>{{c.kd}}</td>
 							<td>
+								<a href="" cetak-Kartu="{{c.id}}" class="btn btn-sm tooltips" title="cetak kartu anggota"><i class="fa fa-print"></i></a>
 								<a href="" reset-Anggota="{{c.id}}" class="btn btn-sm tooltips" title="reset password"><i class="fa fa-wrench"></i></a>
 								<a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
 								<a href="" hapus-anggota="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
 						</tr>
 						<tr>
-							<td colspan="12" align=""> <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
+							<td colspan="12" align=""> <i class="fa fa-print"></i> : Cetak Kartu &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-wrench"></i> : Reset Password  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;  <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
 						</tr>
 					</tbody>
 				</table>

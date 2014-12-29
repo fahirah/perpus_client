@@ -25,6 +25,7 @@ app.controller('FilePetugasCtrl', function($scope, $http){
 	$scope.loadDataFile(); //panggil fungsi
 	
 	$scope.file=null;
+	$scope.file2=null;
 	$scope.berkas = {};	
 	
 	$scope.resetBerkas= function(){
@@ -83,7 +84,7 @@ app.controller('FilePetugasCtrl', function($scope, $http){
 	};
 	$scope.nextPagefl = function(){
 		if($scope.cpagefl < $scope.numpagefl -1)
-			$scope.cpagefl;
+			$scope.cpagefl++;
 		$scope.loadDataFile();
 	};		
 	

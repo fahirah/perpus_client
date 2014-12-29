@@ -137,7 +137,8 @@ app.directive('simpanFile', function(){
 			//fd.append("file", e.target.files[0]);
 			fd.append("status", $scope.user.status);
 			fd.append("id_user", $scope.user.id);
-			fd.append("file", $scope.file);
+			fd.append("file1", $scope.file);
+			fd.append("file2", $scope.file2);
 			fd.append("id", $scope.berkas.id);
 			fd.append("judul", $scope.berkas.judul);
 			fd.append("pengarang", $scope.berkas.pengarang);
@@ -248,7 +249,122 @@ app.directive('simpanAp', ['$http', function($http) {
 			success(function(d){
 				elm.button('reset');
 				alertify.success('Data pengaturan aplikasi berhasil disimpan');
-				$scope.db=d;
+				$scope.db=data;
+			}).
+			error(function(e, s, h) { elm.button('reset'); });
+		});
+	}
+}]);
+
+/* simpan prodi */
+app.directive('simpanProdi', ['$http', function($http) {
+	return function($scope, elm) {
+		elm.click(function(e) {
+			//validasi
+			if($scope.pr.namapr.length < 2) return alertify.error('Nama prodi tidak boleh kosong');
+			
+			elm.button('loading');
+			$http({ url:$scope.server + '/admin/pengaturanprodi?id='+$scope.user.id, method: 'POST', data:$scope.pr }).
+			success(function(d){
+				elm.button('reset');
+				alertify.success('Data prodi berhasil disimpan');
+				$scope.batal();
+				$scope.dbPr=d.datapr;
+			}).
+			error(function(e, s, h) { elm.button('reset'); });
+		});
+	}
+}]);
+
+/*hapus peminjaman */
+app.directive('hapusProdi', ['$http', function($http) {
+	return function($scope, elm, attrs) {
+		elm.click(function(e) {
+			alertify.confirm('Yakin data ini akan dihapus?', function(e){
+				if(e){
+					$http({ url:$scope.server + '/admin/pengaturanprodi/'+attrs.hapusProdi, method: 'DELETE' }).
+					success(function(d){
+						alertify.success('Data prodi berhasil dihapus');
+						$scope.batal();
+						$scope.dbPr=d.datapr;
+					});
+				}
+			});
+		});
+	}
+}]);
+
+
+/* simpan akun */
+app.directive('simpanAkun', ['$http', function($http) {
+	return function($scope, elm) {
+		elm.click(function(e) {
+			if($scope.dbPt.pw != $scope.dbPt.pw2){
+				return alertify.error("password harus sama. . .");
+			}
+			elm.button('loading');
+			$http({ url:$scope.server + '/admin/pengaturanakun?id='+$scope.user.id, method: 'POST', data:$scope.dbPt }).
+			success(function(d){
+				elm.button('reset');
+				alertify.success('Data akun berhasil disimpan');
+				$scope.batal();
+				$scope.dbPt=d.datapt;
+			}).
+			error(function(e, s, h) { elm.button('reset'); });
+		});
+	}
+}]);
+
+/* simpan petugas/admin */
+app.directive('simpanAdmin', ['$http', function($http) {
+	return function($scope, elm) {
+		elm.click(function(e) {
+					
+			elm.button('loading');
+			$http({ url:$scope.server + '/admin/petugas?id='+$scope.user.id, method: 'POST', data:$scope.ad }).
+			success(function(d){
+				elm.button('reset');
+				alertify.success('Data petugas berhasil disimpan');
+				$scope.batal();
+				$scope.dbAd=d.dataad;
+			}).
+			error(function(e, s, h) { elm.button('reset'); });
+		});
+	}
+}]);
+
+/*hapus petugas */
+app.directive('hapusPetugas', ['$http', function($http) {
+	return function($scope, elm, attrs) {
+		elm.click(function(e) {
+			alertify.confirm('Yakin data ini akan dihapus?', function(e){
+				if(e){
+					$http({ url:$scope.server + '/admin/petugas/'+attrs.hapusPetugas, method: 'DELETE' }).
+					success(function(d){
+						alertify.success('Data petugas berhasil dihapus');
+						$scope.batal();
+						$scope.dbAd=d.dataad;
+					});
+				}
+			});
+		});
+	}
+}]);
+
+/* simpan akun anggota */
+app.directive('simpanAkunanggota', ['$http', function($http) {
+	return function($scope, elm) {
+		elm.click(function(e) {
+			if($scope.dbPt.pw != $scope.dbPt.pw2){
+				return alertify.error("password harus sama. . .");
+			}
+			elm.button('loading');
+			$http({ url:$scope.server + '/user/pengaturan?id='+$scope.user.id, method: 'POST', data:$scope.dbPt }).
+			success(function(d){
+				elm.button('reset');
+				alertify.success('Data akun berhasil disimpan');
+				$scope.batal();
+				$scope.dbPt=d.datapt;
 			}).
 			error(function(e, s, h) { elm.button('reset'); });
 		});

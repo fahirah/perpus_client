@@ -1,0 +1,85 @@
+<div class="well">
+	<div data-ng-show="detail">
+		<h3 class="text-center">DATA DETAIL BUKU
+			<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
+		</h3>
+	</div>
+	<div data-ng-show="detailfile">
+		<h3 class="text-center"> DETAIL DIGITAL
+			<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
+		</h3>
+	</div>
+	<div class="col-md-6" data-ng-show=" !detail && !detailbuku && !detailfile && dbBukuBr.length > 0">
+		<table class="table table-bordered" data-ng-repeat="c in dbBukuBr" >
+		<tbody>
+			<tr><td width="150px"><img data-ng-src="{{server}}/{{c.sampul}}" style="width:100px; height:100px"></td>
+				<td width=""><strong>{{c.judul}} / {{c.tahun}}</strong><br/>
+					{{c.pengarang}}<br/>
+					{{c.isbn}}<br/>
+					{{c.penempatan}}<br/>
+				<a href="" data-ng-click="tampilDetail(c.kode)" class="tooltips" title="detail data"><button class="btn btn-xs btn-info">Detail</button></a>
+			</td>
+			</tr>		
+		</tbody>
+		</table>
+	</div>
+	
+	<div class="col-md-6" data-ng-show="! detail && ! detailfile && dbFileBr.length > 0">
+		<table class="table table-bordered table-striped table-hover" data-ng-repeat="c in dbFileBr">
+			<tbody>
+				<tr><td width="150px"><img data-ng-src="{{server}}/{{c.sampul}}" style="width:100px; height:100px"></td>
+					<td><strong>{{c.judul}}</strong><br/>
+						{{c.pengarang}}<br/> 
+						{{c.tipe}} / {{c.ukuran}}<br/> 
+						{{c.tgl}} <br/>
+						<a href="" data-ng-click="tampilDetailFile(c.kode)" class="tooltips" title="detail data"><button class="btn btn-xs btn-info">Detail</button></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="col-md-offset-2">
+		</div>
+	</div>
+	<div data-ng-show="detail && dataDetail.length>0">
+		<table class="table" data-ng-repeat="c in dataDetail">
+			<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KODE BUKU</td><td>:</td><td width="">{{c.kode}}</td></tr>
+			<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
+			<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
+			<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
+			<tr><td>STOK</td><td>:</td><td>{{c.stok}}</td></tr>
+			<tr><td>SISA STOK</td><td>:</td><td>{{c.sisa}}</td></tr>
+			<tr><td>NO PENEMPATAN</td><td>:</td><td>{{c.penempatan}}</td></tr>
+			<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
+			<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
+			<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
+			<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+			<tr><td colspan="4">&nbsp;</td></tr>
+		</table>
+	</div>
+	
+	<div data-ng-show="detailfile && dataDetailFile.length>0">
+		<table class="table table-bordered table-hover" data-ng-repeat="c in dataDetailFile">
+			<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
+			<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
+			<tr><td>TIPE FILE</td><td>:</td><td>{{c.tipe}}</td></tr>
+			<tr><td>UKURAN FILE</td><td>:</td><td>{{c.ukuran}}</td></tr>
+			<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
+			<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
+			<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
+			<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+			<tr><td>TGL UPLOAD</td><td>:</td><td>{{c.tgl}}</td></tr>
+			<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
+			<tr><td colspan="4">&nbsp;</td></tr>
+		</table>
+	</div>
+	<br/><br/>
+	<table class="table table-bordered table-striped table-hover col-md-offset-3" style="width:60%" data-ng-show=" !detail && !detailbuku && !detailfile">
+		<tbody>
+			<tr><td width="35%">Jumlah Anggota</td><td width="5%">:</td><td width="">{{jumanggota}} Orang</td></tr>
+			<tr><td>Jumlah Buku</td><td>:</td><td>{{jumbuku}} Buku</td></tr>
+			<tr><td>Jumlah File</td><td>:</td><td>{{jumfile}} File</td></tr>
+			<tr><td>Buku Yang Banyak Dipinjam</td><td>:</td><td>{{dipinjam}}</td></tr>
+			<tr><td>File Yang Banyak Diunduh</td><td>:</td><td>{{diunduh}}</td></tr>
+		</tbody>
+	</table>	
+</div>

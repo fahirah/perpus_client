@@ -11,14 +11,6 @@ config(function($routeProvider, $httpProvider) {
 		templateUrl: 'html/login.html', 
 		controller: 'LoginCtrl' 
 	})
-	.when('/buku', { 
-		templateUrl: 'html/buku.html', 
-		controller: 'BukuCtrl' 
-	})
-	.when('/file', { 
-		templateUrl: 'html/file.html', 
-		controller: 'FileCtrl' 
-	})
 	.when('/user/buku', { 
 		templateUrl: 'html/user/buku.html', 
 		controller: 'BukuAnggotaCtrl' 
@@ -31,9 +23,17 @@ config(function($routeProvider, $httpProvider) {
 		templateUrl: 'html/user/peminjaman.html', 
 		controller: 'PeminjamanAnggotaCtrl' 
 	})
+	.when('/user/pengaturan', { 
+		templateUrl: 'html/user/pengaturan.html', 
+		controller: 'PengaturanAnggotaCtrl' 
+	})
 	.when('/admin/anggota', { 
 		templateUrl: 'html/admin/anggota.html', 
 		controller: 'PetugasCtrl' 
+	})
+	.when('/admin/beranda', { 
+		templateUrl: 'html/admin/beranda.html', 
+		controller: 'BerandaPetugasCtrl' 
 	})
 	.when('/admin/buku', { 
 		templateUrl: 'html/admin/buku.html', 

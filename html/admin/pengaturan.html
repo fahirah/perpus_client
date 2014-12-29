@@ -2,9 +2,10 @@
 	<div class="row">
 		<div class="col">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="" data-target="#aplikasi" data-toggle="tab"><span class="fa fa-fw fa-dekstop"></span> Aplikasi</a></li>
-				<li><a href="" data-target="#prodi" data-toggle="tab"><span class=""></span> Prodi</a></li>
-				<li><a href="" data-target="#akun" data-toggle="tab"><span class=""></span> Akun</a></li>
+				<li class="active"><a href="" data-target="#aplikasi" data-toggle="tab"><span class="fa fa-desktop"></span> Aplikasi</a></li>
+				<li><a href="" data-target="#prodi" data-toggle="tab"><span class="fa fa-columns"></span> Prodi</a></li>
+				<li><a href="" data-target="#petugas" data-toggle="tab"><span class="fa fa-users"></span> Petugas</a></li>
+				<li><a href="" data-target="#akun" data-toggle="tab"><span class="fa fa-gears"></span> Akun</a></li>
 			</ul>
 		</div>
 	</div>
@@ -44,13 +45,13 @@
 					</h3>
 					<br/><br/>			
 					<hr>				
-					<form class="form form-horizontal" data-ng-show="editing">
+					<form class="form form-horizontal" data-ng-show="editing" >
 						<div class="form-group">
 							<label for="nama" class="col-md-3 col-md-offset-2">Nama</label>
-							<div class="col-md-3"><input type="text" name="nama" data-ng-model="anggota.nama" placeholder="Nama" class="form-control tooltips" title="Masukkan nama"></div>
+							<div class="col-md-3"><input type="text" name="nama" data-ng-model="pr.namapr" placeholder="Nama" class="form-control tooltips" title="Masukkan nama"></div>
 						</div>
 						<div class="form-group">
-							<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-anggota>SIMPAN</button> <button class="btn btn-info btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetAnggota()">RESET</button> </div>
+							<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-prodi>SIMPAN</button> <button class="btn btn-info btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetPr()">RESET</button> </div>
 						</div>
 					</form>
 					
@@ -64,11 +65,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr data-ng-repeat="c in db">
-								<td>{{(jph*cpage)+$index+1}}</td>
-								<td>{{c.id}}</td>
-								<td>{{c.nama}}</td>
-								<td><a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a><a href="" hapus-anggota="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
+							<tr data-ng-repeat="c in dbPr">
+								<td>{{$index+1}}</td>
+								<td>{{c.kodepr}}</td>
+								<td>{{c.namapr}}</td>
+								<td><a href="" data-ng-click="setEditPr($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a><a href="" hapus-prodi="{{c.kodepr}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
 							</tr>
 							<tr>
 								<td colspan="12" align=""> <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
@@ -78,7 +79,105 @@
 			
 				</div>
 				<div class="tab-pane" id="akun">
-					akun
+					<form class="form form-horizontal" >
+						<div class="form-group">
+							<label for="nama" class="col-md-3 col-md-offset-2">Nama</label>
+							<div class="col-md-3"><input type="text" name="nama" data-ng-model="dbPt.nama" id="nama" class="form-control tooltips" title="nama"></div>
+						</div>
+						<div class="form-group">
+							<label for="jk" class="col-md-3 col-md-offset-2">Jenis Kelamin</label>
+							<div class="col-md-3">
+								<label><input type="radio" name="gender" value="L" data-ng-model="dbPt.jk"> Laki-Laki </label> &nbsp;
+								<label><input type="radio" name="gender" value="P" data-ng-model="dbPt.jk"> Perempuan </label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="telp" class="col-md-3 col-md-offset-2">Telp</label>
+							<div class="col-md-3"><input type="text" name="telp" data-ng-model="dbPt.telp" id="telp" class="form-control tooltips" title="telp"></div>
+						</div>
+						<div class="form-group">
+							<label for="un" class="col-md-3 col-md-offset-2">Username</label>
+							<div class="col-md-3"><input type="text" name="un" data-ng-model="dbPt.un"  id="un" class="form-control tooltips" title="username"></div>
+						</div>
+						<div class="form-group">
+							<label for="pw" class="col-md-3 col-md-offset-2">Password</label>
+							<div class="col-md-3"><input type="password" name="pw" data-ng-model="dbPt.pw"  id="pw" class="form-control tooltips" title="password"><span class="help-block">*isi password, jika password ingin diubah.</span></div>
+						</div>
+						<div class="form-group">
+							<label for="pw2" class="col-md-3 col-md-offset-2">Konfirmasi Password</label>
+							<div class="col-md-3"><input type="password" name="pw2" data-ng-model="dbPt.pw2"  id="pw2" class="form-control tooltips" title="konfirmasi password"><span class="help-block">*konfirmasi ganti password </span></div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-akun>UBAH</button></div>
+						</div>
+					</form>
+				</div>
+				<div class="tab-pane" id="petugas">
+					<h3 class="text-center" data-ng-hide="editing">
+						DATA PETUGAS
+						<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Petugas</button>
+					</h3>
+					<h3 class="text-center" data-ng-show="editing">
+						TAMBAH / EDIT PETUGAS
+						<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
+					</h3>
+					<br/><br/>			
+					<hr>				
+					<form class="form form-horizontal" data-ng-show="editing" >
+						<div class="form-group">
+							<label for="nama" class="col-md-3 col-md-offset-2">Nama</label>
+							<div class="col-md-3"><input type="text" name="nama" data-ng-model="ad.nama" placeholder="Nama" class="form-control tooltips" title="Masukkan nama"></div>
+						</div>
+						<div class="form-group">
+							<label for="" class="col-md-3 col-md-offset-2">Jenis Kelamin</label>
+							<div class="col-md-3">
+								<label><input type="radio" name="gender" value="L" data-ng-model="ad.jk"> Laki-Laki </label> &nbsp;
+								<label><input type="radio" name="gender" value="P" data-ng-model="ad.jk"> Perempuan </label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="telp" class="col-md-3 col-md-offset-2">Telp</label>
+							<div class="col-md-2"><input type="text" name="telp" data-ng-model="ad.telp"  placeholder="telp" id="telp" class="form-control tooltips" title="Masukkan telp" number-input></div>
+						</div>
+						<div class="form-group">
+							<label for="un" class="col-md-3 col-md-offset-2">Username</label>
+							<div class="col-md-3"><input type="text" name="un" data-ng-model="ad.un" placeholder="Username" class="form-control tooltips" title="Masukkan username"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-admin>SIMPAN</button> <button class="btn btn-info btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetAd()">RESET</button> </div>
+						</div>
+					</form>
+					
+					<table class="table table-bordered table-striped table-hover" data-ng-hide="editing">
+						<thead>
+							<tr>
+								<th>NO</th>
+								<th>ID PETUGAS</th>
+								<th>NAMA</th>
+								<th>JENIS KELAMIN</th>
+								<th>TELP</th>
+								<th>USERNAME</th>
+								<th>AKSI</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="c in dbAd">
+								<td>{{$index+1}}</td>
+								<td>{{c.idad}}</td>
+								<td>{{c.nama}}</td>
+								<td>{{c.gender}}</td>
+								<td>{{c.telp}}</td>
+								<td>{{c.un}}</td>
+								<td>
+									<a href="" data-ng-click="setEditAd($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
+									<a href="" hapus-petugas="{{c.idad}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
+							</tr>
+							<tr>
+								<td colspan="12" align=""> <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>
+							</tr>
+						</tbody>
+					</table>
+			
 				</div>
 			</div>
 		</div>

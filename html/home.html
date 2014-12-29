@@ -1,5 +1,15 @@
 <div class="well">
-<div class="well col-md-8 col-md-offset-2"><br/><br/>
+	<div data-ng-show="detail">
+		<h3 class="text-center">DATA DETAIL BUKU
+			<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
+		</h3>
+	</div>
+	<div data-ng-show="detailfile">
+		<h3 class="text-center"> DETAIL DIGITAL
+			<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
+		</h3>
+	</div>
+<div class="well col-md-8 col-md-offset-2" data-ng-show="! detail && ! detailfile"><br/><br/>
 	<form class="form form-horizontal">
 		<div class="form-group">
 			<div>
@@ -20,17 +30,18 @@
 					</tr>
 					<tr>
 						<td width="7px">&nbsp;</td>
-						<td width="">ISBN/ISSN</td>
-						<td width="200px"><input type="text" name="nama" data-ng-model="search.isbn" placeholder="ISBN/ISSN" class="form-control tooltips" title="Masukkan nama"></td>
-						<td width="80px">&nbsp;</td>
 						<td width="">Tipe</td>
 						<td width="200px">
 							<select name="tipe" id="tipe" data-ng-model="search.tipe" class="form-control">
 								<option value="">-- semua tipe --</option>
 								<option value="buku">buku</option>
 								<option value="file">file</option>
-							</select>	</td>
+							</select>	
+						</td>
 						<td width="100px">&nbsp;</td>
+						<td width="" ><div data-ng-show="search.tipe=='buku'">ISBN/ISSN</div></td>
+						<td width="200px"><input type="text" name="isbn" data-ng-model="search.isbn" placeholder="ISBN/ISSN" class="form-control tooltips" title="Masukkan isbn" data-ng-show="search.tipe=='buku'"></td>
+						<td width="80px">&nbsp;</td>
 					</tr>
 				</table>
 			</div>
@@ -40,73 +51,80 @@
 		</div>
 	</form>
 </div>	
-	<table class="table table-bordered table-striped table-hover" data-ng-show=" db.length > 0">
-	<thead>
-		<tr>
-			<th>NO.</th>
-			<th>KODE BUKU</th>
-			<th>ISBN BUKU</th>
-			<th>JUDUL</th>
-			<th>PENGARANG</th>
-			<th>SISA STOK</th>
-			<th>MACAM</th>
-			<th>BAHASA</th>
-			<th>PENERBIT</th>
-			<th>TAHUN TERBIT</th>
-		</tr>
-	</thead>
+<div  class="col-md-6" data-ng-show=" !detail && !detailfile && db.length > 0"data-ng-show=" !detail && !detailfile && db.length > 0">
+	<table class="table " style="width:60%"  data-ng-repeat="c in db" >
 	<tbody>
-		<tr data-ng-repeat="c in db">
-			<td>{{$index+1}}</td>
-			<td>{{c.kode}}</td>
-			<td>{{c.isbn}}</td>
-			<td>{{c.judul}}</td>
-			<td>{{c.pengarang}}</td>
-			<td>{{c.stok}}</td>
-			<td>{{c.macam}}</td>
-			<td>{{c.bahasa}}</td>
-			<td>{{c.penerbit}}</td>
-			<td>{{c.tahun}}</td>
-		</tr>
+		<tr><td width="150px"><img data-ng-src="{{server}}/{{c.sampul}}" style="width:100px; height:100px"></td>
+			<td width=""><strong>{{c.judul}} / {{c.tahun}}</strong><br/>
+				{{c.pengarang}}<br/>
+				{{c.isbn}}<br/>
+				{{c.penempatan}}<br/><br/>
+				<a href="" data-ng-click="tampilDetail(c.kode)" class="tooltips" title="detail data"><button class="btn btn-xs btn-info">Detail</button></a>
+			</td>
+		</tr>		
 	</tbody>
 	</table>
-	<ul class="pagination pagination-sm" data-ng-show=" db.length > 0">
-		<li data-ng-class="{ disabled: cpagebk == 0 }"><a href="" data-ng-click="prevPagebk()">&laquo;</a></li>
-		<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
-		<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
-	</ul>
-	
-		<table class="table table-bordered table-striped table-hover" data-ng-show=" dbFile.length > 0">
-		<thead>
-			<tr>
-				<th>NO.</th>
-				<th>JUDUL</th>
-				<th>PENGARANG</th>
-				<th>MACAM</th>
-				<th>BAHASA</th>
-				<th>PENERBIT</th>
-				<th>TAHUN TERBIT</th>
-				<th>TGL UPLOAD</th>
-				<th>RINGKASAN</th>
-			</tr>
-		</thead>
+	<div class="col-md-offset-2">
+		<ul class="pagination pagination-sm">
+			<li data-ng-class="{ disabled: cpagebk == 0 }"><a href="" data-ng-click="prevPagebk()">&laquo;</a></li>
+			<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
+			<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
+		</ul>
+	</div>
+</div>
+<br/><br/><br/><br/>
+<div class="col-md-6" data-ng-show="! detail && ! detailfile && dbFile.length > 0">
+	<table class="table" style="width:60%"  data-ng-repeat="c in dbFile">
 		<tbody>
-			<tr data-ng-repeat="c in dbFile">
-				<td>{{$index+1}}</td>
-				<td>{{c.judul}}</td>
-				<td>{{c.pengarang}}</td> 
-				<td>{{c.macam}}</td>
-				<td>{{c.bahasa}}</td>
-				<td>{{c.penerbit}}</td>
-				<td>{{c.tahun}}</td>
-				<td>{{c.tgl}}</td>
-				<td>{{c.ringkasan}}</td>
+			<tr>
+				<td width="150px"><img data-ng-src="{{server}}/{{c.sampul}}" style="width:100px; height:100px"></td>
+				<td><strong>{{c.judul}}</strong><br/>
+					{{c.pengarang}}<br/> 
+					{{c.tipe}} / {{c.ukuran}}<br/> 
+					{{c.tgl}} <br/>
+					<a href="" data-ng-click="tampilDetailFile(c.kode)" class="tooltips" title="detail data"><button class="btn btn-xs btn-info">Detail</button></a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
-	<ul class="pagination pagination-sm" data-ng-show=" dbFile.length > 0">
-		<li data-ng-class="{ disabled: cpagefl == 0 }"><a href="" data-ng-click="prevPagefl()">&laquo;</a></li>
-		<li data-ng-repeat="n in range(numpagefl)" data-ng-class="{ active: n == cpagefl }"><a href="" data-ng-click="setPagefl()" data-ng-bind="n+1">1</a></li>
-		<li data-ng-class="{ disabled: cpagefl == numpagefl - 1 }"><a href="" data-ng-click="nextPagefl()">&raquo;</a></li>
-	</ul>
+	<div class="col-md-offset-2">
+		<ul class="pagination pagination-sm" >
+			<li data-ng-class="{ disabled: cpagefl == 0 }"><a href="" data-ng-click="prevPagefl()">&laquo;</a></li>
+			<li data-ng-repeat="n in range(numpagefl)" data-ng-class="{ active: n == cpagefl }"><a href="" data-ng-click="setPagefl()" data-ng-bind="n+1">1</a></li>
+			<li data-ng-class="{ disabled: cpagefl == numpagefl - 1 }"><a href="" data-ng-click="nextPagefl()">&raquo;</a></li>
+		</ul>
+	</div>
+</div>
+	<div data-ng-show="detail">
+		<table class="table" data-ng-repeat="c in dataDetail">
+			<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KODE BUKU</td><td>:</td><td width="">{{c.kode}}</td></tr>
+			<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
+			<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
+			<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
+			<tr><td>STOK</td><td>:</td><td>{{c.stok}}</td></tr>
+			<tr><td>SISA STOK</td><td>:</td><td>{{c.sisa}}</td></tr>
+			<tr><td>NO PENEMPATAN</td><td>:</td><td>{{c.penempatan}}</td></tr>
+			<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
+			<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
+			<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
+			<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+			<tr><td colspan="4">&nbsp;</td></tr>
+		</table>
+	</div>
+	
+	<div data-ng-show="detailfile">
+		<table class="table" data-ng-repeat="c in dataDetailFile">
+			<tr><td rowspan="10" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
+			<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
+			<tr><td>TIPE FILE</td><td>:</td><td>{{c.tipe}}</td></tr>
+			<tr><td>UKURAN FILE</td><td>:</td><td>{{c.ukuran}}</td></tr>
+			<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
+			<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
+			<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
+			<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+			<tr><td>TGL UPLOAD</td><td>:</td><td>{{c.tgl}}</td></tr>
+			<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
+			<tr><td colspan="4">&nbsp;</td></tr>
+		</table>
+	</div>
 </div>

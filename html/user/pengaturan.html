@@ -1,0 +1,38 @@
+<div class="well">
+	<form class="form form-horizontal" >
+		<div class="form-group">
+			<label for="noid" class="col-md-3 col-md-offset-2">No Identitas</label>
+			<div class="col-md-3"><input type="text" name="noid" data-ng-model="dbPt.noid" id="noid" class="form-control tooltips" title="noid" readonly ></div>
+		</div>
+		<div class="form-group">
+			<label for="nama" class="col-md-3 col-md-offset-2">Nama</label>
+			<div class="col-md-3"><input type="text" name="nama" data-ng-model="dbPt.nama" id="nama" class="form-control tooltips" title="nama"></div>
+		</div>
+		<div class="form-group">
+			<label for="jk" class="col-md-3 col-md-offset-2">Jenis Kelamin</label>
+			<div class="col-md-3">
+				<label><input type="radio" name="gender" value="L" data-ng-model="dbPt.jk"> Laki-Laki </label> &nbsp;
+				<label><input type="radio" name="gender" value="P" data-ng-model="dbPt.jk"> Perempuan </label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="alamat" class="col-md-3 col-md-offset-2">Alamat</label>
+			<div class="col-md-4"><input type="text" name="alamat" data-ng-model="dbPt.alamat"  placeholder="alamat" id="alamat" class="form-control tooltips" title="Masukkan alamat"></div>
+					</div>
+		<div class="form-group">
+			<label for="telp" class="col-md-3 col-md-offset-2">Telp</label>
+			<div class="col-md-3"><input type="text" name="telp" data-ng-model="dbPt.telp" id="telp" class="form-control tooltips" title="telp"></div>
+		</div>
+		<div class="form-group">
+			<label for="pw" class="col-md-3 col-md-offset-2">Password</label>
+			<div class="col-md-3"><input type="password" name="pw" data-ng-model="dbPt.pw"  id="pw" class="form-control tooltips" title="password"><span class="help-block">*isi password, jika password ingin diubah.</span></div>
+		</div>
+		<div class="form-group">
+			<label for="pw2" class="col-md-3 col-md-offset-2">Konfirmasi Password</label>
+			<div class="col-md-3"><input type="password" name="pw2" data-ng-model="dbPt.pw2"  id="pw2" class="form-control tooltips" title="konfirmasi password"><span class="help-block">*konfirmasi ganti password </span></div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-akunanggota>UBAH</button></div>
+		</div>
+	</form>
+</div>

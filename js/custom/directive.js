@@ -19,6 +19,13 @@ app.directive('inputFile',function(){
 	};
 });
 
+//Input file
+app.directive('inputFile2',function(){
+	return function($scope,elm){
+		elm.on('change', function(e) { $scope.file2 = e.target.files[0]; });
+	};
+});
+
 /**
  * Popover
  */
