@@ -64,10 +64,8 @@ app.directive('simpanBuku', function() {
 		elm.click(function(e) {
 			var fd=new FormData();
 			//validasi
-			if($scope.buku.kode.length < 4) return alertify.error('Kode buku tidak boleh kosong');
 			if($scope.buku.judul.length < 4) return alertify.error('Judul buku tidak boleh kosong');
 			if($scope.buku.pengarang.length < 3) return alertify.error('Pengarang buku tidak boleh kosong');
-			if($scope.buku.stok.length < 1) return alertify.error('Stok buku tidak boleh kosong');
 			if($scope.buku.macam.length < 0 || $scope.buku.macam==null) return alertify.error('Macam buku tidak boleh kosong');
 			if($scope.buku.bahasa.length < 0 || $scope.buku.bahasa==null) return alertify.error('Bahasa buku tidak boleh kosong');
 			if($scope.buku.penempatan.length < 3) return alertify.error('No penempatan buku tidak boleh kosong');

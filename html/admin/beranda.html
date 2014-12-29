@@ -2,12 +2,12 @@
 	<div data-ng-show="detail">
 		<h3 class="text-center">DATA DETAIL BUKU
 			<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
-		</h3>
+		</h3><br/><br/>
 	</div>
 	<div data-ng-show="detailfile">
 		<h3 class="text-center"> DETAIL DIGITAL
 			<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
-		</h3>
+		</h3></br><br/>
 	</div>
 	<div class="col-md-6" data-ng-show=" !detail && !detailbuku && !detailfile && dbBukuBr.length > 0">
 		<table class="table table-bordered" data-ng-repeat="c in dbBukuBr" >
@@ -46,8 +46,6 @@
 			<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
 			<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
 			<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
-			<tr><td>STOK</td><td>:</td><td>{{c.stok}}</td></tr>
-			<tr><td>SISA STOK</td><td>:</td><td>{{c.sisa}}</td></tr>
 			<tr><td>NO PENEMPATAN</td><td>:</td><td>{{c.penempatan}}</td></tr>
 			<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
 			<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
@@ -58,7 +56,7 @@
 	</div>
 	
 	<div data-ng-show="detailfile && dataDetailFile.length>0">
-		<table class="table table-bordered table-hover" data-ng-repeat="c in dataDetailFile">
+		<table class="table " data-ng-repeat="c in dataDetailFile">
 			<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
 			<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
 			<tr><td>TIPE FILE</td><td>:</td><td>{{c.tipe}}</td></tr>
