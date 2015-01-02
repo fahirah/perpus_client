@@ -105,14 +105,14 @@
 				<td>{{c.pengarang}}</td> 
 				<td>{{c.tgl}}</td>
 				<td data-ng-show="user.status==1">
-					<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
+					<a href="" data-ng-click="tampilDetail(c.id)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
 					<a href="" data-ng-show="c.idp==user.id" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
-					<a href="" data-ng-show="c.idp==user.id" hapus-file="{{c.kode}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
-					<a data-ng-href="{{server}}/download/{{c.kode}}/{{user.id}}" class="btn btn-sm tooltips" title="download"><i class="fa fa-download"></i></a>
+					<a href="" data-ng-show="c.idp==user.id" hapus-file="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
+					<a data-ng-href="{{server}}/download/{{c.id}}/{{user.id}}" class="btn btn-sm tooltips" title="download"><i class="fa fa-download"></i></a>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="12" align=""> <i class="fa fa-download"></i> : Download File </td>
+				<td colspan="12" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-download"></i> : Download File </td>
 			</tr>
 		</tbody>
 	</table>

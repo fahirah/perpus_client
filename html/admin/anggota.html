@@ -66,7 +66,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-anggota>SIMPAN</button> <button class="btn btn-info btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetAnggota()">RESET</button> </div>
+						<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-anggota>SIMPAN</button> <button class="btn btn-info btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetAnggota()">BATAL</button> </div>
 					</div>
 				</form>
 				
@@ -114,4 +114,7 @@
 					<li data-ng-repeat="n in range(numpage)" data-ng-class="{ active: n == cpage }"><a href="" data-ng-click="setPage()" data-ng-bind="n+1">1</a></li>
 					<li data-ng-class="{ disabled: cpage == numpage - 1 }"><a href="" data-ng-click="nextPage()">&raquo;</a></li>
 				</ul>
+				<div class="pull-right">
+					<button class="btn btn-md btn-success " data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Anggota</button>
+				</div>
 			</div>

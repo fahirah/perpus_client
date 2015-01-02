@@ -300,7 +300,7 @@ app.controller('LoginCtrl', function($scope,$http,$location) {
 			alertify.success('Anda Berhasil Login');
 			$scope.setUser(d);
 			if (d.status == 1) {
-				$location.path('/user/buku').replace();
+				$location.path('/user/beranda').replace();
 			} else {
 				$location.path('/admin/beranda').replace();
 			}
@@ -310,25 +310,4 @@ app.controller('LoginCtrl', function($scope,$http,$location) {
 			alertify.error('Anda Gagal Login');
 		});
 	};
-});
-
-/*file controller */
-app.controller('PeminjamanAnggotaCtrl', function($scope, $http){
-	//load data peminjaman
-	
-	$scope.dbPjm=[];
-	$scope.loadDataPjm=function(){
-		$http({
-			url: $scope.server+'/user/peminjaman/'+$scope.user.id, method:'GET'
-		}).
-		success(function(d){
-			$scope.dbPjm=d;
-		}).
-		error(function(e, s, h){
-			//kalau error
-			alertify.error('Anda tidak punya tanggungan pinjaman buku. . .');
-		});
-	};
-	$scope.loadDataPjm(); //panggil fungsi
-	
 });

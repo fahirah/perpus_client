@@ -4,6 +4,7 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 	$scope.dbAp=[];
 	$scope.dbPr=[];
 	$scope.dbPt=[];
+	$scope.dbAd=[];
 	$scope.loadDataAp=function(){
 		$http({
 			url: $scope.server+'/admin/pengaturan?id='+$scope.user.id, method:'GET'
@@ -20,6 +21,14 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 		});
 	};
 	$scope.loadDataAp(); //panggil fungsi
+	
+	$scope.setdbPr = function(d) {
+		$scope.dbPr = d;
+	};
+	
+	$scope.setdbAd = function(d) {
+		$scope.dbAd = d;
+	};
 	
 	$scope.ap=null;
 	$scope.ap = {};	
@@ -49,10 +58,10 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 
 	$scope.resetAd= function(){
 		$scope.ad={
-			idad:'', nama:'', jk:'', telp:'', un:''
+			idad:'', nama:'', jk:'L', telp:'', un:''
 		};
 	};	
-	$scope.resetPt();
+	$scope.resetAd();
 
 	$scope.editing = false;
 	$scope.batal = function(){

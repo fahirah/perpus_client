@@ -6,10 +6,10 @@ app.directive('simpanAnggota', ['$http', function($http) {
 	return function($scope, elm) {
 		elm.click(function(e) {
 			//validasi
-			if($scope.anggota.nama.length < 3) return alertify.error('Nama anggota tidak boleh kosong');
-			if($scope.anggota.identitas.length < 5) return alertify.error('No identitaas tidak boleh kosong');
-			if($scope.anggota.alamat.length < 4) return alertify.error('Alamat anggota tidak boleh kosong');
-			if($scope.anggota.telp.length < 5) return alertify.error('Telp anggota tidak boleh kosong');
+			if($scope.anggota.nama.length < 3) return alertify.error('Nama anggota tidak boleh kurang dari 3 karakter');
+			if($scope.anggota.identitas.length < 5) return alertify.error('No identitaas tidak boleh kurang dari 5 karakter');
+			if($scope.anggota.alamat.length < 4) return alertify.error('Alamat anggota tidak boleh kurang dari 4 karakter');
+			if($scope.anggota.telp.length < 6) return alertify.error('Telp anggota tidak boleh kurang dari 6 karakter');
 			
 			elm.button('loading');
 			$http({ url:$scope.server + '/admin/anggota', method: 'POST', data:$scope.anggota }).
@@ -64,13 +64,14 @@ app.directive('simpanBuku', function() {
 		elm.click(function(e) {
 			var fd=new FormData();
 			//validasi
-			if($scope.buku.judul.length < 4) return alertify.error('Judul buku tidak boleh kosong');
-			if($scope.buku.pengarang.length < 3) return alertify.error('Pengarang buku tidak boleh kosong');
+			if($scope.buku.isbn.length < 10) return alertify.error('ISBN buku tidak boleh kurang dari 10 karakter');
+			if($scope.buku.judul.length < 3) return alertify.error('Judul buku tidak boleh kurang dari 3 karakter');
+			if($scope.buku.pengarang.length < 3) return alertify.error('Pengarang buku tidak boleh kurang dari 3 karakter');
 			if($scope.buku.macam.length < 0 || $scope.buku.macam==null) return alertify.error('Macam buku tidak boleh kosong');
 			if($scope.buku.bahasa.length < 0 || $scope.buku.bahasa==null) return alertify.error('Bahasa buku tidak boleh kosong');
-			if($scope.buku.penempatan.length < 3) return alertify.error('No penempatan buku tidak boleh kosong');
-			if($scope.buku.penerbit.length < 3) return alertify.error('Penerbit buku tidak boleh kosong');
-			if($scope.buku.tahun.length < 4) return alertify.error('Tahun terbit buku tidak boleh kosong');
+			if($scope.buku.penempatan.length < 2) return alertify.error('No klasifikasi buku tidak boleh kurang dari 2 karakter');
+			if($scope.buku.penerbit.length < 3) return alertify.error('Penerbit buku tidak boleh kurang dari 3 karakter');
+			if($scope.buku.tahun.length < 4) return alertify.error('Tahun terbit buku tidak boleh kurang dari 4 karakter');
 			
 			fd.append("id",$scope.buku.id);
 			fd.append("kode",$scope.buku.kode);
@@ -125,12 +126,12 @@ app.directive('simpanFile', function(){
 		elm.on('click', function(e){
 			var fd = new FormData();
 			//validasi
-			if($scope.berkas.judul.length < 3) return alertify.error('Judul file tidak boleh kosong');
-			if($scope.berkas.pengarang.length < 3) return alertify.error('Pengarang file tidak boleh kosong');
+			if($scope.berkas.judul.length < 3) return alertify.error('Judul file tidak boleh kurang dari 3 karakter');
+			if($scope.berkas.pengarang.length < 3) return alertify.error('Pengarang file tidak boleh kurang dari 3 karakter');
 			if($scope.berkas.macam.length < 0 || $scope.berkas.macam==null) return alertify.error('Macam file tidak boleh kosong');
 			if($scope.berkas.bahasa.length < 0 || $scope.berkas.bahasa==null) return alertify.error('Bahasa file tidak boleh kosong');
-			if($scope.berkas.tahun.length < 4) return alertify.error('Tahun terbit file tidak boleh kosong');
-			if($scope.berkas.ringkasan.length < 5) return alertify.error('Ringkasan file tidak boleh kosong');
+			if($scope.berkas.tahun.length < 4) return alertify.error('Tahun terbit file tidak boleh kurang dari 4 karakter');
+			if($scope.berkas.ringkasan.length < 5) return alertify.error('Ringkasan file tidak boleh kurang dari 5 karakter');
 						
 			//fd.append("file", e.target.files[0]);
 			fd.append("status", $scope.user.status);
@@ -212,6 +213,7 @@ app.directive('simpanPjm', ['$http', function($http) {
 				elm.button('reset');
 				$scope.resetPjm();
 				$scope.loadDataPjm();
+				$scope.loadDataKas();
 				alertify.success('Data peminjaman berhasil disimpan');				
 			}).
 			error(function(e, s, h) { elm.button('reset'); });
@@ -230,6 +232,7 @@ app.directive('hapusPjm', ['$http', function($http) {
 					success(function(d){
 						alertify.success('Data peminjaman berhasil dihapus');
 						$scope.loadDataPjm();
+						$scope.loadDataKas();
 					});
 				}
 			});
@@ -241,6 +244,13 @@ app.directive('hapusPjm', ['$http', function($http) {
 app.directive('simpanAp', ['$http', function($http) {
 	return function($scope, elm) {
 		elm.click(function(e) {
+			if($scope.dbAp.jumlah.length < 1) return alertify.error('Jumlah Maksimal Buku tidak boleh kurang dari 1 karakter');
+			if($scope.dbAp.jumlah==0) return alertify.error('Jumlah Maksimal Buku Tidak Boleh 0');
+			if($scope.dbAp.denda.length < 2) return alertify.error('Denda tidak boleh kurang dari 2 karakter');
+			if($scope.dbAp.denda==0) return alertify.error('Denda Tidak Boleh 0');
+			if($scope.dbAp.lama.length < 1) return alertify.error('Lama Pinjam Buku tidak boleh kurang dari 1 karakter');
+			if($scope.dbAp.lama==0) return alertify.error('Lama Pinjam Buku Tidak Boleh 0');
+		
 			
 			elm.button('loading');
 			$http({ url:$scope.server + '/admin/pengaturan', method: 'POST', data:$scope.dbAp }).
@@ -259,7 +269,7 @@ app.directive('simpanProdi', ['$http', function($http) {
 	return function($scope, elm) {
 		elm.click(function(e) {
 			//validasi
-			if($scope.pr.namapr.length < 2) return alertify.error('Nama prodi tidak boleh kosong');
+			if($scope.pr.namapr.length < 3) return alertify.error('Nama prodi tidak boleh kurang dari 3 karakter');
 			
 			elm.button('loading');
 			$http({ url:$scope.server + '/admin/pengaturanprodi?id='+$scope.user.id, method: 'POST', data:$scope.pr }).
@@ -284,7 +294,7 @@ app.directive('hapusProdi', ['$http', function($http) {
 					success(function(d){
 						alertify.success('Data prodi berhasil dihapus');
 						$scope.batal();
-						$scope.dbPr=d.datapr;
+						$scope.setdbPr(d.datapr);
 					});
 				}
 			});
@@ -297,8 +307,14 @@ app.directive('hapusProdi', ['$http', function($http) {
 app.directive('simpanAkun', ['$http', function($http) {
 	return function($scope, elm) {
 		elm.click(function(e) {
-			if($scope.dbPt.pw != $scope.dbPt.pw2){
-				return alertify.error("password harus sama. . .");
+			if($scope.dbPt.nama.length < 3) return alertify.error('Nama  tidak boleh kurang dari 3 karakter');
+			if($scope.dbPt.telp.length < 6) return alertify.error('Telp  tidak boleh kurang dari 6 karakter');
+			if($scope.dbPt.un.length < 5) return alertify.error('Username tidak boleh kurang dari 5 karakter');
+			if($scope.dbPt.pw!=''){
+				if($scope.dbPt.pw.length < 5) return alertify.error('Password tidak boleh kurang dari 5 karakter');
+				if($scope.dbPt.pw != $scope.dbPt.pw2){
+					return alertify.error("password harus sama. . .");
+				}
 			}
 			elm.button('loading');
 			$http({ url:$scope.server + '/admin/pengaturanakun?id='+$scope.user.id, method: 'POST', data:$scope.dbPt }).
@@ -317,7 +333,10 @@ app.directive('simpanAkun', ['$http', function($http) {
 app.directive('simpanAdmin', ['$http', function($http) {
 	return function($scope, elm) {
 		elm.click(function(e) {
-					
+			if($scope.ad.nama.length < 3) return alertify.error('Nama Petugas tidak boleh kurang dari 3 karakter');
+			if($scope.ad.telp.length < 6) return alertify.error('Telp Petugas tidak boleh kurang dari 6 karakter');
+			if($scope.ad.un.length < 5) return alertify.error('Username Petugas tidak boleh kurang dari 5 karakter');
+			
 			elm.button('loading');
 			$http({ url:$scope.server + '/admin/petugas?id='+$scope.user.id, method: 'POST', data:$scope.ad }).
 			success(function(d){
@@ -337,10 +356,28 @@ app.directive('hapusPetugas', ['$http', function($http) {
 		elm.click(function(e) {
 			alertify.confirm('Yakin data ini akan dihapus?', function(e){
 				if(e){
-					$http({ url:$scope.server + '/admin/petugas/'+attrs.hapusPetugas, method: 'DELETE' }).
+					$http({ url:$scope.server + '/admin/petugas/'+attrs.hapusPetugas+'?id='+$scope.user.id, method: 'DELETE' }).
 					success(function(d){
 						alertify.success('Data petugas berhasil dihapus');
 						$scope.batal();
+						$scope.setdbAd(d.dataad);
+					});
+				}
+			});
+		});
+	}
+}]);
+
+/*reset password petugas */
+app.directive('resetPetugas', ['$http', function($http) {
+	return function($scope, elm, attrs) {
+		elm.click(function(e) {
+			alertify.confirm('Yakin akan reset password?', function(e){
+				if(e){
+					$http({ url:$scope.server + '/admin/pengaturan/'+attrs.resetPetugas, method: 'POST' }).
+					success(function(d){
+						alertify.success('Password petugas berhasil direset');
+						//$scope.setdbAd(d.dataad);
 						$scope.dbAd=d.dataad;
 					});
 				}
@@ -353,8 +390,15 @@ app.directive('hapusPetugas', ['$http', function($http) {
 app.directive('simpanAkunanggota', ['$http', function($http) {
 	return function($scope, elm) {
 		elm.click(function(e) {
-			if($scope.dbPt.pw != $scope.dbPt.pw2){
-				return alertify.error("password harus sama. . .");
+		
+			if($scope.dbPt.nama.length < 3) return alertify.error('Nama  tidak boleh kurang dari 3 karakter');
+			if($scope.dbPt.telp.length < 6) return alertify.error('Telp  tidak boleh kurang dari 6 karakter');
+			if($scope.dbPt.un.length < 5) return alertify.error('Username tidak boleh kurang dari 5 karakter');
+			if($scope.dbPt.pw!=''){
+				if($scope.dbPt.pw.length < 5) return alertify.error('Password tidak boleh kurang dari 5 karakter');
+				if($scope.dbPt.pw != $scope.dbPt.pw2){
+					return alertify.error("password harus sama. . .");
+				}
 			}
 			elm.button('loading');
 			$http({ url:$scope.server + '/user/pengaturan?id='+$scope.user.id, method: 'POST', data:$scope.dbPt }).

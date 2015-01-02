@@ -1,4 +1,4 @@
-/*buku controller */
+/*anggota controller */
 app.controller('BukuAnggotaCtrl', function($scope, $http){
 	if ( ! $scope.checkUser()) $scope.disconnect();
 	//load data buku
@@ -168,6 +168,28 @@ app.controller('FileAnggotaCtrl', function($scope, $http){
 	
 });
 
+/*peminjaman anggota controller */
+app.controller('PeminjamanAnggotaCtrl', function($scope, $http){
+	if ( ! $scope.checkUser()) $scope.disconnect();
+	//load data peminjaman
+	
+	$scope.dbPjm=[];
+	$scope.loadDataPjm=function(){
+		$http({
+			url: $scope.server+'/user/peminjaman/'+$scope.user.id, method:'GET'
+		}).
+		success(function(d){
+			$scope.dbPjm=d;
+		}).
+		error(function(e, s, h){
+			//kalau error
+			alertify.error('Anda tidak punya tanggungan pinjaman buku. . .');
+		});
+	};
+	$scope.loadDataPjm(); //panggil fungsi
+	
+});
+
 app.controller('PengaturanAnggotaCtrl', function($scope, $http){
 	if ( ! $scope.checkUser()) $scope.disconnect();
 		
@@ -193,3 +215,53 @@ app.controller('PengaturanAnggotaCtrl', function($scope, $http){
 	$scope.pt = {};	
 		
 });
+
+
+/*beranda anggota controller */
+app.controller('BerandaAnggotaCtrl', function($scope, $http){
+	if ( ! $scope.checkUser()) $scope.disconnect();
+	
+	//load data
+	$scope.dbBukuBr=[];
+	$scope.dbFileBr=[];
+	$scope.loadData=function(){
+		$http({
+			url: $scope.server+'/user/beranda', method:'GET'
+		}).
+		success(function(d){
+			$scope.dbBukuBr=d.bukubaru;
+			$scope.dbFileBr=d.filebaru;
+		});
+	};
+	$scope.loadData(); //panggil fungsi	
+
+	$scope.batal = function(){
+		$scope.detail=false;
+		$scope.detailfile=false;
+	};
+	
+	$scope.detail = false;
+	$scope.dataDetail = [];
+	$scope.tampilDetail = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailbuku/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail=d.data;
+		});
+	}
+	
+	$scope.detailfile = false;
+	$scope.dataDetailFile = [];
+	$scope.tampilDetailFile = function(i) {
+		$scope.detailfile = true;
+		$http({
+			url: $scope.server+'/detailfile/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetailFile=d.data;
+		});
+	}	
+});
+

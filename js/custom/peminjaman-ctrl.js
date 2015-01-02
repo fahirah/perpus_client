@@ -8,7 +8,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	$scope.kata='';
 	$scope.jumpjm=0;
 	$scope.search={
-		status:'',tgl:'',noid:'', bulan:'', kd:'', jd:''
+		status:'',tgl:'',noid:'', bulan:'', kd:'', jd:'', tahun:''
 	};
 	$scope.pjm={
 		anggota:'',buku:''
@@ -35,6 +35,25 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	};
 	$scope.loadDataPjm(); //panggil fungsi
 	
+	//kas
+	$scope.cpagekas = 0;
+	$scope.numpagekas = 0;
+	$scope.total = 0;
+	$scope.jumlah = 0;
+	$scope.dbKas=[];
+	$scope.loadDataKas=function(){
+		$http({
+			url: $scope.server+'/admin/peminjaman/kas?cpagekas='+$scope.cpagekas+'&tgl='+$scope.search.tgl+'&tahun='+$scope.search.tahun+'&bulan='+$scope.search.bulan, method:'GET'
+		}).
+		success(function(d){
+			$scope.dbKas=d.data;
+			$scope.total=d.total;
+		//	$scope.jumlah=d.jumlah;
+			$scope.numpagekas=d.numpagekas;
+		});
+	};
+	$scope.loadDataKas(); //panggil fungsi
+	
 	/*$scope.setEdit=function(i){
 		$scope.pjm=$scope.dbPjm[i];
 		$scope.editing = true;
@@ -47,15 +66,25 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 		}).
 		success(function(d){
 			$http({
-				url: $scope.server+'/cekbuku/'+$scope.pjm.buku+'/'+$scope.pjm.anggota, method:'GET'
+				url: $scope.server+'/cekjumlah/'+$scope.pjm.anggota+'/'+$scope.dataPinjam.length, method:'GET'
 			}).
 			success(function(d){
-				$scope.dataPinjam.push(d);
-				$scope.pjm.buku='';
+				$http({
+					url: $scope.server+'/cekbuku/'+$scope.pjm.buku+'/'+$scope.pjm.anggota, method:'GET'
+				}).
+				success(function(d){
+					$scope.dataPinjam.push(d);
+					$scope.pjm.buku='';
+				}).
+				error(function(e, s, h){
+					//kalau error
+					alertify.error('Kode buku yang anda cari tidak ditemukan atau stok buku kosong');
+					$scope.pjm.buku='';
+				});
 			}).
 			error(function(e, s, h){
 				//kalau error
-				alertify.error('Kode buku yang anda cari tidak ditemukan atau stok buku kosong');
+				alertify.error('Jumlah Peminjaman sudah maksimal');
 				$scope.pjm.buku='';
 			});
 		}).
@@ -92,22 +121,17 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 		$scope.detail=false;
 		$scope.resetPjm();
 	};
-	
-	$scope.dataDetail = [];
-	$scope.tampilDetail = function(i) {
-		$scope.detail = true;
+/*		
+	$scope.bayarDenda = function(i,j) {
 		$http({
-			url: $scope.server+'/detailpjm/'+i, method:'GET'
+			url: $scope.server+'/bayardenda/'+i+'/'+j, method:'GET'
 		}).
 		success(function(d){
-			$scope.dataDetail=d.data;
-			$scope.kode_pinjam=d.kode_pinjam;
-			$scope.id_anggota=d.id_anggota;
-			$scope.no_identitas=d.no_identitas;
-			$scope.nama_anggota=d.nama_anggota;
+			alertify.success('Bayar Denda berhasil disimpan');
+			$scope.loadDataPjm();
 		});
 	}
-	
+*/	
 	$scope.perpanjangPjm = function(i,j) {
 		$scope.detail = true;
 		$http({
@@ -117,6 +141,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			alertify.success('Perpanjangan buku berhasil disimpan');
 			$scope.detail = false;
 			$scope.loadDataPjm();
+			$scope.loadDataKas();
 		});
 	}
 	
@@ -129,12 +154,13 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			alertify.success('Buku dikembalikan berhasil disimpan');
 			$scope.detail= false;
 			$scope.loadDataPjm();
+			$scope.loadDataKas();
 			//$scope.tampilDetail(i);
 		});
 	}
 
 	
-	//pagination file
+	//pagination pjm
 	$scope.jph=20;
 	
 	$scope.range = function(start, end){
@@ -159,6 +185,33 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 		if($scope.cpagepjm < $scope.numpagepjm -1)
 			$scope.cpagepjm++;
 		$scope.loadDataPjm();
+	};
+	
+	//pagination kas
+	$scope.jph=20;
+	
+	$scope.range = function(start, end){
+		var r = [];
+		if( ! end){
+			end = start; start = 0;
+		}
+		for(var i = start; i< end; i++) r.push(i);
+		return r;
+	};
+	
+	$scope.setPagekas = function(){
+		$scope.cpagekas = this.n;
+		$scope.loadDataKas();
+	};
+	$scope.prevPagekas = function(){
+		if($scope.cpagekas > 0 )
+			$scope.cpagekas--;
+		$scope.loadDataKas();
+	};
+	$scope.nextPagekas = function(){
+		if($scope.cpagekas < $scope.numpagekas -1)
+			$scope.cpagekas++;
+		$scope.loadDataKas();
 	};
 	
 });

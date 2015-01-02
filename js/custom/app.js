@@ -11,6 +11,10 @@ config(function($routeProvider, $httpProvider) {
 		templateUrl: 'html/login.html', 
 		controller: 'LoginCtrl' 
 	})
+	.when('/user/beranda', { 
+		templateUrl: 'html/user/beranda.html', 
+		controller: 'BerandaAnggotaCtrl' 
+	})
 	.when('/user/buku', { 
 		templateUrl: 'html/user/buku.html', 
 		controller: 'BukuAnggotaCtrl' 

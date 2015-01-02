@@ -37,12 +37,21 @@
 						<label for="nama" class="col-md-3 col-md-offset-2">Nama File</label>
 						<div class="col-md-3">
 							<input type="hidden" name="namalm" class="form-control tooltips" data-ng-model="berkas.nama" readonly>
-							<input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file accept=".doc,.docx,.ppt,.pptx,.pdf,.xls,.xlsx"> <span class="help-block">*Pilih file kembali, jika file akan diganti.</span>
+							<span class="btn btn-success btn-file">
+								<i class="fa fa-fw fa-upload"></i>
+								<span> Pilih Nama File</span>	<input type="file" name="nama" id="nama" title="Masukkan file" input-file accept=".doc,.docx,.ppt,.pptx,.pdf,.xls,.xlsx">  
+							</span>
+							
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="isbn" class="col-md-3 col-md-offset-2">Sampul File</label>
-						<div class="col-md-3"><input type="file" name="sampul" id="sampul" class="form-control tooltips" title="Masukkan sampul file" input-file2 accept=".jpg,.png,.jpeg,.gif"> <span class="help-block">*Pilih file kembali, jika gambar akan diganti.</span> </div>
+						<div class="col-md-3">
+						<span class="btn btn-success btn-file">
+							<i class="fa fa-fw fa-upload"></i>
+							<span> Pilih Sampul File</span>	<input type="file" name="sampul" id="sampul" title="Masukkan sampul file" input-file2 accept=".jpg,.png,.jpeg,.gif">  
+						</span>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="judul" class="col-md-3 col-md-offset-2">Judul</label>
@@ -80,14 +89,14 @@
 					</div>
 					<div class="form-group">
 						<label for="thn" class="col-md-3 col-md-offset-2">Tahun Terbit</label>
-						<div class="col-md-2"><input type="text" name="tahun" data-ng-model="berkas.tahun"  placeholder="tahun terbit" id="thn" class="form-control tooltips" title="Masukkan tahun terbit" number-input></div>
+						<div class="col-md-2"><input type="text" name="tahun" data-ng-model="berkas.tahun"  placeholder="tahun terbit" id="thn" class="form-control tooltips" title="Masukkan tahun terbit" number-input maxlength="4"></div>
 					</div>
 					<div class="form-group">
 						<label for="ringkasan" class="col-md-3 col-md-offset-2">Ringkasan</label>
 						<div class="col-md-4"><textarea name="ringkasan" data-ng-model="berkas.ringkasan" class="form-control tooltips" title="Masukkan ringkasan" cols="50" rows="4"></textarea></div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-file>SIMPAN</button> <button class="btn btn-info btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetBerkas()">RESET</button></div>
+						<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-file>SIMPAN</button> <button class="btn btn-info btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetBerkas()">BATAL</button></div>
 					</div>
 				</form>
 				
@@ -98,8 +107,7 @@
 							<th>SAMPUL</th>
 							<th>JUDUL</th>
 							<th>PENGARANG</th>
-							<th>PENERBIT</th>
-							<th>TAHUN TERBIT</th>
+							<th>PENG-UPLOAD</th>
 							<th>TGL UPLOAD</th>
 							<th>TER-UNDUH</th>
 							<th>AKSI</th>
@@ -111,8 +119,7 @@
 							<td><img data-ng-src="{{server}}/{{c.sampul}}" style="width:50px; height:50px"></td>
 							<td>{{c.judul}}</td>
 							<td>{{c.pengarang}}</td>
-							<td>{{c.penerbit}}</td>
-							<td>{{c.tahun}}</td>
+							<td>{{c.idu}} / {{c.nmu}} / {{c.status}}</td>
 							<td>{{c.tgl}}</td>
 							<td>{{c.jumlah}}</td>
 							<td>
@@ -125,7 +132,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbFile.length > 0">
+				<ul class="pagination pagination-sm" data-ng-show=" ! editing && dbFile.length > 0 && !detail">
 					<li data-ng-class="{ disabled: cpagefl == 0 }"><a href="" data-ng-click="prevPagefl()">&laquo;</a></li>
 					<li data-ng-repeat="n in range(numpagefl)" data-ng-class="{ active: n == cpagefl }"><a href="" data-ng-click="setPagefl()" data-ng-bind="n+1">1</a></li>
 					<li data-ng-class="{ disabled: cpagefl == numpagefl - 1 }"><a href="" data-ng-click="nextPagefl()">&raquo;</a></li>
@@ -142,33 +149,36 @@
 							<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
 							<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
 							<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+							<tr><td>PENG-UPLOAD</td><td>:</td><td>{{c.idu}} / {{c.nmu}} / {{c.status}}</td></tr>
 							<tr><td>TGL UPLOAD</td><td>:</td><td>{{c.tgl}}</td></tr>
 							<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
 							<tr><td colspan="4">&nbsp;</td></tr>
 						</table>
 					</div>
-					<h4 class="text-center">PENGUNDUH BERKAS</h4><br/>
-					<table class="table table-bordered table-striped table-hover">
-						<thead>
-							<tr>
-								<th>NO.</th>
-								<th>ID ANGGOTA</th>
-								<th>NO IDENTITAS</th>
-								<th>NAMA ANGGOTA</th>
-								<th>STATUS ANGGOTA</th>
-								<th>TGL DOWNLOAD</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr data-ng-repeat="c in dataDownload">
-								<td>{{$index+1}}</td>
-								<td>{{c.idan}}</td>				
-								<td>{{c.noid}}</td>				
-								<td>{{c.nama}}</td>				
-								<td>{{c.status}}</td>				
-								<td>{{c.tgl_download}}</td>				
-							</tr>
-						</tbody>
-					</table>
+					<div data-ng-show="dataDownload.length>0">
+						<h4 class="text-center">PENGUNDUH BERKAS</h4><br/>
+						<table class="table table-bordered table-striped table-hover">
+							<thead>
+								<tr>
+									<th>NO.</th>
+									<th>ID ANGGOTA</th>
+									<th>NO IDENTITAS</th>
+									<th>NAMA ANGGOTA</th>
+									<th>STATUS ANGGOTA</th>
+									<th>TGL DOWNLOAD</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="c in dataDownload">
+									<td>{{$index+1}}</td>
+									<td>{{c.idan}}</td>				
+									<td>{{c.noid}}</td>				
+									<td>{{c.nama}}</td>				
+									<td>{{c.status}}</td>				
+									<td>{{c.tgl_download}}</td>				
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
