@@ -137,6 +137,11 @@
 					<li data-ng-repeat="n in range(numpagefl)" data-ng-class="{ active: n == cpagefl }"><a href="" data-ng-click="setPagefl()" data-ng-bind="n+1">1</a></li>
 					<li data-ng-class="{ disabled: cpagefl == numpagefl - 1 }"><a href="" data-ng-click="nextPagefl()">&raquo;</a></li>
 				</ul>
+				<div class="pull-right">
+					<a data-ng-href="{{server}}/cetakpdf/file?jenis={{search.jenis}}&kata={{search.kata}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
+						<button class="btn btn-md btn-info " data-ng-show="dbFile.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+					</a>
+				</div>
 				
 				<div data-ng-show="detail && ! editing">
 					<div class="col-md-offset-1">

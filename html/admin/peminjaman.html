@@ -172,6 +172,13 @@
 							<li data-ng-repeat="n in range(numpagepjm)" data-ng-class="{ active: n == cpagepjm }"><a href="" data-ng-click="setPagepjm()" data-ng-bind="n+1">1</a></li>
 							<li data-ng-class="{ disabled: cpagepjm == numpagepjm - 1 }"><a href="" data-ng-click="nextPagepjm()">&raquo;</a></li>
 						</ul>
+						
+						<div class="pull-right">
+							<a data-ng-href="{{server}}/cetakpdf/peminjaman?status={{search.status}}&tgl={{search.tgl}}&noid={{search.noid}}&bulan={{search.bulan}}&kdbuku={{search.kd}}&jdbuku={{search.jd}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
+							<button class="btn btn-md btn-info " data-ng-show="dbPjm.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+							</a>
+						</div>
+			
 					</div>
 				</div>
 				<div class="tab-pane" id="kas">
@@ -249,6 +256,11 @@
 						<li data-ng-repeat="n in range(numpagekas)" data-ng-class="{ active: n == cpagekas }"><a href="" data-ng-click="setPagekas()" data-ng-bind="n+1">1</a></li>
 						<li data-ng-class="{ disabled: cpagekas == numpagekas - 1 }"><a href="" data-ng-click="nextPagekas()">&raquo;</a></li>
 					</ul>
+					<div class="pull-right">
+						<a data-ng-href="{{server}}/cetakpdf/kas?&tgl={{search.tgl}}&bulan={{search.bulan}}&tahun={{search.tahun}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
+						<button class="btn btn-md btn-info " data-ng-show="dbKas.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+							</a>
+						</div>
 				</div>
 			</div>
 		</div>

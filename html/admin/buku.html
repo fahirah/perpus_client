@@ -135,7 +135,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="10" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td><td>&nbsp;</td>
+							<td colspan="8" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td><td>&nbsp;</td>
 						</tr>
 					</tbody>
 				</table>
@@ -144,6 +144,11 @@
 					<li data-ng-repeat="n in range(numpagebk)" data-ng-class="{ active: n == cpagebk }"><a href="" data-ng-click="setPagebk()" data-ng-bind="n+1">1</a></li>
 					<li data-ng-class="{ disabled: cpagebk == numpagebk - 1 }"><a href="" data-ng-click="nextPagebk()">&raquo;</a></li>
 				</ul>
+				<div class="pull-right">
+					<a data-ng-href="{{server}}/cetakpdf/buku?jenis={{search.jenis}}&kata={{search.kata}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
+						<button class="btn btn-md btn-info " data-ng-show="dbBuku.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+					</a>
+				</div>
 				
 				<div data-ng-show="detail && ! editing">
 					<div class="">

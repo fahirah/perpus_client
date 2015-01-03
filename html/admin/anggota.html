@@ -115,6 +115,8 @@
 					<li data-ng-class="{ disabled: cpage == numpage - 1 }"><a href="" data-ng-click="nextPage()">&raquo;</a></li>
 				</ul>
 				<div class="pull-right">
-					<button class="btn btn-md btn-success " data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Anggota</button>
+					<a data-ng-href="{{server}}/cetakpdf/anggota?jenis={{search.jenis}}&kata={{search.kata}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
+						<button class="btn btn-md btn-info " data-ng-show="db.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+					</a>
 				</div>
 			</div>
