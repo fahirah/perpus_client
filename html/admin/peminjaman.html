@@ -27,7 +27,7 @@
 					<form class="form form-vertical col-md-offset-2" data-ng-show=" ! editing && ! detail">
 						<div class="form-group">
 							<div class="col-md-2">
-								<select name="tipe" id="tipe" data-ng-model="search.tipe" class="form-control">
+								<select name="tipe" id="tipe" data-ng-model="search.tipe" class="form-control" data-ng-change="changeType()">
 									<option value="">-- Pilih --</option>
 									<option value="status">Status</option>
 									<option value="tanggal">tanggal</option>
@@ -78,6 +78,7 @@
 								<button type="text" class="btn btn-primary btn-md" data-ng-click="loadDataPjm()"><i class="fa fa-search"></i>  cari</button>
 							</div>
 						</div>
+					
 					</form><br/>
 					<hr>
 					
@@ -172,22 +173,22 @@
 							<li data-ng-repeat="n in range(numpagepjm)" data-ng-class="{ active: n == cpagepjm }"><a href="" data-ng-click="setPagepjm()" data-ng-bind="n+1">1</a></li>
 							<li data-ng-class="{ disabled: cpagepjm == numpagepjm - 1 }"><a href="" data-ng-click="nextPagepjm()">&raquo;</a></li>
 						</ul>
-						
+				
 						<div class="pull-right">
 							<a data-ng-href="{{server}}/cetakpdf/peminjaman?status={{search.status}}&tgl={{search.tgl}}&noid={{search.noid}}&bulan={{search.bulan}}&kdbuku={{search.kd}}&jdbuku={{search.jd}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
-							<button class="btn btn-md btn-info " data-ng-show="dbPjm.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+							<button class="btn btn-md btn-info " data-ng-show="dbPjm.length>0 && !editing "><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
 							</a>
 						</div>
 			
 					</div>
 				</div>
 				<div class="tab-pane" id="kas">
-					<h3 class="text-center"> DATA KAS DENDA</h3><br/>
+					<h3 class="text-center"> DATA DENDA</h3><br/>
 					
 					<form class="form form-vertical col-md-offset-2">
 						<div class="form-group">
 							<div class="col-md-2">
-								<select name="pil" id="pil" data-ng-model="search.pil" class="form-control">
+								<select name="pil" id="pil" data-ng-model="cari.pil" class="form-control" data-ng-change="changePil()">
 									<option value="">-- Pilih --</option>
 									<option value="tanggal">tanggal</option>
 									<option value="bulanan">bulan</option>
@@ -195,19 +196,19 @@
 								</select>	
 							</div>
 						</div>
-						<div class="form-group" data-ng-show="search.pil=='tanggal'">
+						<div class="form-group" data-ng-show="cari.pil=='tanggal'">
 							<div class="col-md-2">
-								<label><input type="date" name="tgl" data-ng-model="search.tgl" ></label> &nbsp;
+								<label><input type="date" name="tgl" data-ng-model="cari.tgl" ></label> &nbsp;
 							</div>
 						</div>
-						<div class="form-group" data-ng-show="search.pil=='bulanan'">
+						<div class="form-group" data-ng-show="cari.pil=='bulanan'">
 							<div class="col-md-2">
-								<label><input type="month" name="bln" data-ng-model="search.bulan" ></label> &nbsp;
+								<label><input type="month" name="bln" data-ng-model="cari.bulan" ></label> &nbsp;
 							</div>
 						</div>
-						<div class="form-group" data-ng-show="search.pil=='tahunan'">
+						<div class="form-group" data-ng-show="cari.pil=='tahunan'">
 							<div class="col-md-2">
-								<label><input type="year" name="tahun" data-ng-model="search.tahun" ></label> &nbsp;
+								<label><input type="year" name="tahun" data-ng-model="cari.tahun" ></label> &nbsp;
 							</div>
 						</div>						
 						<div class="form-group">
@@ -239,7 +240,7 @@
 								<td>{{c.tgl_pinjam}}</td>
 								<td>{{c.tgl_kembali}}</td>														
 								<td>{{c.denda}}</td>							
-								<td><a href="" hapus-kas="" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>							
+								<td><a href="" hapus-kas="{{c.kodedenda}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>							
 							</tr>
 							<tr>
 								<td colspan="6" align="right"> Total Denda : </td>
@@ -256,8 +257,9 @@
 						<li data-ng-repeat="n in range(numpagekas)" data-ng-class="{ active: n == cpagekas }"><a href="" data-ng-click="setPagekas()" data-ng-bind="n+1">1</a></li>
 						<li data-ng-class="{ disabled: cpagekas == numpagekas - 1 }"><a href="" data-ng-click="nextPagekas()">&raquo;</a></li>
 					</ul>
+					
 					<div class="pull-right">
-						<a data-ng-href="{{server}}/cetakpdf/kas?&tgl={{search.tgl}}&bulan={{search.bulan}}&tahun={{search.tahun}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
+						<a data-ng-href="{{server}}/cetakpdf/kas?tgl={{cari.tgl}}&bulan={{cari.bulan}}&tahun={{cari.tahun}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
 						<button class="btn btn-md btn-info " data-ng-show="dbKas.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
 							</a>
 						</div>

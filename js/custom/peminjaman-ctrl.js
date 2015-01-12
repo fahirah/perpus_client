@@ -8,11 +8,34 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	$scope.kata='';
 	$scope.jumpjm=0;
 	$scope.search={
-		status:'',tgl:'',noid:'', bulan:'', kd:'', jd:'', tahun:''
+		tipe: '',status:'',tgl:'',noid:'', bulan:'', kd:'', jd:'', tahun:''
 	};
 	$scope.pjm={
 		anggota:'',buku:''
 	}
+	
+	$scope.changeType = function() {
+		switch($scope.search.tipe) {
+			case 'status':
+				$scope.search.tgl = $scope.search.noid = $scope.search.bulan = $scope.search.kd = $scope.search.jd = '';
+				break;
+			case 'tanggal':
+				$scope.search.status = $scope.search.noid = $scope.search.bulan = $scope.search.kd = $scope.search.jd = '';
+				break;
+			case 'bulanan':
+				$scope.search.status = $scope.search.noid = $scope.search.tgl =  $scope.search.kd = $scope.search.jd = '';
+				break;
+			case 'noid':
+				$scope.search.status = $scope.search.bulan = $scope.search.tgl =  $scope.search.kd = $scope.search.jd = '';
+				break;
+			case 'kdbuku':
+				$scope.search.status = $scope.search.bulan = $scope.search.tgl =  $scope.search.noid = $scope.search.jd = '';
+				break;
+			case 'jdbuku':
+				$scope.search.status = $scope.search.bulan = $scope.search.tgl =  $scope.search.noid = $scope.search.kd = '';
+				break;
+		}
+	};
 	
 	$scope.dbPjm=[];
 	$scope.loadDataPjm=function(){
@@ -23,10 +46,6 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			$scope.dbPjm=d.data;
 			$scope.jumpjm=d.jumlah;
 			$scope.numpagepjm=d.numpagepjm;
-			$scope.search.status='';
-			$scope.search.tgl='';
-			$scope.search.noid='';
-			$scope.search.bulan='';
 		}).
 		error(function(e, s, h){
 			//kalau error
@@ -40,10 +59,29 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	$scope.numpagekas = 0;
 	$scope.total = 0;
 	$scope.jumlah = 0;
+	
+	$scope.cari={
+		pil: '',tgl:'', bulan:'', tahun:''
+	};
+	
+	$scope.changePil = function() {
+		switch($scope.cari.pil) {
+			case 'tanggal':
+				$scope.cari.bulan = $scope.cari.tahun = '';
+				break;
+			case 'bulanan':
+				$scope.cari.tgl = $scope.cari.tahun = '';
+				break;
+			case 'tahunan':
+				$scope.cari.tgl = $scope.cari.bulan = '';
+				break;
+		}
+	};
+	
 	$scope.dbKas=[];
 	$scope.loadDataKas=function(){
 		$http({
-			url: $scope.server+'/admin/peminjaman/kas?cpagekas='+$scope.cpagekas+'&tgl='+$scope.search.tgl+'&tahun='+$scope.search.tahun+'&bulan='+$scope.search.bulan, method:'GET'
+			url: $scope.server+'/admin/peminjaman/kas?cpagekas='+$scope.cpagekas+'&tgl='+$scope.cari.tgl+'&tahun='+$scope.cari.tahun+'&bulan='+$scope.cari.bulan, method:'GET'
 		}).
 		success(function(d){
 			$scope.dbKas=d.data;

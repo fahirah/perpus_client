@@ -1,0 +1,11 @@
+{
+	"name": "perpustakaan",
+	"description": "aplikasi perpustakaan fakultas teknik universitas madura",
+	"version": "1.0",
+	"main": "index.html",
+	"window":{
+		"toolbar": false,
+		"width": 1000,
+		"height": 600
+	}
+}

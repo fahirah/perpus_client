@@ -139,7 +139,7 @@
 				</ul>
 				<div class="pull-right">
 					<a data-ng-href="{{server}}/cetakpdf/file?jenis={{search.jenis}}&kata={{search.kata}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
-						<button class="btn btn-md btn-info " data-ng-show="dbFile.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+						<button class="btn btn-md btn-info " data-ng-show="! editing && dbFile.length > 0 && !detail"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
 					</a>
 				</div>
 				

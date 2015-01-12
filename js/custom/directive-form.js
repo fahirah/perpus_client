@@ -10,6 +10,7 @@ app.directive('simpanAnggota', ['$http', function($http) {
 			if($scope.anggota.identitas.length < 5) return alertify.error('No identitaas tidak boleh kurang dari 5 karakter');
 			if($scope.anggota.alamat.length < 4) return alertify.error('Alamat anggota tidak boleh kurang dari 4 karakter');
 			if($scope.anggota.telp.length < 6) return alertify.error('Telp anggota tidak boleh kurang dari 6 karakter');
+			if($scope.anggota.prodi.length == 0) return alertify.error('Prodi belum dipilih');
 			
 			elm.button('loading');
 			$http({ url:$scope.server + '/admin/anggota', method: 'POST', data:$scope.anggota }).
@@ -231,6 +232,24 @@ app.directive('hapusPjm', ['$http', function($http) {
 					$http({ url:$scope.server + '/admin/peminjaman/'+attrs.hapusPjm, method: 'DELETE' }).
 					success(function(d){
 						alertify.success('Data peminjaman berhasil dihapus');
+						$scope.loadDataPjm();
+						$scope.loadDataKas();
+					});
+				}
+			});
+		});
+	}
+}]);
+
+/*hapus kas */
+app.directive('hapusKas', ['$http', function($http) {
+	return function($scope, elm, attrs) {
+		elm.click(function(e) {
+			alertify.confirm('Yakin data ini akan dihapus?', function(e){
+				if(e){
+					$http({ url:$scope.server + '/admin/peminjaman/kas/'+attrs.hapusKas, method: 'DELETE' }).
+					success(function(d){
+						alertify.success('Data denda berhasil dihapus');
 						$scope.loadDataPjm();
 						$scope.loadDataKas();
 					});

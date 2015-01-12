@@ -33,7 +33,7 @@
 					</div>
 					<div class="form-group">
 						<label for="identitas" class="col-md-3 col-md-offset-2">No Identitas</label>
-						<div class="col-md-3"><input type="text" name="identitas" data-ng-model="anggota.identitas" placeholder="No Identitas" class="form-control tooltips" title="Masukkan no identitas"></div>
+						<div class="col-md-3"><input type="text" name="identitas" data-ng-model="anggota.identitas" placeholder="No Identitas" class="form-control tooltips" title="Masukkan no identitas" number-input></div>
 					</div>
 					<div class="form-group">
 						<label for="alamat" class="col-md-3 col-md-offset-2">Alamat</label>
@@ -116,7 +116,7 @@
 				</ul>
 				<div class="pull-right">
 					<a data-ng-href="{{server}}/cetakpdf/anggota?jenis={{search.jenis}}&kata={{search.kata}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
-						<button class="btn btn-md btn-info " data-ng-show="db.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+						<button class="btn btn-md btn-info " data-ng-show="db.length>0 && !editing "><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
 					</a>
 				</div>
 			</div>

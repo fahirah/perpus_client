@@ -112,7 +112,7 @@
 							<th>SAMPUL BUKU</th>
 							<th>JUDUL</th>
 							<th>PENGARANG</th>
-							<th>PENEMPATAN</th>
+							<th>KLASIFIKASI</th>
 							<th>TERPINJAM</th>
 							<th>AKSI</th>
 						</tr>
@@ -146,7 +146,7 @@
 				</ul>
 				<div class="pull-right">
 					<a data-ng-href="{{server}}/cetakpdf/buku?jenis={{search.jenis}}&kata={{search.kata}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu anggota">
-						<button class="btn btn-md btn-info " data-ng-show="dbBuku.length>0"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
+						<button class="btn btn-md btn-info " data-ng-show="dbBuku.length>0 && !editing && !detail"><i class="fa fa-file-pdf-o"></i> Cetak Pdf</button>
 					</a>
 				</div>
 				
@@ -157,7 +157,7 @@
 							<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
 							<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
 							<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
-							<tr><td>NO PENEMPATAN</td><td>:</td><td>{{c.penempatan}}</td></tr>
+							<tr><td>KLASIFIKASI BUKU</td><td>:</td><td>{{c.penempatan}}</td></tr>
 							<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
 							<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
 							<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>

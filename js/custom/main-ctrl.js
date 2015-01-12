@@ -55,7 +55,7 @@ app.controller('HomeCtrl', function($scope, $http){
 			alertify.error('Data yang anda cari tidak ditemukan');
 		});
 	};
-	//$scope.loadDataSearch(); //panggil fungsi
+	$scope.loadDataSearch(); //panggil fungsi
 	
 	$scope.batal = function(){
 		$scope.detail=false;
