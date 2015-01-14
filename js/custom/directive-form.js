@@ -329,7 +329,7 @@ app.directive('simpanAkun', ['$http', function($http) {
 			if($scope.dbPt.nama.length < 3) return alertify.error('Nama  tidak boleh kurang dari 3 karakter');
 			if($scope.dbPt.telp.length < 6) return alertify.error('Telp  tidak boleh kurang dari 6 karakter');
 			if($scope.dbPt.un.length < 5) return alertify.error('Username tidak boleh kurang dari 5 karakter');
-			if($scope.dbPt.pw!=''){
+			if($scope.dbPt.pw !=''){
 				if($scope.dbPt.pw.length < 5) return alertify.error('Password tidak boleh kurang dari 5 karakter');
 				if($scope.dbPt.pw != $scope.dbPt.pw2){
 					return alertify.error("password harus sama. . .");
@@ -410,7 +410,8 @@ app.directive('simpanAkunanggota', ['$http', function($http) {
 	return function($scope, elm) {
 		elm.click(function(e) {
 		
-			if($scope.dbPt.nama.length < 3) return alertify.error('Nama  tidak boleh kurang dari 3 karakter');
+			if($scope.dbPt.nama.length < 3) return alertify.error('Nama tidak boleh kurang dari 3 karakter');
+			if($scope.dbPt.alamat.length < 3) return alertify.error('Alamat tidak boleh kurang dari 3 karakter');
 			if($scope.dbPt.telp.length < 6) return alertify.error('Telp  tidak boleh kurang dari 6 karakter');
 			if($scope.dbPt.un.length < 5) return alertify.error('Username tidak boleh kurang dari 5 karakter');
 			if($scope.dbPt.pw!=''){

@@ -31,14 +31,22 @@
 	<form class="form form-horizontal" data-ng-show="editing">
 		<div class="form-group">
 			<label for="nama" class="col-md-3 col-md-offset-2">Nama File</label>
-			<div class="col-md-3">
-				<input type="hidden" name="namalm" class="form-control tooltips" data-ng-model="berkas.nama" readonly>
-				<input type="file" name="nama" id="nama" class="form-control tooltips" title="Masukkan file" input-file accept=".doc,.docx,.ppt,.pptx,.pdf,.xls,.xlsx">
-			</div>
+				<div class="col-md-3">
+					<input type="hidden" name="namalm" class="form-control tooltips" data-ng-model="berkas.nama" readonly>
+					<span class="btn btn-success btn-file">
+						<i class="fa fa-fw fa-upload"></i>
+						<span> Pilih Nama File</span>	<input type="file" name="nama" id="nama" title="Masukkan file" input-file accept=".doc,.docx,.ppt,.pptx,.pdf,.xls,.xlsx">  
+					</span>
+				</div>
 		</div>
 		<div class="form-group">
 			<label for="isbn" class="col-md-3 col-md-offset-2">Sampul File</label>
-				<div class="col-md-3"><input type="file" name="sampul" id="sampul" class="form-control tooltips" title="Masukkan sampul file" input-file2 accept=".jpg,.png,.jpeg,.gif"> <span class="help-block">*Pilih file kembali, jika gambar akan diganti.</span> </div>
+			<div class="col-md-3">
+				<span class="btn btn-success btn-file">
+					<i class="fa fa-fw fa-upload"></i>
+					<span> Pilih Sampul File</span>	<input type="file" name="sampul" id="sampul" title="Masukkan sampul file" input-file2 accept=".jpg,.png,.jpeg,.gif">  
+				</span>
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="judul" class="col-md-3 col-md-offset-2">Judul</label>
