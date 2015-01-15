@@ -65,12 +65,13 @@ app.directive('simpanBuku', function() {
 		elm.click(function(e) {
 			var fd=new FormData();
 			//validasi
-			if($scope.buku.isbn.length < 10) return alertify.error('ISBN buku tidak boleh kurang dari 10 karakter');
+			//if($scope.buku.isbn.length < 10) return alertify.error('ISBN buku tidak boleh kurang dari 10 karakter');
 			if($scope.buku.judul.length < 3) return alertify.error('Judul buku tidak boleh kurang dari 3 karakter');
 			if($scope.buku.pengarang.length < 3) return alertify.error('Pengarang buku tidak boleh kurang dari 3 karakter');
-			if($scope.buku.macam.length < 0 || $scope.buku.macam==null) return alertify.error('Macam buku tidak boleh kosong');
-			if($scope.buku.bahasa.length < 0 || $scope.buku.bahasa==null) return alertify.error('Bahasa buku tidak boleh kosong');
+			if($scope.buku.macam.length == 0) return alertify.error('Macam belum dipilih');
+			if($scope.buku.bahasa.length == 0) return alertify.error('Bahasa belum dipilih');
 			if($scope.buku.penempatan.length < 2) return alertify.error('No klasifikasi buku tidak boleh kurang dari 2 karakter');
+			if($scope.buku.kota.length < 3) return alertify.error('Kota terbit buku tidak boleh kurang dari 3 karakter');
 			if($scope.buku.penerbit.length < 3) return alertify.error('Penerbit buku tidak boleh kurang dari 3 karakter');
 			if($scope.buku.tahun.length < 4) return alertify.error('Tahun terbit buku tidak boleh kurang dari 4 karakter');
 			
@@ -84,6 +85,7 @@ app.directive('simpanBuku', function() {
 			fd.append("stok",$scope.buku.stok);
 			fd.append("macam", $scope.buku.macam);
 			fd.append("bahasa", $scope.buku.bahasa);
+			fd.append("kota", $scope.buku.kota);
 			fd.append("penerbit", $scope.buku.penerbit);
 			fd.append("tahun", $scope.buku.tahun);
 			
@@ -127,10 +129,13 @@ app.directive('simpanFile', function(){
 		elm.on('click', function(e){
 			var fd = new FormData();
 			//validasi
+			if($scope.berkas.id === null ){
+				if($scope.file === null) return alertify.error('File Harus Dipilih');
+			}
 			if($scope.berkas.judul.length < 3) return alertify.error('Judul file tidak boleh kurang dari 3 karakter');
 			if($scope.berkas.pengarang.length < 3) return alertify.error('Pengarang file tidak boleh kurang dari 3 karakter');
-			if($scope.berkas.macam.length < 0 || $scope.berkas.macam==null) return alertify.error('Macam file tidak boleh kosong');
-			if($scope.berkas.bahasa.length < 0 || $scope.berkas.bahasa==null) return alertify.error('Bahasa file tidak boleh kosong');
+			if($scope.berkas.macam.length == 0) return alertify.error('Macam belum dipilih');
+			if($scope.berkas.bahasa.length == 0) return alertify.error('Bahasa belum dipilih');
 			if($scope.berkas.tahun.length < 4) return alertify.error('Tahun terbit file tidak boleh kurang dari 4 karakter');
 			if($scope.berkas.ringkasan.length < 5) return alertify.error('Ringkasan file tidak boleh kurang dari 5 karakter');
 						
@@ -343,7 +348,12 @@ app.directive('simpanAkun', ['$http', function($http) {
 				$scope.batal();
 				$scope.dbPt=d.datapt;
 			}).
-			error(function(e, s, h) { elm.button('reset'); });
+			error(function(e, s, h) { 
+				elm.button('reset');
+				alertify.error('Gagal Diubah, Gunakan Username yang lain. . .');
+				$scope.batal();
+				//$scope.dbPt=e.datapt;
+			});
 		});
 	}
 }]);
@@ -413,7 +423,7 @@ app.directive('simpanAkunanggota', ['$http', function($http) {
 			if($scope.dbPt.nama.length < 3) return alertify.error('Nama tidak boleh kurang dari 3 karakter');
 			if($scope.dbPt.alamat.length < 3) return alertify.error('Alamat tidak boleh kurang dari 3 karakter');
 			if($scope.dbPt.telp.length < 6) return alertify.error('Telp  tidak boleh kurang dari 6 karakter');
-			if($scope.dbPt.un.length < 5) return alertify.error('Username tidak boleh kurang dari 5 karakter');
+			//if($scope.dbPt.un.length < 5) return alertify.error('Username tidak boleh kurang dari 5 karakter');
 			if($scope.dbPt.pw!=''){
 				if($scope.dbPt.pw.length < 5) return alertify.error('Password tidak boleh kurang dari 5 karakter');
 				if($scope.dbPt.pw != $scope.dbPt.pw2){

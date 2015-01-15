@@ -208,6 +208,13 @@ app.controller('PengaturanAnggotaCtrl', function($scope, $http){
 	};
 	$scope.loadDataAp(); //panggil fungsi
 	
+	$scope.resetPt= function(){
+		$scope.pt={
+			idp:'', nama:'', jk:'', telp:'', un:'', pw:''
+		};
+	};	
+	$scope.resetPt();
+	
 	$scope.batal = function(){
 		$scope.resetPt();
 	};
