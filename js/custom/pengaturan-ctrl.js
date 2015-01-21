@@ -5,6 +5,7 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 	$scope.dbPr=[];
 	$scope.dbPt=[];
 	$scope.dbAd=[];
+	$scope.dbDdc=[];
 	$scope.loadDataAp=function(){
 		$http({
 			url: $scope.server+'/admin/pengaturan?id='+$scope.user.id, method:'GET'
@@ -14,6 +15,7 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 			$scope.dbPr=d.datapr;
 			$scope.dbPt=d.datapt;
 			$scope.dbAd=d.dataad;
+			$scope.dbDdc=d.dataddc;
 		}).
 		error(function(e, s, h){
 			//kalau error
@@ -22,8 +24,23 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 	};
 	$scope.loadDataAp(); //panggil fungsi
 	
+	$scope.dataDetail = [];
+	$scope.tampilDetailkls = function(i) {
+		$scope.detail = true;
+		$http({
+			url: $scope.server+'/detailkelas/'+i, method:'GET'
+		}).
+		success(function(d){
+			$scope.dataDetail=d.data;
+		});
+	}
+	
 	$scope.setdbPr = function(d) {
 		$scope.dbPr = d;
+	};
+	
+	$scope.setdbDdc = function(d) {
+		$scope.dbDdc = d;
 	};
 	
 	$scope.setdbAd = function(d) {
@@ -34,6 +51,7 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 	$scope.ap = {};	
 	$scope.pr = {};	
 	$scope.pt = {};	
+	$scope.ddc = {};	
 	
 	$scope.resetAp= function(){
 		$scope.ap={
@@ -62,13 +80,23 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 		};
 	};	
 	$scope.resetAd();
+	
+	$scope.resetDdc= function(){
+		$scope.ddc={
+			id:'', kode:'', ket:''
+		};
+	};	
+	$scope.resetAd();
 
+	$scope.detail = false;
 	$scope.editing = false;
 	$scope.batal = function(){
 		$scope.editing = false;
+		$scope.detail = false;
 		$scope.resetAp();
 		$scope.resetPr();
 		$scope.resetAd();
+		$scope.resetDdc();
 	};
 	
 	$scope.setEdit=function(i){
@@ -88,6 +116,11 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 	
 	$scope.setEditAd=function(i){
 		$scope.ad=$scope.dbAd[i];
+		$scope.editing = true;
+	}
+	
+	$scope.setEditDdc=function(i){
+		$scope.ddc=$scope.dbDdc[i];
 		$scope.editing = true;
 	}
 		

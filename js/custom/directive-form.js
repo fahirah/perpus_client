@@ -74,7 +74,9 @@ app.directive('simpanBuku', function() {
 			if($scope.buku.kota.length < 3) return alertify.error('Kota terbit buku tidak boleh kurang dari 3 karakter');
 			if($scope.buku.penerbit.length < 3) return alertify.error('Penerbit buku tidak boleh kurang dari 3 karakter');
 			if($scope.buku.tahun.length < 4) return alertify.error('Tahun terbit buku tidak boleh kurang dari 4 karakter');
+			if($scope.buku.ringkasan.length < 5) return alertify.error('Ringkasan file tidak boleh kurang dari 5 karakter');
 			
+			fd.append("id_user", $scope.user.id);
 			fd.append("id",$scope.buku.id);
 			fd.append("kode",$scope.buku.kode);
 			fd.append("isbn",$scope.buku.isbn);
@@ -88,6 +90,8 @@ app.directive('simpanBuku', function() {
 			fd.append("kota", $scope.buku.kota);
 			fd.append("penerbit", $scope.buku.penerbit);
 			fd.append("tahun", $scope.buku.tahun);
+			fd.append("ringkasan", $scope.buku.ringkasan);
+			fd.append("status", $scope.buku.status);
 			
 			var xhr = new XMLHttpRequest();
 			xhr.open('post', $scope.server +'/admin/buku', true);
@@ -308,7 +312,52 @@ app.directive('simpanProdi', ['$http', function($http) {
 	}
 }]);
 
-/*hapus peminjaman */
+/* simpan kelas utama ddc */
+app.directive('simpanKelasutama', ['$http', function($http) {
+	return function($scope, elm) {
+		elm.click(function(e) {
+			//validasi
+			if($scope.ddc.kode.length < 3) return alertify.error('Kode Klasifikasi Kelas Utama tidak boleh kurang dari 3');
+			if($scope.ddc.ket.length < 3) return alertify.error('Keterangan Klasifikasi Kelas Utama tidak boleh kurang dari 3');
+			
+			elm.button('loading');
+			$http({ url:$scope.server + '/admin/pengaturankelasut?id='+$scope.user.id, method: 'POST', data:$scope.ddc }).
+			success(function(d){
+				elm.button('reset');
+				alertify.success('Data Klasifikasi Kelas Utama berhasil disimpan');
+				$scope.batal();
+				$scope.dbDdc=d.dataddc;
+			}).
+			error(function(e, s, h) {
+				elm.button('reset'); 
+				alertify.success('Data Klasifikasi Kelas Utama gagal disimpan');
+				$scope.batal();
+				$scope.dbDdc=d.dataddc;
+			});
+		});
+	}
+}]);
+
+/*hapus kelasutama */
+app.directive('hapusDdc', ['$http', function($http) {
+	return function($scope, elm, attrs) {
+		elm.click(function(e) {
+			alertify.confirm('Yakin data ini akan dihapus?', function(e){
+				if(e){
+					$http({ url:$scope.server + '/admin/pengaturankelasut/'+attrs.hapusDdc, method: 'DELETE' }).
+					success(function(d){
+						alertify.success('Data Klasifikasi Kelas Utama berhasil dihapus');
+						$scope.batal();
+						//$scope.setdbDdc(d.dataddc);
+						$scope.dbDdc=d.dataddc;
+					});
+				}
+			});
+		});
+	}
+}]);
+
+/*hapus prodi */
 app.directive('hapusProdi', ['$http', function($http) {
 	return function($scope, elm, attrs) {
 		elm.click(function(e) {

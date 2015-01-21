@@ -8,7 +8,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 	$scope.kata='';
 	$scope.jumpjm=0;
 	$scope.search={
-		tipe: '',status:'',tgl:'',noid:'', bulan:'', kd:'', jd:'', tahun:''
+		tipe: '',status:'',tgl:'',noid:'', bulan:'',  jd:'', tahun:''
 	};
 	$scope.pjm={
 		anggota:'',buku:''
@@ -27,9 +27,6 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 				break;
 			case 'noid':
 				$scope.search.status = $scope.search.bulan = $scope.search.tgl =  $scope.search.kd = $scope.search.jd = '';
-				break;
-			case 'kdbuku':
-				$scope.search.status = $scope.search.bulan = $scope.search.tgl =  $scope.search.noid = $scope.search.jd = '';
 				break;
 			case 'jdbuku':
 				$scope.search.status = $scope.search.bulan = $scope.search.tgl =  $scope.search.noid = $scope.search.kd = '';

@@ -19,7 +19,6 @@
 						<div class="col-md-2">
 							<select class="form-control" name="jenis" data-ng-model="search.jenis">
 								<option value="">--Pilih--</option>
-								<option value="kode">Kode</option>
 								<option value="isbn">ISBN</option>
 								<option value="judul">Judul</option>
 								<option value="pengarang">Pengarang</option>
@@ -34,10 +33,6 @@
 				<hr>
 				
 				<form class="form form-horizontal" data-ng-show="editing">
-					<div class="form-group" data-ng-show="buku.kode!=''">
-						<label for="kode" class="col-md-3 col-md-offset-2">Kode Buku</label>
-						<div class="col-md-3"><input type="hidden" name="namalm" class="form-control tooltips" data-ng-model="buku.sampul" readonly><input type="text" name="kode" data-ng-model="buku.kode" placeholder="Kode Buku" id="kode" class="form-control tooltips" title="Masukkan kode buku" readonly ></div>
-					</div>
 					<div class="form-group">
 						<label for="isbn" class="col-md-3 col-md-offset-2">ISBN Buku</label>
 						<div class="col-md-3"><input type="text" name="isbn" data-ng-model="buku.isbn" placeholder="ISBN Buku" id="kode" class="form-control tooltips" title="Masukkan isbn buku"></div>
@@ -59,7 +54,7 @@
 						<label for="pengarang" class="col-md-3 col-md-offset-2">Pengarang</label>
 						<div class="col-md-4"><input type="text" name="pengarang" data-ng-model="buku.pengarang"  placeholder="pengarang" id="pengarang" class="form-control tooltips" title="Masukkan pengarang"></div>
 					</div>
-					<div class="form-group" data-ng-show="buku.kode==''">
+					<div class="form-group">
 						<label for="stok" class="col-md-3 col-md-offset-2">Stok</label>
 						<div class="col-md-2"><input type="text" name="stok" data-ng-model="buku.stok"  placeholder="stok" id="stok" class="form-control tooltips" title="Masukkan Stok" number-input></div>
 					</div>
@@ -85,9 +80,25 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group">
+					<!--<div class="form-group">
 						<label for="prodi" class="col-md-3 col-md-offset-2">No Klasifikasi Buku</label>
 						<div class="col-md-3"><input type="text" name="penempatan" data-ng-model="buku.penempatan" placeholder="No Klasifikasi Buku" class="form-control tooltips" title="Masukkan no klasifikasi">
+						</div>
+					</div>-->
+					<div class="form-group">
+						<label for="klsutama" class="col-md-3 col-md-offset-2">Kelas Utama Klasifikasi Buku</label>
+						<div class="col-md-3">
+							<select name="klsutama" id="klsutama" data-ng-model="buku.klsutama" class="form-control" data-ng-options="p.kode as p.ket for p in kelasutama">
+								<option value="">-- pilih kelas utama klasifikasi --</option>
+							</select>	
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="devisi" class="col-md-3 col-md-offset-2">Devisi Klasifikasi Buku</label>
+						<div class="col-md-3">
+							<select name="devisi" id="devisi" data-ng-model="buku.devisi" class="form-control" data-ng-options="q.kodedev as q.ketdev for q in devisi">
+								<option value="">-- pilih devisi klasifikasi --</option>
+							</select>	
 						</div>
 					</div>
 					<div class="form-group">
@@ -103,6 +114,21 @@
 						<div class="col-md-2"><input type="text" name="tahun" data-ng-model="buku.tahun"  placeholder="tahun terbit" id="thn" class="form-control tooltips" title="Masukkan tahun terbit" number-input maxlength="4"></div>
 					</div>
 					<div class="form-group">
+						<label for="ringkasan" class="col-md-3 col-md-offset-2">Ringkasan</label>
+						<div class="col-md-4"><textarea name="ringkasan" data-ng-model="buku.ringkasan" class="form-control tooltips" title="Masukkan ringkasan" cols="50" rows="4"></textarea></div>
+					</div>
+					<div class="form-group" data-ng-hide="buku.id==''">
+						<label for="status" class="col-md-3 col-md-offset-2">Status Buku</label>
+						<div class="col-md-3">
+							<select class="form-control" name="status" id="status" data-ng-model="buku.status"  >
+								<option value="">--Pilih Status Buku--</option>
+								<option value="L">Layak</option>
+								<option value="TL">Tidak Layak</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
 						<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-buku>SIMPAN</button> <button class="btn btn-info btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetBuku()">BATAL</button> </div>
 					</div>
 				</form>
@@ -111,29 +137,31 @@
 					<thead>
 						<tr>
 							<th>NO.</th>
-							<th>KODE BUKU</th>
-							<th>ISBN BUKU</th>
 							<th>SAMPUL BUKU</th>
+							<th>KLASIFIKASI</th>
+							<th>ISBN BUKU</th>
 							<th>JUDUL</th>
 							<th>PENGARANG</th>
-							<th>KLASIFIKASI</th>
-							<th>TERPINJAM</th>
+							<th>STATUS</th>
+							<th>PETUGAS</th>
+							<th>TGL INPUT</th>
 							<th>AKSI</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="c in dbBuku">
 							<td>{{(jph*cpagebk)+$index+1}}</td>
-							<td>{{c.kode}}</td>
-							<td>{{c.isbn}}</td>
 							<td><img data-ng-src="{{server}}/{{c.sampul}}" style="width:50px; height:50px"></td>
+							<td>{{c.pn}}</td>
+							<td>{{c.isbn}}</td>
 							<td>{{c.judul}}</td>
 							<td>{{c.pengarang}}</td>
-							<td>{{c.pn}}</td>
-							<td>{{c.jumlah}}</td>
+							<td>{{c.statusbk}}</td>
+							<td>{{c.idpetugas}} / {{c.namapetugas}}</td>
+							<td>{{c.tgl}}</td>
 							<td>
-								<a data-ng-href="{{server}}/cetak/buku/{{c.kode}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu buku"><i class="fa fa-print"></i></a>
-								<a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
+								<a data-ng-href="{{server}}/cetak/buku/{{c.pn}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu buku"><i class="fa fa-print"></i></a>
+								<a href="" data-ng-click="tampilDetail(c.id)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
 								<a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
 								<a href="" hapus-buku="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
 							</td>
@@ -157,17 +185,19 @@
 				<div data-ng-show="detail && ! editing">
 					<div class="">
 						<table class="table" data-ng-repeat="c in dataDetail">
-							<tr><td rowspan="13" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KODE BUKU</td><td>:</td><td width="">{{c.kode}}</td></tr>
-							<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
+							<tr><td rowspan="16" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">ISBN BUKU</td><td>:</td><td width="">{{c.isbn}}</td></tr>
 							<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
 							<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
 							<tr><td>NO INVENTARIS</td><td>:</td><td>{{c.inventaris}}</td></tr>
 							<tr><td>KLASIFIKASI BUKU</td><td>:</td><td>{{c.penempatan}}</td></tr>
+							<tr><td>STATUS</td><td>:</td><td>{{c.status}}</td></tr>
+							<tr><td>PETUGAS</td><td>:</td><td>{{c.idpetugas}} / {{c.namapetugas}}</td></tr>
 							<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
 							<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
 							<tr><td>KOTA TERBIT</td><td>:</td><td>{{c.kota}}</td></tr>
 							<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
 							<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+							<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
 							<tr><td>JUMLAH TERPINJAM</td><td>:</td><td>{{c.jumlah}}</td></tr>
 							<tr><td>JUMLAH BUKU</td><td>:</td><td>{{c.jumlahbk}}</td></tr>
 							<tr><td colspan="4">&nbsp;</td></tr>

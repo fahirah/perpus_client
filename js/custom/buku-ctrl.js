@@ -8,7 +8,29 @@ app.controller('BukuPetugasCtrl', function($scope, $http){
 	$scope.search={
 		kata:'',jenis:''
 	};
-
+	
+	$scope.kelasutama = [];
+	$scope.loadKelasUtama=function(){
+		$http({
+			url: $scope.server+'/kelasutama', method:'GET'
+		}).
+		success(function(d){
+			$scope.kelasutama=d;
+		});
+	};
+	$scope.loadKelasUtama(); //panggil fungsi
+	
+	$scope.devisi = [];
+	$scope.loadDevisi=function(){
+		$http({
+			url: $scope.server+'/devisi', method:'GET'
+		}).
+		success(function(d){
+			$scope.devisi=d;
+		});
+	};
+	$scope.loadDevisi(); //panggil fungsi
+	
 	$scope.dbBuku=[];
 	$scope.file=null;
 	$scope.loadDataBuku=function(){
@@ -30,7 +52,7 @@ app.controller('BukuPetugasCtrl', function($scope, $http){
 	
 	$scope.resetBuku= function(){
 		$scope.buku={
-			id:'', sampul:'', kode:'',isbn:'', judul:'', pengarang:'', stok:'', sisa:'', macam:'', bahasa:'', penempatan:'', kota:'', penerbit:'', tahun:''
+			id:'', sampul:'', kode:'',isbn:'', judul:'', pengarang:'', stok:'', sisa:'', macam:'', bahasa:'', penempatan:'', kota:'', penerbit:'', tahun:'', ringkasan:'', status:''
 		};
 	};
 	$scope.resetBuku();

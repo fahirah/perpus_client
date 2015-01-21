@@ -33,7 +33,6 @@
 									<option value="tanggal">tanggal</option>
 									<option value="bulanan">bulan</option>
 									<option value="noid">no identitas</option>
-									<option value="kdbuku">Kode Buku</option>
 									<option value="jdbuku">Judul Buku</option>
 								</select>	
 							</div>
@@ -62,12 +61,7 @@
 							<div class="col-md-2">
 								<label><input type="text" name="noid" data-ng-model="search.noid" ></label> &nbsp;
 							</div>
-						</div>
-						<div class="form-group" data-ng-show="search.tipe=='kdbuku'">
-							<div class="col-md-2">
-								<label><input type="text" name="kd" data-ng-model="search.kd" ></label> &nbsp;
-							</div>
-						</div>		
+						</div>	
 						<div class="form-group" data-ng-show="search.tipe=='jdbuku'">
 							<div class="col-md-2">
 								<label><input type="text" name="kd" data-ng-model="search.jd" ></label> &nbsp;
@@ -90,7 +84,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="identitas" class="col-md-3 col-md-offset-2">Kode Buku </label>
+							<label for="identitas" class="col-md-3 col-md-offset-2">Klasifikasi Buku </label>
 							<div class="col-md-3">
 								<input type="text" name="kdbuku" data-ng-model="pjm.buku" placeholder="kode buku " class="form-control tooltips" title="Masukkan kode buku" data-ng-disabled="dataPinjam.length>2">
 							</div>
@@ -103,7 +97,7 @@
 						<thead>
 							<tr>
 								<th>NO.</th>
-								<th>KODE BUKU</th>
+								<th>KLASIFIKASI BUKU</th>
 								<th>JUDUL BUKU</th>
 								<th>TGL PINJAM</th>
 								<th>TGL KEMBALI</th>
@@ -113,7 +107,7 @@
 						<tbody>
 							<tr data-ng-repeat="c in dataPinjam">
 								<td>{{$index+1}}</td>
-								<td>{{c.kode}}</td>
+								<td>{{c.nopn}}</td>
 								<td>{{c.judul}}</td>
 								<td>{{c.tgl_pinjam}}</td>
 								<td>{{c.tgl_kembali}}</td>							
@@ -138,7 +132,7 @@
 									<th>TGL PENGEMBALIAN</th>
 									<th>NO IDENTITAS</th>
 									<th>NAMA</th>
-									<th>KODE BUKU</th>
+									<th>KLASIFIKASI BUKU</th>
 									<th>JUDUL</th>
 									<th>DENDA</th>
 									<th>AKSI</th>
@@ -152,7 +146,7 @@
 									<td>{{c.tgl_pengembalian}}</td>	
 									<td>{{c.noid}}</td>	
 									<td>{{c.nmang}}</td>	
-									<td>{{c.kd_buku}}</td>	
+									<td>{{c.nopn}}</td>	
 									<td>{{c.judul}}</td>	
 									<td>{{c.denda}}</td>	
 									<td>
