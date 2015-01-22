@@ -25,9 +25,9 @@
 	<thead>
 		<tr>
 			<th>NO.</th>
-			<th>KODE BUKU</th>
-			<th>ISBN BUKU</th>
 			<th>SAMPUL</th>
+			<th>KLASIFIKASI BUKU</th>
+			<th>ISBN BUKU</th>
 			<th>JUDUL</th>
 			<th>PENGARANG</th>
 			<th>PENERBIT</th>
@@ -36,14 +36,14 @@
 	</thead>
 	<tbody>
 		<tr data-ng-repeat="c in db">
-			<td>{{$index+1}}</td>
-			<td>{{c.kode}}</td>
-			<td>{{c.isbn}}</td>
+			<td>{{(jph*cpagebk)+$index+1}}</td>
 			<td><img data-ng-src="{{server}}/{{c.sampul}}" style="width:50px; height:50px"></td>
+			<td>{{c.penempatan}}</td>
+			<td>{{c.isbn}}</td>
 			<td>{{c.judul}}</td>
 			<td>{{c.pengarang}}</td>
 			<td>{{c.penerbit}}</td>
-			<td><a href="" data-ng-click="tampilDetail(c.kode)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a> </td>
+			<td><a href="" data-ng-click="tampilDetail(c.id)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a> </td>
 		</tr>
 		<tr>
 			<td colspan="12" align=""> <i class="fa fa-th-list"></i> : Detail Data  </td>
@@ -59,15 +59,21 @@
 <div data-ng-show="detail">
 	<div class="">
 		<table class="table" data-ng-repeat="c in dataDetail">
-			<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KODE BUKU</td><td>:</td><td width="">{{c.kode}}</td></tr>
+			<tr><td rowspan="15" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KLASIFIKASI BUKU</td><td>:</td><td width="">{{c.penempatan}}</td></tr>
 			<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
 			<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
 			<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
-			<tr><td>NO PENEMPATAN</td><td>:</td><td>{{c.penempatan}}</td></tr>
+			<tr><td>NO INVENTARIS</td><td>:</td><td>{{c.inventaris}}</td></tr>
+			<tr><td>STATUS</td><td>:</td><td>{{c.status}}</td></tr>
+			<tr><td>PETUGAS</td><td>:</td><td>{{c.idpetugas}} / {{c.namapetugas}}</td></tr>
 			<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
 			<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
+			<tr><td>KOTA TERBIT</td><td>:</td><td>{{c.kota}}</td></tr>
 			<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
 			<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+			<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
+			<tr><td>JUMLAH BUKU</td><td>:</td><td>{{c.jumlahbk}}</td></tr>
+			<tr><td>JUMLAH TERPINJAM</td><td>:</td><td>{{c.jumlahpjm}}</td></tr>
 			<tr><td colspan="4">&nbsp;</td></tr>
 		</table>
 	</div>

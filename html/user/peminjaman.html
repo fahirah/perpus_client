@@ -4,7 +4,7 @@
 		<thead>
 			<tr>
 				<th>NO.</th>
-				<th>KODE BUKU</th>
+				<th>KLASIFIKASI BUKU</th>
 				<th>JUDUL BUKU</th>
 				<th>TGL PINJAM</th>
 				<th>TGL KEMBALI</th>
@@ -14,7 +14,7 @@
 		<tbody>
 			<tr data-ng-repeat="c in dbPjm">
 				<td>{{$index+1}}</td>
-				<td>{{c.idbuku}}</td>
+				<td>{{c.penempatan}}</td>
 				<td>{{c.judul}}</td>
 				<td>{{c.tgl_pinjam}}</td>
 				<td>{{c.tgl_kembali}}</td>							

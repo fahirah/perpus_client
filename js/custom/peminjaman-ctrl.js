@@ -105,7 +105,7 @@ app.controller('PeminjamanPetugasCtrl', function($scope, $http) {
 			}).
 			success(function(d){
 				$http({
-					url: $scope.server+'/cekbuku/'+$scope.pjm.buku+'/'+$scope.pjm.anggota, method:'GET'
+					url: $scope.server+'/cekbuku/'+Base64.encode($scope.pjm.buku)+'/'+$scope.pjm.anggota, method:'GET'
 				}).
 				success(function(d){
 					$scope.dataPinjam.push(d);

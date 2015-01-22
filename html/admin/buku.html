@@ -54,7 +54,7 @@
 						<label for="pengarang" class="col-md-3 col-md-offset-2">Pengarang</label>
 						<div class="col-md-4"><input type="text" name="pengarang" data-ng-model="buku.pengarang"  placeholder="pengarang" id="pengarang" class="form-control tooltips" title="Masukkan pengarang"></div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-hide="buku.stok <0">
 						<label for="stok" class="col-md-3 col-md-offset-2">Stok</label>
 						<div class="col-md-2"><input type="text" name="stok" data-ng-model="buku.stok"  placeholder="stok" id="stok" class="form-control tooltips" title="Masukkan Stok" number-input></div>
 					</div>
@@ -88,7 +88,7 @@
 					<div class="form-group">
 						<label for="klsutama" class="col-md-3 col-md-offset-2">Kelas Utama Klasifikasi Buku</label>
 						<div class="col-md-3">
-							<select name="klsutama" id="klsutama" data-ng-model="buku.klsutama" class="form-control" data-ng-options="p.kode as p.ket for p in kelasutama">
+							<select name="klsutama" id="klsutama" data-ng-model="buku.klsutama" class="form-control" data-ng-options="p.id as p.ket for p in kelasutama" data-ng-change="changeKelas()">
 								<option value="">-- pilih kelas utama klasifikasi --</option>
 							</select>	
 						</div>
@@ -96,7 +96,7 @@
 					<div class="form-group">
 						<label for="devisi" class="col-md-3 col-md-offset-2">Devisi Klasifikasi Buku</label>
 						<div class="col-md-3">
-							<select name="devisi" id="devisi" data-ng-model="buku.devisi" class="form-control" data-ng-options="q.kodedev as q.ketdev for q in devisi">
+							<select name="devisi" id="devisi" data-ng-model="buku.devisi" class="form-control" data-ng-options="q.iddev as q.ketdev for q in devisi">
 								<option value="">-- pilih devisi klasifikasi --</option>
 							</select>	
 						</div>
@@ -160,14 +160,14 @@
 							<td>{{c.idpetugas}} / {{c.namapetugas}}</td>
 							<td>{{c.tgl}}</td>
 							<td>
-								<a data-ng-href="{{server}}/cetak/buku/{{c.pn}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu buku"><i class="fa fa-print"></i></a>
+								<a data-ng-href="{{server}}/cetak/buku/{{c.id}}" target="_blank" class="btn btn-sm tooltips" title="cetak kartu buku"><i class="fa fa-print"></i></a>
 								<a href="" data-ng-click="tampilDetail(c.id)" class="btn btn-sm tooltips" title="detail data"><i class="fa fa-th-list"></i></a>
 								<a href="" data-ng-click="setEdit($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
 								<a href="" hapus-buku="{{c.id}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="8" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td><td>&nbsp;</td>
+							<td colspan="9" align=""> <i class="fa fa-th-list"></i> : Detail Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td><td>&nbsp;</td>
 						</tr>
 					</tbody>
 				</table>
@@ -185,21 +185,23 @@
 				<div data-ng-show="detail && ! editing">
 					<div class="">
 						<table class="table" data-ng-repeat="c in dataDetail">
-							<tr><td rowspan="16" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">ISBN BUKU</td><td>:</td><td width="">{{c.isbn}}</td></tr>
+							<tr><td rowspan="17" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KLASIFIKASI BUKU</td><td>:</td><td width="">{{c.pn}}</td></tr>
+							<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
 							<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
 							<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
 							<tr><td>NO INVENTARIS</td><td>:</td><td>{{c.inventaris}}</td></tr>
-							<tr><td>KLASIFIKASI BUKU</td><td>:</td><td>{{c.penempatan}}</td></tr>
 							<tr><td>STATUS</td><td>:</td><td>{{c.status}}</td></tr>
 							<tr><td>PETUGAS</td><td>:</td><td>{{c.idpetugas}} / {{c.namapetugas}}</td></tr>
+							<tr><td>TGL INPUT</td><td>:</td><td>{{c.tgl}}</td></tr>
 							<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
 							<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
 							<tr><td>KOTA TERBIT</td><td>:</td><td>{{c.kota}}</td></tr>
 							<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
 							<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
 							<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
-							<tr><td>JUMLAH TERPINJAM</td><td>:</td><td>{{c.jumlah}}</td></tr>
 							<tr><td>JUMLAH BUKU</td><td>:</td><td>{{c.jumlahbk}}</td></tr>
+							<tr><td>JUMLAH TERPINJAM</td><td>:</td><td>{{c.jumlahpjm}}</td></tr>
+							<tr><td>JUMLAH TOTAL TERPINJAM</td><td>:</td><td>{{c.jumlah}}</td></tr>
 							<tr><td colspan="4">&nbsp;</td></tr>
 						</table>
 					</div>

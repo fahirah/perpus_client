@@ -4,7 +4,7 @@
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="" data-target="#aplikasi" data-toggle="tab"><span class="fa fa-desktop"></span> Aplikasi</a></li>
 				<li><a href="" data-target="#prodi" data-toggle="tab"><span class="fa fa-columns"></span> Prodi</a></li>
-				<li><a href="" data-target="#ddc" data-toggle="tab"><span class="fa fa-users"></span> DDC</a></li>
+				<li><a href="" data-target="#ddc" data-toggle="tab"><span class="fa fa-list"></span> DDC</a></li>
 				<li><a href="" data-target="#petugas" data-toggle="tab"><span class="fa fa-users"></span> Petugas</a></li>
 				<li><a href="" data-target="#akun" data-toggle="tab"><span class="fa fa-gears"></span> Akun</a></li>
 			</ul>
@@ -83,17 +83,21 @@
 				</div>
 
 				<div class="tab-pane" id="ddc">
-					<div data-ng-show="detail">
-						<h3 class="text-center">DATA KLASIFIKASI BUKU
-							<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Kembali</button>
-						</h3>
-					</div>
 					<h3 class="text-center" data-ng-show="!editing && !detail">
 						DATA KLASIFIKASI BUKU
 						<button class="btn btn-md btn-success pull-right" data-ng-click="editing=true"><i class="fa fa-plus"></i> Tambah Klasifikasi</button>
 					</h3>
 					<h3 class="text-center" data-ng-show="editing">
 						TAMBAH / EDIT KLASIFIKASI
+						<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
+					</h3>
+					<h3 class="text-center" data-ng-show="detail && !inputdev">
+						DATA DEVISI KLASIFIKASI BUKU
+						<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
+						<button class="btn btn-md btn-success pull-right" data-ng-click="inputdev=true"><i class="fa fa-plus"></i> Tambah  Devisi Klasifikasi</button>
+					</h3>
+					<h3 class="text-center" data-ng-show="inputdev">
+						TAMBAH / EDIT DEVISI KLASIFIKASI
 						<button class="btn btn-md btn-default pull-right" data-ng-click="batal()"><i class="fa fa-mail-reply"></i> Batalkan</button>
 					</h3>
 					<br/><br/>			
@@ -109,6 +113,28 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-kelasutama>SIMPAN</button> <button class="btn btn-info btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetDdc()">BATAL</button> </div>
+						</div>
+					</form>
+					
+					<form class="form form-horizontal" data-ng-show="inputdev" >
+						<div class="form-group">
+							<label for="klsutama" class="col-md-3 col-md-offset-2">Kelas Utama Klasifikasi Buku</label>
+							<div class="col-md-3">
+								<select name="klsutama" id="klsutama" data-ng-model="dev.klsutama" class="form-control" data-ng-options="p.id as p.ket for p in kelasutama" data-ng-change="changeKelas()">
+									<option value="">-- pilih kelas utama klasifikasi --</option>
+								</select>	
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="kd" class="col-md-3 col-md-offset-2">Kode DDC</label>
+							<div class="col-md-3"><input type="text" name="kd" data-ng-model="dev.kodedev" placeholder="Kode" class="form-control tooltips" title="Masukkan Kode"></div>
+						</div>
+						<div class="form-group">
+							<label for="nama" class="col-md-3 col-md-offset-2">Keterangan</label>
+							<div class="col-md-3"><input type="text" name="nama" data-ng-model="dev.ketdev" placeholder="Keterangan" class="form-control tooltips" title="Masukkan keterangan"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-5 col-md-offset-5"><button class="btn btn-primary btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i> LOADING" simpan-devisi>SIMPAN</button> <button class="btn btn-info btn-md" data-loading-text="<i class='fa fa-spinner fa-spin'></i>" data-ng-click="resetDev()">BATAL</button> </div>
 						</div>
 					</form>
 					
@@ -137,7 +163,11 @@
 						</tbody>
 					</table>
 					
-					<table class="table table-bordered table-striped table-hover" data-ng-show="detail">
+					<table data-ng-show="detail && !inputdev">
+						<tr><th>&nbsp;</th><th>Kode Kelas Utama</th><th>:</th><th>{{kodekls}}</th></tr>
+						<tr><th>&nbsp;</th><th>Keterangan Kelas Utama</th><th>:</th><th>{{ketkls}}</th></tr>
+					</table>
+					<table class="table table-bordered table-striped table-hover" data-ng-show="detail && !inputdev">
 						<thead>
 							<tr>
 								<th>NO</th>
@@ -152,8 +182,8 @@
 								<td>{{c.kodedev}}</td>
 								<td>{{c.ketdev}}</td>
 								<td>
-									<a href="" data-ng-click="setEditDdc($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
-									<a href="" hapus-ddc="{{c.iddev}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
+									<a href="" data-ng-click="setEditDev($index)" class="btn btn-sm tooltips" title="edit data"><i class="fa fa-edit"></i></a>
+									<a href="" hapus-dev="{{c.iddev}}" class="btn btn-sm tooltips" title="hapus data"><i class="fa fa-trash-o"></i></a></td>
 							</tr>
 							<tr>
 								<td colspan="12" align="">  <i class="fa fa-edit"></i> : Edit Data  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <i class="fa fa-trash-o"></i> : Hapus Data</td>

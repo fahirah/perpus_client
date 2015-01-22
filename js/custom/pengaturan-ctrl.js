@@ -24,6 +24,17 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 	};
 	$scope.loadDataAp(); //panggil fungsi
 	
+	$scope.kelasutama = [];
+	$scope.loadKelasUtama=function(){
+		$http({
+			url: $scope.server+'/kelasutama', method:'GET'
+		}).
+		success(function(d){
+			$scope.kelasutama=d;
+		});
+	};
+	$scope.loadKelasUtama(); //panggil fungsi
+	
 	$scope.dataDetail = [];
 	$scope.tampilDetailkls = function(i) {
 		$scope.detail = true;
@@ -32,6 +43,8 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 		}).
 		success(function(d){
 			$scope.dataDetail=d.data;
+			$scope.kodekls=d.kodekls;
+			$scope.ketkls=d.ketkls;
 		});
 	}
 	
@@ -86,17 +99,28 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 			id:'', kode:'', ket:''
 		};
 	};	
-	$scope.resetAd();
+	$scope.resetDdc();
+
+	$scope.resetDev= function(){
+		$scope.dev={
+			iddev:'', klsutama:'', kodedev:'', ketdev:''
+		};
+	};	
+	$scope.resetDev();
 
 	$scope.detail = false;
 	$scope.editing = false;
+	$scope.inputdev = false;
+	
 	$scope.batal = function(){
 		$scope.editing = false;
 		$scope.detail = false;
+		$scope.inputdev = false;
 		$scope.resetAp();
 		$scope.resetPr();
 		$scope.resetAd();
 		$scope.resetDdc();
+		$scope.resetDev();
 	};
 	
 	$scope.setEdit=function(i){
@@ -122,6 +146,11 @@ app.controller('PengaturanPetugasCtrl', function($scope, $http){
 	$scope.setEditDdc=function(i){
 		$scope.ddc=$scope.dbDdc[i];
 		$scope.editing = true;
+	}
+	
+	$scope.setEditDev=function(i){
+		$scope.dev=$scope.dataDetail[i];
+		$scope.inputdev = true;
 	}
 		
 });

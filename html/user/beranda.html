@@ -17,7 +17,7 @@
 					{{c.pengarang}}<br/>
 					{{c.isbn}}<br/>
 					{{c.penempatan}}<br/>
-				<a href="" data-ng-click="tampilDetail(c.kode)" class="tooltips" title="detail data"><button class="btn btn-xs btn-info">Detail</button></a>
+				<a href="" data-ng-click="tampilDetail(c.id)" class="tooltips" title="detail data"><button class="btn btn-xs btn-info">Detail</button></a>
 			</td>
 			</tr>		
 		</tbody>
@@ -42,15 +42,16 @@
 	</div>
 	<div data-ng-show="detail && dataDetail.length>0">
 		<table class="table" data-ng-repeat="c in dataDetail">
-			<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KODE BUKU</td><td>:</td><td width="">{{c.kode}}</td></tr>
+			<tr><td rowspan="11" width="30%"><img data-ng-src="{{server}}/{{c.sampul}}" style="max-width:250px; max-height:370px"></td><td width="15%">KLASIFIKASI BUKU</td><td>:</td><td width="">{{c.penempatan}}</td></tr>
 			<tr><td>ISBN BUKU</td><td>:</td><td>{{c.isbn}}</td></tr>
 			<tr><td>JUDUL</td><td>:</td><td>{{c.judul}}</td></tr>
 			<tr><td>PENGARANG</td><td>:</td><td>{{c.pengarang}}</td></tr>
-			<tr><td>NO PENEMPATAN</td><td>:</td><td>{{c.penempatan}}</td></tr>
 			<tr><td>MACAM</td><td>:</td><td>{{c.macam}}</td></tr>
 			<tr><td>BAHASA</td><td>:</td><td>{{c.bahasa}}</td></tr>
 			<tr><td>PENERBIT</td><td>:</td><td>{{c.penerbit}}</td></tr>
 			<tr><td>TAHUN TERBIT</td><td>:</td><td>{{c.tahun}}</td></tr>
+			<tr><td>RINGKASAN</td><td>:</td><td>{{c.ringkasan}}</td></tr>
+			<tr><td>JUMLAH</td><td>:</td><td>{{c.jumlahbk}}</td></tr>
 			<tr><td colspan="4">&nbsp;</td></tr>
 		</table>
 	</div>
